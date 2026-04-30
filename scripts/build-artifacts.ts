@@ -2,7 +2,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { apiMonthlyUsd, crossoverTokensPerDay, peakTokensPerSecond, selfHostMonthlyUsd } from "../shared/cost-formulas";
-import { classifyRegime, costRatio } from "../shared/regime-classifier";
+import { CLEAR_WIN_RATIO, classifyRegime, costRatio } from "../shared/regime-classifier";
 import { estimatePerGpuThroughputTps, vramRequiredGb } from "../shared/throughput-estimator";
 import type { Artifact, CloudGpu, CloudSlug, CompositionResult, GpuSpec, ModelRecord, Quantization, UsageShape } from "../shared/types";
 import {
@@ -25,15 +25,10 @@ function compositionKey(gpuSku: string, quantization: Quantization, shape: Usage
   return `${gpuSku}__${quantization}__${shape}`;
 }
 
-function buildSeries(
-  selfHostMonthly: number | null,
-  priceInputPerMtokUsd: number,
-  priceOutputPerMtokUsd: number
-): CompositionResult["crossover_series"] {
+function buildSeries(priceInputPerMtokUsd: number, priceOutputPerMtokUsd: number): CompositionResult["crossover_series"] {
   return [100_000, 1_000_000, 5_000_000, 10_000_000, 25_000_000, 100_000_000, 250_000_000].map(
     (tokensPerDay) => ({
       tokens_per_day: tokensPerDay,
-      self_host_usd: selfHostMonthly,
       api_usd: Math.round(
         apiMonthlyUsd({
           tokensPerDay,
@@ -83,7 +78,7 @@ function buildComposition(
     regime,
     ratio: costRatio(selfMonthly, apiMonthly),
     crossover_tokens_per_day: crossoverTokensPerDay(selfMonthly, apiSide.price_input_per_mtok_usd, apiSide.price_output_per_mtok_usd, DEFAULTS),
-    crossover_series: buildSeries(roundedSelf, apiSide.price_input_per_mtok_usd, apiSide.price_output_per_mtok_usd),
+    crossover_series: buildSeries(apiSide.price_input_per_mtok_usd, apiSide.price_output_per_mtok_usd),
     fits,
     reason: fits
       ? undefined
@@ -183,7 +178,8 @@ function buildArtifact(model: ModelRecord, cloud: CloudSlug, gpuSpecs: Map<strin
       gpus: cloudGpus,
       quantizations: QUANTIZATIONS,
       shapes: SHAPES,
-      assumptions: DEFAULTS
+      assumptions: DEFAULTS,
+      regime_threshold: CLEAR_WIN_RATIO
     },
     compositions,
     provenance: {
@@ -230,15 +226,17 @@ export async function buildArtifacts() {
   const models = (await loadModels()).filter((model) => model.tier !== "archived");
   const gpuSpecs = new Map((await loadGpuSpecs()).map((gpu) => [gpu.sku, gpu]));
 
-  for (const model of models) {
+  await Promise.all(models.map(async (model) => {
     const modelDir = projectPath("src/data/generated/compositions", model.slug);
     await mkdir(modelDir, { recursive: true });
 
-    for (const cloud of CLOUDS) {
-      const artifact = buildArtifact(model, cloud.slug, gpuSpecs);
-      await writeFile(path.join(modelDir, `${cloud.slug}.json`), `${JSON.stringify(artifact, null, 2)}\n`);
-    }
-  }
+    await Promise.all(
+      CLOUDS.map((cloud) => {
+        const artifact = buildArtifact(model, cloud.slug, gpuSpecs);
+        return writeFile(path.join(modelDir, `${cloud.slug}.json`), `${JSON.stringify(artifact, null, 2)}\n`);
+      })
+    );
+  }));
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

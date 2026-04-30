@@ -19,6 +19,7 @@ const artifactPath = path.join(process.cwd(), "src/data/generated/compositions",
 const artifact = JSON.parse(await readFile(artifactPath, "utf8")) as Artifact;
 const pageTitle = `${artifact.model_facts.name} on ${manifest.clouds.find((cloud) => cloud.slug === artifact.artifact.cloud)?.name || artifact.artifact.cloud} | RunWhere`;
 const dataJson = JSON.stringify(artifact).replace(/</g, "\\u003c");
+const defaultAssumptions = artifact.options.assumptions;
 
 const provenanceEntries = Object.entries(artifact.provenance);
 ---
@@ -96,31 +97,31 @@ const provenanceEntries = Object.entries(artifact.provenance);
       </summary>
       <div class="assumption-grid">
         <label>
-          <span>GPU utilization <output data-utilization-output>60%</output></span>
-          <input type="range" min="30" max="95" value="60" data-assumption="utilization" />
+          <span>GPU utilization <output data-utilization-output>{Math.round(defaultAssumptions.utilization * 100)}%</output></span>
+          <input type="range" min="30" max="95" value={defaultAssumptions.utilization * 100} data-assumption="utilization" />
         </label>
         <label>
-          <span>INT8 multiplier <output data-int8-output>1.7x</output></span>
-          <input type="range" min="1.2" max="2" value="1.7" step="0.1" data-assumption="int8" />
+          <span>INT8 multiplier <output data-int8-output>{defaultAssumptions.int8ThroughputMultiplier.toFixed(1)}x</output></span>
+          <input type="range" min="1.2" max="2" value={defaultAssumptions.int8ThroughputMultiplier} step="0.1" data-assumption="int8" />
         </label>
         <label>
-          <span>INT4 multiplier <output data-int4-output>2.5x</output></span>
-          <input type="range" min="1.5" max="3.5" value="2.5" step="0.1" data-assumption="int4" />
+          <span>INT4 multiplier <output data-int4-output>{defaultAssumptions.int4ThroughputMultiplier.toFixed(1)}x</output></span>
+          <input type="range" min="1.5" max="3.5" value={defaultAssumptions.int4ThroughputMultiplier} step="0.1" data-assumption="int4" />
         </label>
         <label>
-          <span>Operational labor <output data-fte-output>0.1 FTE</output></span>
-          <input type="range" min="0" max="1" value="0.1" step="0.05" data-assumption="fte" />
+          <span>Operational labor <output data-fte-output>{defaultAssumptions.fteFraction} FTE</output></span>
+          <input type="range" min="0" max="1" value={defaultAssumptions.fteFraction} step="0.05" data-assumption="fte" />
         </label>
         <label>
-          <span>Annual salary <output data-salary-output>$150K</output></span>
-          <input type="range" min="50000" max="300000" value="150000" step="10000" data-assumption="salary" />
+          <span>Annual salary <output data-salary-output>${Math.round(defaultAssumptions.annualSalaryUsd / 1000)}K</output></span>
+          <input type="range" min="50000" max="300000" value={defaultAssumptions.annualSalaryUsd} step="10000" data-assumption="salary" />
         </label>
         <label>
-          <span>Peak-to-average <output data-peak-output>3:1</output></span>
-          <input type="range" min="1" max="10" value="3" step="0.5" data-assumption="peak" />
+          <span>Peak-to-average <output data-peak-output>{defaultAssumptions.peakToAvgRatio}:1</output></span>
+          <input type="range" min="1" max="10" value={defaultAssumptions.peakToAvgRatio} step="0.5" data-assumption="peak" />
         </label>
         <label class="toggle-row">
-          <input type="checkbox" data-assumption="overhead" />
+          <input type="checkbox" data-assumption="overhead" checked={defaultAssumptions.overheadEnabled} />
           <span>Storage/network overhead</span>
         </label>
       </div>
@@ -153,21 +154,24 @@ const provenanceEntries = Object.entries(artifact.provenance);
   <script id="artifact-data" type="application/json" is:inline set:html={dataJson}></script>
   <script is:inline>
     const artifact = JSON.parse(document.getElementById("artifact-data").textContent);
+    const params = new URL(location.href).searchParams;
     const state = {
-      gpu: new URL(location.href).searchParams.get("gpu") || artifact.defaults.gpu_sku,
-      quant: new URL(location.href).searchParams.get("quant") || artifact.defaults.quantization,
-      shape: new URL(location.href).searchParams.get("shape") || artifact.defaults.shape
+      gpu: params.get("gpu") || artifact.defaults.gpu_sku,
+      quant: params.get("quant") || artifact.defaults.quantization,
+      shape: params.get("shape") || artifact.defaults.shape
     };
+    const artifactDefaults = artifact.options.assumptions;
     const defaults = {
-      utilization: 0.6,
-      int8: 1.7,
-      int4: 2.5,
-      fte: 0.1,
-      salary: 150000,
-      peak: 3,
-      overhead: false
+      utilization: artifactDefaults.utilization,
+      int8: artifactDefaults.int8ThroughputMultiplier,
+      int4: artifactDefaults.int4ThroughputMultiplier,
+      fte: artifactDefaults.fteFraction,
+      salary: artifactDefaults.annualSalaryUsd,
+      peak: artifactDefaults.peakToAvgRatio,
+      overhead: artifactDefaults.overheadEnabled
     };
     const assumptions = { ...defaults };
+    const regimeThreshold = artifact.options.regime_threshold;
 
     const $ = (selector) => document.querySelector(selector);
     const money = (value) =>
@@ -192,7 +196,7 @@ const provenanceEntries = Object.entries(artifact.provenance);
     function classify(selfCost, apiCost) {
       if (!Number.isFinite(selfCost)) return "api-wins";
       const ratio = Math.max(selfCost, apiCost) / Math.min(selfCost, apiCost);
-      if (ratio < 1.5) return "close-call";
+      if (ratio < regimeThreshold) return "close-call";
       return selfCost < apiCost ? "self-host-wins" : "api-wins";
     }
 
@@ -246,15 +250,19 @@ const provenanceEntries = Object.entries(artifact.provenance);
       const points = composition.crossover_series;
       const minX = 100000;
       const maxX = 250000000;
-      const costs = points.flatMap((point) => [point.api_usd, point.self_host_usd || computed.apiCost]);
+      const costs = points.map((point) => point.api_usd);
+      if (Number.isFinite(computed.selfCost)) {
+        costs.push(computed.selfCost);
+      }
       const minY = Math.max(10, Math.min(...costs) * 0.65);
-      const maxY = Math.max(...costs, computed.selfCost || 0) * 1.35;
+      const maxY = Math.max(...costs) * 1.35;
       const log = Math.log10;
       const x = (value) => pad.left + ((log(value) - log(minX)) / (log(maxX) - log(minX))) * (width - pad.left - pad.right);
       const y = (value) => height - pad.bottom - ((log(value) - log(minY)) / (log(maxY) - log(minY))) * (height - pad.top - pad.bottom);
       const path = (series) => series.map((point, index) => `${index ? "L" : "M"} ${x(point.tokens_per_day)} ${y(point.value)}`).join(" ");
       const apiSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.api_usd }));
-      const selfSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.self_host_usd || computed.selfCost || maxY }));
+      const selfValue = Number.isFinite(computed.selfCost) ? computed.selfCost : maxY;
+      const selfSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: selfValue }));
       const workloadX = x(composition.inputs.tokens_per_day);
       const yTicks = [100, 1000, 10000, 100000].filter((tick) => tick >= minY && tick <= maxY);
       const xTicks = [100000, 1000000, 10000000, 100000000];
@@ -282,6 +290,16 @@ const provenanceEntries = Object.entries(artifact.provenance);
       $("[data-peak-output]").textContent = `${assumptions.peak}:1`;
       const adjusted = Object.entries(assumptions).filter(([name, value]) => value !== defaults[name]).length;
       $("[data-adjusted-count]").textContent = adjusted ? `${adjusted} adjusted` : "defaults";
+    }
+
+    function syncAssumptionInputs() {
+      document.querySelector('[data-assumption="utilization"]').value = String(defaults.utilization * 100);
+      document.querySelector('[data-assumption="int8"]').value = String(defaults.int8);
+      document.querySelector('[data-assumption="int4"]').value = String(defaults.int4);
+      document.querySelector('[data-assumption="fte"]').value = String(defaults.fte);
+      document.querySelector('[data-assumption="salary"]').value = String(defaults.salary);
+      document.querySelector('[data-assumption="peak"]').value = String(defaults.peak);
+      document.querySelector('[data-assumption="overhead"]').checked = defaults.overhead;
     }
 
     function render() {
@@ -351,13 +369,7 @@ const provenanceEntries = Object.entries(artifact.provenance);
     });
     $("[data-reset]").addEventListener("click", () => {
       Object.assign(assumptions, defaults);
-      document.querySelector('[data-assumption="utilization"]').value = 60;
-      document.querySelector('[data-assumption="int8"]').value = 1.7;
-      document.querySelector('[data-assumption="int4"]').value = 2.5;
-      document.querySelector('[data-assumption="fte"]').value = 0.1;
-      document.querySelector('[data-assumption="salary"]').value = 150000;
-      document.querySelector('[data-assumption="peak"]').value = 3;
-      document.querySelector('[data-assumption="overhead"]').checked = false;
+      syncAssumptionInputs();
       render();
     });
 

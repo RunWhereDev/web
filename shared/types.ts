@@ -1,3 +1,7 @@
+import type { ModelRecord } from "./content-schemas";
+
+export type { GpuSpec, ModelRecord } from "./content-schemas";
+
 export type CloudSlug = "gcp" | "aws" | "azure";
 export type Quantization = "fp16" | "int8" | "int4";
 export type UsageShape = "light" | "medium" | "heavy";
@@ -29,36 +33,11 @@ export interface ApiCostInput {
   assumptions: Pick<CostAssumptions, "inputShare" | "outputShare">;
 }
 
-export interface GpuSpec {
-  sku: string;
-  name: string;
-  memory_gb: number;
-  bandwidth_gbps: number;
-  generation_rank: number;
-}
-
 export interface CloudGpu {
   sku: string;
   instance_type: string;
   price_hourly_usd: number;
   max_gpus: number;
-}
-
-export interface ModelRecord {
-  slug: string;
-  name: string;
-  family: string;
-  vendor: string;
-  license: "apache-2.0" | "mit" | "llama-community" | "other";
-  hf_id: string;
-  openrouter_slug: string;
-  architecture: "dense" | "moe" | "hybrid";
-  params_b: number;
-  active_params_b: number;
-  tier: "stable" | "preview" | "archived";
-  added: string;
-  one_liner: string;
-  inclusion_rationale: string;
 }
 
 export interface CompositionInputs {
@@ -87,7 +66,6 @@ export interface CompositionResult {
   crossover_tokens_per_day: number | null;
   crossover_series: Array<{
     tokens_per_day: number;
-    self_host_usd: number | null;
     api_usd: number;
   }>;
   fits: boolean;
@@ -138,6 +116,7 @@ export interface Artifact {
       persona: string;
     }>;
     assumptions: CostAssumptions;
+    regime_threshold: number;
   };
   compositions: Record<string, CompositionResult>;
   provenance: Record<string, { label: ProvenanceLabel; source: string; url: string }>;

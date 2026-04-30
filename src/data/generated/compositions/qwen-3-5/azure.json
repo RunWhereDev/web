@@ -97,7 +97,8 @@
       "int8ThroughputMultiplier": 1.7,
       "int4ThroughputMultiplier": 2.5,
       "overheadEnabled": false
-    }
+    },
+    "regime_threshold": 1.5
   },
   "compositions": {
     "h100-80g__fp16__light": {
@@ -109,37 +110,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 14390,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 14390,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 14390,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 14390,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 14390,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 14390,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 14390,
           "api_usd": 20100
         }
       ],
@@ -171,37 +165,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 27530,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 27530,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 27530,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 27530,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 27530,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 27530,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 27530,
           "api_usd": 20100
         }
       ],
@@ -233,37 +220,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -296,37 +276,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 14390,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 14390,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 14390,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 14390,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 14390,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 14390,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 14390,
           "api_usd": 20100
         }
       ],
@@ -358,37 +331,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 27530,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 27530,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 27530,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 27530,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 27530,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 27530,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 27530,
           "api_usd": 20100
         }
       ],
@@ -420,37 +386,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -483,37 +442,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 14390,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 14390,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 14390,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 14390,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 14390,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 14390,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 14390,
           "api_usd": 20100
         }
       ],
@@ -545,37 +497,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 14390,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 14390,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 14390,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 14390,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 14390,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 14390,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 14390,
           "api_usd": 20100
         }
       ],
@@ -607,37 +552,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 106370,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 106370,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 106370,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 106370,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 106370,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 106370,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 106370,
           "api_usd": 20100
         }
       ],
@@ -669,37 +607,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 6950,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 6950,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 6950,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 6950,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 6950,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 6950,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 6950,
           "api_usd": 20100
         }
       ],
@@ -731,37 +662,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 24050,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 24050,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 24050,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 24050,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 24050,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 24050,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 24050,
           "api_usd": 20100
         }
       ],
@@ -793,37 +717,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -856,37 +773,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 6950,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 6950,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 6950,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 6950,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 6950,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 6950,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 6950,
           "api_usd": 20100
         }
       ],
@@ -918,37 +828,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 12650,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 12650,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 12650,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 12650,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 12650,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 12650,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 12650,
           "api_usd": 20100
         }
       ],
@@ -980,37 +883,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1043,37 +939,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 6950,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 6950,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 6950,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 6950,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 6950,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 6950,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 6950,
           "api_usd": 20100
         }
       ],
@@ -1105,37 +994,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 12650,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 12650,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 12650,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 12650,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 12650,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 12650,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 12650,
           "api_usd": 20100
         }
       ],
@@ -1167,37 +1049,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1230,37 +1105,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 9290,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 9290,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 9290,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 9290,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 9290,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 9290,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 9290,
           "api_usd": 20100
         }
       ],
@@ -1292,37 +1160,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1355,37 +1216,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1418,37 +1272,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 5270,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 5270,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 5270,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 5270,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 5270,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 5270,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 5270,
           "api_usd": 20100
         }
       ],
@@ -1480,37 +1327,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 13310,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 13310,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 13310,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 13310,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 13310,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 13310,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 13310,
           "api_usd": 20100
         }
       ],
@@ -1542,37 +1382,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1605,37 +1438,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 5270,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 5270,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 5270,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 5270,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 5270,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 5270,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 5270,
           "api_usd": 20100
         }
       ],
@@ -1667,37 +1493,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 9290,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 9290,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 9290,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 9290,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 9290,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 9290,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 9290,
           "api_usd": 20100
         }
       ],
@@ -1729,37 +1548,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1792,37 +1604,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1855,37 +1660,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1918,37 +1716,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -1981,37 +1772,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -2044,37 +1828,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -2107,37 +1884,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -2170,37 +1940,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": 1874,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": 1874,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": 1874,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": 1874,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": 1874,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": 1874,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": 1874,
           "api_usd": 20100
         }
       ],
@@ -2232,37 +1995,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],
@@ -2295,37 +2051,30 @@
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "self_host_usd": null,
           "api_usd": 8
         },
         {
           "tokens_per_day": 1000000,
-          "self_host_usd": null,
           "api_usd": 80
         },
         {
           "tokens_per_day": 5000000,
-          "self_host_usd": null,
           "api_usd": 402
         },
         {
           "tokens_per_day": 10000000,
-          "self_host_usd": null,
           "api_usd": 804
         },
         {
           "tokens_per_day": 25000000,
-          "self_host_usd": null,
           "api_usd": 2010
         },
         {
           "tokens_per_day": 100000000,
-          "self_host_usd": null,
           "api_usd": 8040
         },
         {
           "tokens_per_day": 250000000,
-          "self_host_usd": null,
           "api_usd": 20100
         }
       ],

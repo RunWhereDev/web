@@ -8,16 +8,34 @@ interface EscalationRequest {
   artifact_id?: string;
   model_slug?: string;
   cloud?: string;
+  composition_key?: string;
   inputs?: EscalationInputs;
   turnstile_token?: string;
 }
 
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000;
 const rateLimitPerHour = Number(process.env.RUNWHERE_RATE_LIMIT_PER_HOUR || 10);
 const callsByIp = new Map<string, number[]>();
 
+function pruneRateLimit(now = Date.now()) {
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
+
+  for (const [ip, calls] of callsByIp) {
+    const freshCalls = calls.filter((timestamp) => timestamp > windowStart);
+    if (freshCalls.length > 0) {
+      callsByIp.set(ip, freshCalls);
+    } else {
+      callsByIp.delete(ip);
+    }
+  }
+}
+
+const sweepTimer = setInterval(pruneRateLimit, RATE_LIMIT_WINDOW_MS);
+sweepTimer.unref();
+
 function allowed(ip: string) {
   const now = Date.now();
-  const windowStart = now - 60 * 60 * 1000;
+  const windowStart = now - RATE_LIMIT_WINDOW_MS;
   const calls = (callsByIp.get(ip) || []).filter((timestamp) => timestamp > windowStart);
   if (calls.length >= rateLimitPerHour) return false;
   calls.push(now);
@@ -80,7 +98,7 @@ export const server = createServer(async (request, response) => {
   try {
     const body = JSON.parse(await readBody(request)) as EscalationRequest;
     const artifact = await loadArtifact(body);
-    const prompt = buildPrompt(artifact, body.inputs || {});
+    const prompt = buildPrompt(artifact, body.inputs || {}, body.composition_key);
 
     response.writeHead(200, {
       "content-type": "text/event-stream",

@@ -4,13 +4,57 @@ export interface EscalationInputs {
   operational_risk_tolerance?: "low" | "medium" | "high";
 }
 
-export function buildPrompt(artifactJson: unknown, inputs: EscalationInputs) {
+interface ArtifactLike {
+  artifact?: unknown;
+  model_facts?: unknown;
+  api_side?: unknown;
+  defaults?: {
+    gpu_sku?: string;
+    quantization?: string;
+    shape?: string;
+  };
+  options?: {
+    assumptions?: unknown;
+    regime_threshold?: number;
+  };
+  compositions?: Record<string, unknown>;
+}
+
+function defaultCompositionKey(artifact: ArtifactLike) {
+  if (artifact.defaults?.gpu_sku && artifact.defaults.quantization && artifact.defaults.shape) {
+    return `${artifact.defaults.gpu_sku}__${artifact.defaults.quantization}__${artifact.defaults.shape}`;
+  }
+
+  const compositions = artifact.compositions || {};
+  return Object.keys(compositions)[0];
+}
+
+export function compactArtifactContext(artifactJson: unknown, compositionKey?: string) {
+  const artifact = artifactJson as ArtifactLike;
+  const compositions = artifact.compositions || {};
+  const selectedKey = compositionKey && compositions[compositionKey] ? compositionKey : defaultCompositionKey(artifact);
+
+  return {
+    artifact: artifact.artifact,
+    model_facts: artifact.model_facts,
+    api_side: artifact.api_side,
+    defaults: artifact.defaults,
+    assumptions: artifact.options?.assumptions,
+    regime_threshold: artifact.options?.regime_threshold,
+    selected_composition_key: selectedKey,
+    selected_composition: selectedKey ? compositions[selectedKey] : undefined
+  };
+}
+
+export function buildPrompt(artifactJson: unknown, inputs: EscalationInputs, compositionKey?: string) {
+  const context = compactArtifactContext(artifactJson, compositionKey);
+
   return [
     "You are RunWhere's analysis assistant.",
     "Reason only from the supplied artifact. Do not invent current pricing.",
     "Return four sections: What tips this one way, What tips it the other, Which preferences likely matter most, Bottom line.",
     "",
     `User inputs: ${JSON.stringify(inputs)}`,
-    `Artifact: ${JSON.stringify(artifactJson)}`
+    `Artifact context: ${JSON.stringify(context)}`
   ].join("\n");
 }
