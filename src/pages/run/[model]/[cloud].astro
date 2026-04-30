@@ -313,7 +313,6 @@ const provenanceEntries = Object.entries(artifact.provenance);
       const computed = recompute(composition);
       const defaultRegime = composition.regime;
       const ratioCopy = computed.ratio ? `${computed.ratio.toFixed(1)}x difference` : "self-host infeasible";
-      const cheaper = computed.regime === "self-host-wins" ? "Self-host" : "API";
 
       updateControls();
       updateAssumptionLabels();

@@ -6,5 +6,5 @@
     "resolveJsonModule": true,
     "types": ["node", "vitest/globals"]
   },
-  "include": ["src", "scripts", "shared", "functions/src", "*.config.*"]
+  "include": ["src", "scripts", "shared", "*.config.*"]
 }
