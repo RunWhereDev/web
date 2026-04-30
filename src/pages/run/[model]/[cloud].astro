@@ -20,6 +20,7 @@ const artifact = JSON.parse(await readFile(artifactPath, "utf8")) as Artifact;
 const pageTitle = `${artifact.model_facts.name} on ${manifest.clouds.find((cloud) => cloud.slug === artifact.artifact.cloud)?.name || artifact.artifact.cloud} | RunWhere`;
 const dataJson = JSON.stringify(artifact).replace(/</g, "\\u003c");
 const defaultAssumptions = artifact.options.assumptions;
+const escalationUrl = import.meta.env.PUBLIC_ESCALATION_URL || "http://localhost:8080/escalate";
 
 const provenanceEntries = Object.entries(artifact.provenance);
 ---
@@ -128,13 +129,19 @@ const provenanceEntries = Object.entries(artifact.provenance);
       <button class="button-secondary" type="button" data-reset>Reset to defaults</button>
     </details>
 
-    <section class="panel escalation" data-escalation hidden>
-      <div>
-        <p class="eyebrow">Declared escalation</p>
-        <h2>Close call analysis</h2>
-        <p class="muted">This composition sits near the boundary, so RunWhere can hand it to the opt-in live path.</p>
+    <section class="panel escalation" data-escalation hidden data-escalation-url={escalationUrl}>
+      <div class="escalation-intro">
+        <p class="eyebrow">Close call</p>
+        <h2>Tailored analysis</h2>
+        <p class="muted">This composition sits near the boundary. RunWhere can hand it to a live analysis path.</p>
       </div>
-      <button class="button-primary" type="button">Get tailored analysis - ~$0.005</button>
+      <div class="escalation-action">
+        <button class="button-primary" type="button" data-escalation-btn>Get tailored analysis — ~$0.005</button>
+        <div class="escalation-result" data-escalation-result hidden>
+          <p class="escalation-text" data-escalation-text></p>
+        </div>
+        <p class="muted escalation-error" data-escalation-error hidden></p>
+      </div>
     </section>
 
     <section class="provenance panel" aria-labelledby="provenance-heading">
@@ -249,33 +256,32 @@ const provenanceEntries = Object.entries(artifact.provenance);
       const pad = { left: 70, right: 24, top: 24, bottom: 56 };
       const points = composition.crossover_series;
       const minX = 100000;
-      const maxX = 250000000;
-      const costs = points.map((point) => point.api_usd);
-      if (Number.isFinite(computed.selfCost)) {
-        costs.push(computed.selfCost);
-      }
-      const minY = Math.max(10, Math.min(...costs) * 0.65);
-      const maxY = Math.max(...costs) * 1.35;
+      const maxX = 5000000000;
+      const allApiCosts = points.map((point) => point.api_usd);
+      const visibleCosts = allApiCosts.filter((v) => v > 0);
+      if (Number.isFinite(computed.selfCost)) visibleCosts.push(computed.selfCost);
+      const minY = Math.max(10, Math.min(...visibleCosts) * 0.65);
+      const maxY = Math.max(...visibleCosts) * 1.35;
       const log = Math.log10;
       const x = (value) => pad.left + ((log(value) - log(minX)) / (log(maxX) - log(minX))) * (width - pad.left - pad.right);
       const y = (value) => height - pad.bottom - ((log(value) - log(minY)) / (log(maxY) - log(minY))) * (height - pad.top - pad.bottom);
       const path = (series) => series.map((point, index) => `${index ? "L" : "M"} ${x(point.tokens_per_day)} ${y(point.value)}`).join(" ");
       const apiSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.api_usd }));
-      const selfValue = Number.isFinite(computed.selfCost) ? computed.selfCost : maxY;
-      const selfSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: selfValue }));
+      const selfValue = Number.isFinite(computed.selfCost) ? computed.selfCost : null;
+      const selfSeries = selfValue != null ? points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: selfValue })) : [];
       const workloadX = x(composition.inputs.tokens_per_day);
-      const yTicks = [100, 1000, 10000, 100000].filter((tick) => tick >= minY && tick <= maxY);
-      const xTicks = [100000, 1000000, 10000000, 100000000];
+      const yTicks = [100, 1000, 10000, 100000, 1000000].filter((tick) => tick >= minY && tick <= maxY);
+      const xTicks = [100000, 1000000, 10000000, 100000000, 1000000000];
 
       svg.innerHTML = `
         <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
         ${xTicks.map((tick) => `<line x1="${x(tick)}" x2="${x(tick)}" y1="${pad.top}" y2="${height - pad.bottom}" stroke="var(--color-border-muted)"></line><text x="${x(tick)}" y="${height - 20}" text-anchor="middle">${compact(tick)}</text>`).join("")}
         ${yTicks.map((tick) => `<line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="var(--color-border-muted)"></line><text x="12" y="${y(tick) + 4}">${money(tick).replace(".00", "")}</text>`).join("")}
-        <path d="${path(selfSeries)}" fill="none" stroke="var(--color-regime-self-host)" stroke-width="3"></path>
+        ${selfSeries.length ? `<path d="${path(selfSeries)}" fill="none" stroke="var(--color-regime-self-host)" stroke-width="3"></path>` : ""}
         <path d="${path(apiSeries)}" fill="none" stroke="var(--color-regime-api)" stroke-width="3"></path>
         <line x1="${workloadX}" x2="${workloadX}" y1="${pad.top}" y2="${height - pad.bottom}" stroke="var(--color-fg-muted)" stroke-dasharray="6 6"></line>
         <circle cx="${workloadX}" cy="${y(Math.max(1, computed.apiCost))}" r="5" fill="var(--color-regime-api)"></circle>
-        ${Number.isFinite(computed.selfCost) ? `<circle cx="${workloadX}" cy="${y(Math.max(1, computed.selfCost))}" r="5" fill="var(--color-regime-self-host)"></circle>` : ""}
+        ${selfValue != null ? `<circle cx="${workloadX}" cy="${y(Math.max(1, selfValue))}" r="5" fill="var(--color-regime-self-host)"></circle>` : ""}
         <text x="${pad.left}" y="${height - 342}" fill="var(--color-regime-self-host)">Self-host</text>
         <text x="${pad.left + 92}" y="${height - 342}" fill="var(--color-regime-api)">API</text>
       `;
@@ -313,10 +319,20 @@ const provenanceEntries = Object.entries(artifact.provenance);
       updateAssumptionLabels();
       $("[data-verdict-card]").dataset.regime = computed.regime;
       $("[data-verdict-title]").textContent = `${computed.regime === "close-call" ? "~" : "Clear:"} ${regimeTitle(computed.regime)}`;
-      $("[data-verdict-copy]").textContent =
-        computed.regime === "close-call"
-          ? `${ratioCopy}; operational preferences likely dominate.`
-          : `${cheaper} is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.`;
+
+      let verdictCopy;
+      if (computed.regime === "close-call") {
+        verdictCopy = `${ratioCopy}; operational preferences likely dominate.`;
+      } else if (computed.regime === "api-wins") {
+        const crossover = composition.crossover_tokens_per_day;
+        const crossoverNote = crossover
+          ? ` Self-hosting breaks even around ${compact(crossover)} tokens/day.`
+          : " Self-hosting is not cost-competitive at any modelled scale.";
+        verdictCopy = `API is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.${crossoverNote}`;
+      } else {
+        verdictCopy = `Self-host is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.`;
+      }
+      $("[data-verdict-copy]").textContent = verdictCopy;
 
       const flip = $("[data-flip-banner]");
       if (defaultRegime !== computed.regime) {
@@ -332,8 +348,10 @@ const provenanceEntries = Object.entries(artifact.provenance);
         : composition.reason;
       $("[data-api-cost]").textContent = money(computed.apiCost);
       $("[data-api-details]").textContent = `${artifact.api_side.providers_count} providers - ${artifact.api_side.throughput_p50_tps} p50 tokens/sec - ${artifact.api_side.price_input_per_mtok_usd}/${artifact.api_side.price_output_per_mtok_usd} USD per MTok`;
-      $("[data-crossover]").textContent = composition.crossover_tokens_per_day ? `${compact(composition.crossover_tokens_per_day)} tok/day crossover` : "no crossover";
-      $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} tokens/day, self-host costs ${money(computed.selfCost)} per month vs API at ${money(computed.apiCost)}. ${regimeTitle(computed.regime)}.`;
+      $("[data-crossover]").textContent = composition.crossover_tokens_per_day
+        ? `Breaks even at ${compact(composition.crossover_tokens_per_day)} tok/day`
+        : "no crossover in range";
+      $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} tokens/day: self-host ${money(computed.selfCost)}/month, API ${money(computed.apiCost)}/month. ${composition.crossover_tokens_per_day ? `Self-hosting becomes cheaper above ${compact(composition.crossover_tokens_per_day)} tokens/day.` : "Self-hosting is not cost-competitive at this configuration."}`;
       $("[data-escalation]").hidden = computed.regime !== "close-call";
 
       drawChart(composition, computed);
@@ -371,6 +389,77 @@ const provenanceEntries = Object.entries(artifact.provenance);
       Object.assign(assumptions, defaults);
       syncAssumptionInputs();
       render();
+    });
+
+    const escalationSection = $("[data-escalation]");
+    const escalationBtn = $("[data-escalation-btn]");
+
+    escalationBtn?.addEventListener("click", async () => {
+      const url = escalationSection?.dataset.escalationUrl;
+      const resultEl = $("[data-escalation-result]");
+      const textEl = $("[data-escalation-text]");
+      const errorEl = $("[data-escalation-error]");
+
+      escalationBtn.disabled = true;
+      escalationBtn.textContent = "Analysing…";
+      resultEl.hidden = false;
+      errorEl.hidden = true;
+      textEl.textContent = "";
+
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            artifact_id: artifact.artifact.id,
+            model_slug: artifact.artifact.model_slug,
+            cloud: artifact.artifact.cloud,
+            composition_key: key(),
+            inputs: {}
+          })
+        });
+
+        if (!response.ok) {
+          const err = await response.json().catch(() => ({}));
+          throw new Error(err.error || `Server error ${response.status}`);
+        }
+
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let currentEvent = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+
+          const lines = buffer.split("\n");
+          buffer = lines.pop() ?? "";
+
+          for (const line of lines) {
+            if (line.startsWith("event: ")) {
+              currentEvent = line.slice(7).trim();
+            } else if (line.startsWith("data: ") && currentEvent === "chunk") {
+              try {
+                const data = JSON.parse(line.slice(6));
+                if (data.text) textEl.textContent += data.text;
+              } catch {}
+            } else if (line === "") {
+              currentEvent = "";
+            }
+          }
+        }
+
+        escalationBtn.textContent = "Run again";
+        escalationBtn.disabled = false;
+      } catch (err) {
+        resultEl.hidden = true;
+        errorEl.hidden = false;
+        errorEl.textContent = err?.message || "Analysis unavailable. Check that the escalation service is running.";
+        escalationBtn.textContent = "Try again";
+        escalationBtn.disabled = false;
+      }
     });
 
     render();
@@ -582,13 +671,34 @@ const provenanceEntries = Object.entries(artifact.provenance);
   }
 
   .escalation {
-    align-items: center;
+    display: grid;
+    gap: var(--space-6);
   }
 
   @media (min-width: 760px) {
     .escalation {
       grid-template-columns: 1fr auto;
+      align-items: start;
     }
+  }
+
+  .escalation-action {
+    display: grid;
+    gap: var(--space-3);
+    min-width: 220px;
+  }
+
+  .escalation-result {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    padding: var(--space-4);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+
+  .escalation-error {
+    font-size: var(--text-sm);
   }
 
   .chip-list {

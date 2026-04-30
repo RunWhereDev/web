@@ -135,6 +135,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -190,6 +202,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -245,6 +269,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -301,6 +337,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -356,6 +404,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -411,6 +471,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -467,6 +539,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -522,6 +606,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -577,6 +673,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -632,6 +740,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -687,6 +807,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -743,6 +875,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -799,6 +943,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -854,6 +1010,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -910,6 +1078,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -966,6 +1146,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -1021,6 +1213,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1077,6 +1281,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1133,6 +1349,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1189,6 +1417,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1245,6 +1485,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1301,6 +1553,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -1356,6 +1620,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1412,6 +1688,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1468,6 +1756,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -1523,6 +1823,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1579,6 +1891,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1635,6 +1959,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1691,6 +2027,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1747,6 +2095,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1803,6 +2163,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1859,6 +2231,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1915,6 +2299,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -1971,6 +2367,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": true,
@@ -2026,6 +2434,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,
@@ -2082,6 +2502,18 @@
         {
           "tokens_per_day": 250000000,
           "api_usd": 20100
+        },
+        {
+          "tokens_per_day": 500000000,
+          "api_usd": 40200
+        },
+        {
+          "tokens_per_day": 1000000000,
+          "api_usd": 80400
+        },
+        {
+          "tokens_per_day": 5000000000,
+          "api_usd": 402000
         }
       ],
       "fits": false,

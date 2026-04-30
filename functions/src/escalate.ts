@@ -2,7 +2,9 @@ import { createReadStream, existsSync } from "node:fs";
 import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
-import { buildPrompt, type EscalationInputs } from "./prompt.js";
+import { GoogleGenAI } from "@google/genai";
+import { buildMessages, type EscalationInputs } from "./prompt.js";
+import { getRequiredSecret } from "./secrets.js";
 
 interface EscalationRequest {
   artifact_id?: string;
@@ -60,6 +62,14 @@ async function loadArtifact(body: EscalationRequest) {
   return JSON.parse(await readFile(filePath, "utf8"));
 }
 
+const GEMINI_MODEL = process.env.RUNWHERE_GEMINI_MODEL || "gemini-2.5-flash";
+
+const CORS_HEADERS = {
+  "access-control-allow-origin": "*",
+  "access-control-allow-methods": "GET, POST, OPTIONS",
+  "access-control-allow-headers": "content-type"
+};
+
 function writeSse(response: import("node:http").ServerResponse, event: string, data: unknown) {
   response.write(`event: ${event}\n`);
   response.write(`data: ${JSON.stringify(data)}\n\n`);
@@ -68,8 +78,14 @@ function writeSse(response: import("node:http").ServerResponse, event: string, d
 export const server = createServer(async (request, response) => {
   const ip = request.socket.remoteAddress || "unknown";
 
+  if (request.method === "OPTIONS") {
+    response.writeHead(204, CORS_HEADERS);
+    response.end();
+    return;
+  }
+
   if (request.method === "GET" && request.url === "/healthz") {
-    response.writeHead(200, { "content-type": "text/plain" });
+    response.writeHead(200, { ...CORS_HEADERS, "content-type": "text/plain" });
     response.end("ok");
     return;
   }
@@ -77,20 +93,20 @@ export const server = createServer(async (request, response) => {
   if (request.method === "GET" && request.url === "/") {
     const indexPath = path.join(process.cwd(), "data/manifest.json");
     if (existsSync(indexPath)) {
-      response.writeHead(200, { "content-type": "application/json" });
+      response.writeHead(200, { ...CORS_HEADERS, "content-type": "application/json" });
       createReadStream(indexPath).pipe(response);
       return;
     }
   }
 
   if (request.method !== "POST" || request.url !== "/escalate") {
-    response.writeHead(404, { "content-type": "application/json" });
+    response.writeHead(404, { ...CORS_HEADERS, "content-type": "application/json" });
     response.end(JSON.stringify({ error: "not_found" }));
     return;
   }
 
   if (!allowed(ip)) {
-    response.writeHead(429, { "content-type": "application/json" });
+    response.writeHead(429, { ...CORS_HEADERS, "content-type": "application/json" });
     response.end(JSON.stringify({ error: "rate_limited" }));
     return;
   }
@@ -98,26 +114,42 @@ export const server = createServer(async (request, response) => {
   try {
     const body = JSON.parse(await readBody(request)) as EscalationRequest;
     const artifact = await loadArtifact(body);
-    const prompt = buildPrompt(artifact, body.inputs || {}, body.composition_key);
+    const { system, user } = buildMessages(artifact, body.inputs || {}, body.composition_key);
+    const apiKey = await getRequiredSecret("GEMINI_API_KEY");
 
     response.writeHead(200, {
+      ...CORS_HEADERS,
       "content-type": "text/event-stream",
       "cache-control": "no-cache",
       connection: "keep-alive"
     });
 
-    writeSse(response, "chunk", {
-      text: "Live Vertex AI streaming is not configured in this local stub. The prompt is ready for deployment wiring."
+    const genai = new GoogleGenAI({ apiKey });
+    const stream = await genai.models.generateContentStream({
+      model: GEMINI_MODEL,
+      contents: user,
+      config: {
+        systemInstruction: system,
+        temperature: 0.3,
+        thinkingConfig: { thinkingBudget: 0 }
+      }
     });
-    writeSse(response, "debug", {
-      artifact_id: artifact.artifact?.id || body.artifact_id,
-      prompt_chars: prompt.length
-    });
+
+    for await (const chunk of stream) {
+      const text = chunk.text;
+      if (text) writeSse(response, "chunk", { text });
+    }
+
     writeSse(response, "done", { ok: true });
     response.end();
   } catch (error) {
-    response.writeHead(400, { "content-type": "application/json" });
-    response.end(JSON.stringify({ error: error instanceof Error ? error.message : "bad_request" }));
+    if (!response.headersSent) {
+      response.writeHead(400, { ...CORS_HEADERS, "content-type": "application/json" });
+      response.end(JSON.stringify({ error: error instanceof Error ? error.message : "bad_request" }));
+    } else {
+      writeSse(response, "error", { message: error instanceof Error ? error.message : "stream_error" });
+      response.end();
+    }
   }
 });
 

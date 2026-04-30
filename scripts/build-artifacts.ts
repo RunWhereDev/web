@@ -26,7 +26,7 @@ function compositionKey(gpuSku: string, quantization: Quantization, shape: Usage
 }
 
 function buildSeries(priceInputPerMtokUsd: number, priceOutputPerMtokUsd: number): CompositionResult["crossover_series"] {
-  return [100_000, 1_000_000, 5_000_000, 10_000_000, 25_000_000, 100_000_000, 250_000_000].map(
+  return [100_000, 1_000_000, 5_000_000, 10_000_000, 25_000_000, 100_000_000, 250_000_000, 500_000_000, 1_000_000_000, 5_000_000_000].map(
     (tokensPerDay) => ({
       tokens_per_day: tokensPerDay,
       api_usd: Math.round(
