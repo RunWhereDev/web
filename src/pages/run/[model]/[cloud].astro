@@ -22,6 +22,15 @@ const dataJson = JSON.stringify(artifact).replace(/</g, "\\u003c");
 const defaultAssumptions = artifact.options.assumptions;
 const escalationUrl = import.meta.env.PUBLIC_ESCALATION_URL || "http://localhost:8080/escalate";
 const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
+const navManifest = {
+  models: manifest.models.map((model) => ({
+    slug: model.slug,
+    name: model.name,
+    clouds: model.clouds
+  })),
+  clouds: manifest.clouds
+};
+const navManifestJson = JSON.stringify(navManifest).replace(/</g, "\\u003c");
 
 const provenanceEntries = Object.entries(artifact.provenance);
 ---
@@ -34,7 +43,22 @@ const provenanceEntries = Object.entries(artifact.provenance);
     <nav class="knob-panel" aria-label="Composition controls">
       <a class="link-quiet" href="/">RunWhere</a>
       <span aria-hidden="true">/</span>
-      <strong>{artifact.model_facts.name}</strong>
+      <label>
+        <span class="visually-hidden">Open-weight model</span>
+        <select data-model>
+          {manifest.models.map((model) => (
+            <option value={model.slug} selected={model.slug === artifact.artifact.model_slug}>{model.name}</option>
+          ))}
+        </select>
+      </label>
+      <label>
+        <span class="visually-hidden">Cloud</span>
+        <select data-cloud>
+          {manifest.clouds.map((cloud) => (
+            <option value={cloud.slug} selected={cloud.slug === artifact.artifact.cloud}>{cloud.name}</option>
+          ))}
+        </select>
+      </label>
       <label>
         <span class="visually-hidden">GPU</span>
         <select data-gpu>
@@ -161,8 +185,10 @@ const provenanceEntries = Object.entries(artifact.provenance);
   </article>
 
   <script id="artifact-data" type="application/json" is:inline set:html={dataJson}></script>
+  <script id="nav-manifest-data" type="application/json" is:inline set:html={navManifestJson}></script>
   <script is:inline>
     const artifact = JSON.parse(document.getElementById("artifact-data").textContent);
+    const navManifest = JSON.parse(document.getElementById("nav-manifest-data").textContent);
     const params = new URL(location.href).searchParams;
     const state = {
       gpu: params.get("gpu") || artifact.defaults.gpu_sku,
@@ -304,11 +330,29 @@ const provenanceEntries = Object.entries(artifact.provenance);
     }
 
     function updateControls() {
+      $("[data-model]").value = artifact.artifact.model_slug;
+      $("[data-cloud]").value = artifact.artifact.cloud;
+      syncCloudOptions(artifact.artifact.model_slug);
       $("[data-gpu]").value = state.gpu;
       $("[data-shape]").value = state.shape;
       document.querySelectorAll("[data-quant]").forEach((button) => {
         button.setAttribute("aria-pressed", button.dataset.quant === state.quant ? "true" : "false");
       });
+    }
+
+    function supportedCloudsFor(modelSlug) {
+      return navManifest.models.find((model) => model.slug === modelSlug)?.clouds || [];
+    }
+
+    function syncCloudOptions(modelSlug) {
+      const supportedClouds = supportedCloudsFor(modelSlug);
+      document.querySelectorAll("[data-cloud] option").forEach((option) => {
+        option.disabled = supportedClouds.length > 0 && !supportedClouds.includes(option.value);
+      });
+    }
+
+    function navigateToComposition(modelSlug, cloudSlug) {
+      location.href = `/run/${modelSlug}/${cloudSlug}/`;
     }
 
     function drawChart(composition, computed) {
@@ -447,6 +491,16 @@ const provenanceEntries = Object.entries(artifact.provenance);
     $("[data-shape]").addEventListener("change", (event) => {
       state.shape = event.target.value;
       render();
+    });
+    $("[data-model]").addEventListener("change", (event) => {
+      const nextModel = event.target.value;
+      const currentCloud = $("[data-cloud]").value || artifact.artifact.cloud;
+      const supportedClouds = supportedCloudsFor(nextModel);
+      const nextCloud = supportedClouds.includes(currentCloud) ? currentCloud : supportedClouds[0] || artifact.artifact.cloud;
+      navigateToComposition(nextModel, nextCloud);
+    });
+    $("[data-cloud]").addEventListener("change", (event) => {
+      navigateToComposition(artifact.artifact.model_slug, event.target.value);
     });
     document.querySelectorAll("[data-quant]").forEach((button) => {
       button.addEventListener("click", () => {
