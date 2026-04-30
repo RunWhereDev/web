@@ -33,7 +33,46 @@ const gpuSpecs = defineCollection({
   })
 });
 
+const apiMappings = defineCollection({
+  loader: glob({ pattern: "**/*.yaml", base: "./src/content/api-mappings" }),
+  schema: z.object({
+    slug: z.string().min(1),
+    name: z.string().min(1),
+    vendor: z.string().min(1),
+    family: z.string().min(1),
+    size_class: z.enum(["small", "medium", "frontier"]),
+    typical_price_source: z.string().min(1).optional(),
+    mapped_open_weight_candidates: z.array(z.string().min(1)).min(1),
+    quality_caveat: z.string().min(1),
+    inclusion_rationale: z.string().min(1)
+  })
+});
+
+const servingModalities = defineCollection({
+  loader: glob({ pattern: "**/*.yaml", base: "./src/content/serving-modalities" }),
+  schema: z.object({
+    slug: z.enum([
+      "api",
+      "managed-endpoint",
+      "serverless-gpu",
+      "vm-cheap",
+      "vm-serious",
+      "batch-gpu",
+      "owned-hardware"
+    ]),
+    label: z.string().min(1),
+    description: z.string().min(1),
+    pricing_model: z.string().min(1),
+    best_fit: z.string().min(1),
+    v1_treatment: z.enum(["modeled", "preview", "advisory", "excluded"]),
+    operational_effort: z.enum(["Low", "Medium", "High"]),
+    sort_order: z.number().int().nonnegative()
+  })
+});
+
 export const collections = {
   models,
-  "gpu-specs": gpuSpecs
+  "gpu-specs": gpuSpecs,
+  "api-mappings": apiMappings,
+  "serving-modalities": servingModalities
 };

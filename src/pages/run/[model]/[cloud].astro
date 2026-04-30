@@ -21,6 +21,7 @@ const pageTitle = `${artifact.model_facts.name} on ${manifest.clouds.find((cloud
 const dataJson = JSON.stringify(artifact).replace(/</g, "\\u003c");
 const defaultAssumptions = artifact.options.assumptions;
 const escalationUrl = import.meta.env.PUBLIC_ESCALATION_URL || "http://localhost:8080/escalate";
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
 
 const provenanceEntries = Object.entries(artifact.provenance);
 ---
@@ -129,7 +130,7 @@ const provenanceEntries = Object.entries(artifact.provenance);
       <button class="button-secondary" type="button" data-reset>Reset to defaults</button>
     </details>
 
-    <section class="panel escalation" data-escalation hidden data-escalation-url={escalationUrl}>
+    <section class="panel escalation" data-escalation hidden data-escalation-url={escalationUrl} data-turnstile-site-key={turnstileSiteKey}>
       <div class="escalation-intro">
         <p class="eyebrow">Close call</p>
         <h2>Tailored analysis</h2>
@@ -207,24 +208,62 @@ const provenanceEntries = Object.entries(artifact.provenance);
       return selfCost < apiCost ? "self-host-wins" : "api-wins";
     }
 
-    function recompute(composition) {
-      const input = composition.inputs;
-      const defaultMultiplier = state.quant === "int8" ? defaults.int8 : state.quant === "int4" ? defaults.int4 : 1;
-      const activeMultiplier = state.quant === "int8" ? assumptions.int8 : state.quant === "int4" ? assumptions.int4 : 1;
+    function apiAggregateTps() {
+      return artifact.api_side.throughput_p50_tps * artifact.api_side.providers_count;
+    }
+
+    function apiCapacityFor(peakOutputTps) {
+      const aggregate = apiAggregateTps();
+      return {
+        aggregate_p50_tps: aggregate,
+        required_peak_output_tps: Math.round(peakOutputTps),
+        constrained: aggregate > 0 && peakOutputTps > aggregate
+      };
+    }
+
+    function applyServingNuance(costRegime, fits, apiCapacity) {
+      if (costRegime === "api-wins" && fits && apiCapacity.constrained) return "close-call";
+      return costRegime;
+    }
+
+    function selfHostForTokens(input, tokensPerDay) {
+      const quantization = input.quantization || state.quant;
+      const defaultMultiplier = quantization === "int8" ? defaults.int8 : quantization === "int4" ? defaults.int4 : 1;
+      const activeMultiplier = quantization === "int8" ? assumptions.int8 : quantization === "int4" ? assumptions.int4 : 1;
       const perGpuTps = input.self_host_throughput_tps_per_gpu / defaultMultiplier * activeMultiplier * (assumptions.utilization / defaults.utilization);
-      const peakTps = (input.tokens_per_day / 86400) * assumptions.peak;
+      const peakTps = (tokensPerDay / 86400) * assumptions.peak;
+      const peakOutputTps = (tokensPerDay * artifactDefaults.outputShare / 86400) * assumptions.peak;
       const vramGpuCount = Math.max(1, Math.ceil(input.vram_required_gb / input.gpu_memory_gb));
-      const capacityGpuCount = Math.max(1, Math.ceil(peakTps / perGpuTps));
+      const capacityGpuCount = Math.max(1, Math.ceil(peakOutputTps / perGpuTps));
       const gpuCount = Math.max(vramGpuCount, capacityGpuCount);
       const fits = gpuCount <= input.gpu_max_count;
       const labor = assumptions.fte * assumptions.salary / 12;
-      const baseCost = fits ? (input.gpu_price_hourly_usd * gpuCount * 24 * 30 / assumptions.utilization) + labor : Infinity;
+      const baseCost = fits ? (input.gpu_price_hourly_usd * gpuCount * 24 * 30) + labor : Infinity;
       const selfCost = assumptions.overhead ? baseCost * 1.08 : baseCost;
-      const apiCost = composition.api_monthly_usd;
-      const regime = classify(selfCost, apiCost);
-      const ratio = Number.isFinite(selfCost) && apiCost > 0 ? Math.max(selfCost, apiCost) / Math.min(selfCost, apiCost) : null;
 
-      return { ...composition, fits, selfCost, apiCost, regime, ratio, gpuCount, perGpuTps, peakTps };
+      return { fits, selfCost, gpuCount, perGpuTps, peakTps, peakOutputTps };
+    }
+
+    function crossoverForSelfCost(selfCost) {
+      const blendedPrice =
+        artifactDefaults.inputShare * artifact.api_side.price_input_per_mtok_usd +
+        artifactDefaults.outputShare * artifact.api_side.price_output_per_mtok_usd;
+
+      if (!Number.isFinite(selfCost) || blendedPrice <= 0) return null;
+      return (selfCost / blendedPrice / 30) * 1_000_000;
+    }
+
+    function recompute(composition) {
+      const input = composition.inputs;
+      const host = selfHostForTokens(input, input.tokens_per_day);
+      const apiCost = composition.api_monthly_usd;
+      const costRegime = classify(host.selfCost, apiCost);
+      const apiCapacity = apiCapacityFor(host.peakOutputTps);
+      const regime = applyServingNuance(costRegime, host.fits, apiCapacity);
+      const ratio = Number.isFinite(host.selfCost) && apiCost > 0 ? Math.max(host.selfCost, apiCost) / Math.min(host.selfCost, apiCost) : null;
+      const crossoverTokens = crossoverForSelfCost(host.selfCost);
+
+      return { ...composition, ...host, apiCost, costRegime, apiCapacity, regime, ratio, crossoverTokens };
     }
 
     function regimeTitle(regime) {
@@ -259,7 +298,13 @@ const provenanceEntries = Object.entries(artifact.provenance);
       const maxX = 5000000000;
       const allApiCosts = points.map((point) => point.api_usd);
       const visibleCosts = allApiCosts.filter((v) => v > 0);
-      if (Number.isFinite(computed.selfCost)) visibleCosts.push(computed.selfCost);
+      const selfSeries = points
+        .map((point) => {
+          const host = selfHostForTokens(composition.inputs, point.tokens_per_day);
+          return host.fits ? { tokens_per_day: point.tokens_per_day, value: host.selfCost } : null;
+        })
+        .filter(Boolean);
+      visibleCosts.push(...selfSeries.map((point) => point.value).filter((v) => v > 0));
       const minY = Math.max(10, Math.min(...visibleCosts) * 0.65);
       const maxY = Math.max(...visibleCosts) * 1.35;
       const log = Math.log10;
@@ -268,7 +313,6 @@ const provenanceEntries = Object.entries(artifact.provenance);
       const path = (series) => series.map((point, index) => `${index ? "L" : "M"} ${x(point.tokens_per_day)} ${y(point.value)}`).join(" ");
       const apiSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.api_usd }));
       const selfValue = Number.isFinite(computed.selfCost) ? computed.selfCost : null;
-      const selfSeries = selfValue != null ? points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: selfValue })) : [];
       const workloadX = x(composition.inputs.tokens_per_day);
       const yTicks = [100, 1000, 10000, 100000, 1000000].filter((tick) => tick >= minY && tick <= maxY);
       const xTicks = [100000, 1000000, 10000000, 100000000, 1000000000];
@@ -321,15 +365,19 @@ const provenanceEntries = Object.entries(artifact.provenance);
 
       let verdictCopy;
       if (computed.regime === "close-call") {
-        verdictCopy = `${ratioCopy}; operational preferences likely dominate.`;
+        if (computed.costRegime === "api-wins" && computed.apiCapacity.constrained) {
+          verdictCopy = `API is ${computed.ratio?.toFixed(1)}x cheaper on token cost, but peak output demand (${compact(computed.apiCapacity.required_peak_output_tps)} tokens/sec) exceeds measured hosted aggregate p50 (${compact(computed.apiCapacity.aggregate_p50_tps)} tokens/sec). Capacity and latency likely dominate.`;
+        } else {
+          verdictCopy = `${ratioCopy}; operational preferences likely dominate.`;
+        }
       } else if (computed.regime === "api-wins") {
-        const crossover = composition.crossover_tokens_per_day;
+        const crossover = computed.crossoverTokens;
         const crossoverNote = crossover
-          ? ` Self-hosting breaks even around ${compact(crossover)} tokens/day.`
+          ? ` Self-hosting breaks even around ${compact(crossover)} blended tokens/day at this capacity point.`
           : " Self-hosting is not cost-competitive at any modelled scale.";
-        verdictCopy = `API is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.${crossoverNote}`;
+        verdictCopy = `API is cheaper at ${compact(composition.inputs.tokens_per_day)} blended tokens/day.${crossoverNote}`;
       } else {
-        verdictCopy = `Self-host is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.`;
+        verdictCopy = `Self-host is cheaper at ${compact(composition.inputs.tokens_per_day)} blended tokens/day.`;
       }
       $("[data-verdict-copy]").textContent = verdictCopy;
 
@@ -343,14 +391,17 @@ const provenanceEntries = Object.entries(artifact.provenance);
 
       $("[data-self-cost]").textContent = money(computed.selfCost);
       $("[data-self-details]").textContent = computed.fits
-        ? `${computed.gpuCount}x ${composition.inputs.gpu_name} - ${Math.round(computed.perGpuTps * computed.gpuCount)} tokens/sec - ${composition.inputs.instance_type}`
+        ? `${computed.gpuCount}x ${composition.inputs.gpu_name} - ${Math.round(computed.perGpuTps * computed.gpuCount)} output tokens/sec - ${composition.inputs.instance_type}`
         : composition.reason;
       $("[data-api-cost]").textContent = money(computed.apiCost);
-      $("[data-api-details]").textContent = `${artifact.api_side.providers_count} providers - ${artifact.api_side.throughput_p50_tps} p50 tokens/sec - ${artifact.api_side.price_input_per_mtok_usd}/${artifact.api_side.price_output_per_mtok_usd} USD per MTok`;
-      $("[data-crossover]").textContent = composition.crossover_tokens_per_day
-        ? `Breaks even at ${compact(composition.crossover_tokens_per_day)} tok/day`
+      $("[data-api-details]").textContent = `${artifact.api_side.providers_count} providers - ${compact(computed.apiCapacity.aggregate_p50_tps)} aggregate p50 output tokens/sec - peak output demand ${compact(computed.apiCapacity.required_peak_output_tps)} - ${artifact.api_side.price_input_per_mtok_usd}/${artifact.api_side.price_output_per_mtok_usd} USD per MTok`;
+      $("[data-crossover]").textContent = computed.crossoverTokens
+        ? `Cost break-even at ${compact(computed.crossoverTokens)} tok/day`
         : "no crossover in range";
-      $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} tokens/day: self-host ${money(computed.selfCost)}/month, API ${money(computed.apiCost)}/month. ${composition.crossover_tokens_per_day ? `Self-hosting becomes cheaper above ${compact(composition.crossover_tokens_per_day)} tokens/day.` : "Self-hosting is not cost-competitive at this configuration."}`;
+      const capacityCopy = computed.apiCapacity.constrained
+        ? ` Hosted API peak capacity is constrained at this output rate.`
+        : ` Hosted API aggregate p50 capacity covers the estimated peak output rate.`;
+      $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} blended tokens/day: self-host ${money(computed.selfCost)}/month, API ${money(computed.apiCost)}/month. Peak output demand is ${compact(computed.apiCapacity.required_peak_output_tps)} tokens/sec.${capacityCopy}`;
       $("[data-escalation]").hidden = computed.regime !== "close-call";
 
       drawChart(composition, computed);
@@ -393,6 +444,45 @@ const provenanceEntries = Object.entries(artifact.provenance);
     const escalationSection = $("[data-escalation]");
     const escalationBtn = $("[data-escalation-btn]");
 
+    function loadTurnstile() {
+      if (window.turnstile) return Promise.resolve(window.turnstile);
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.onload = () => resolve(window.turnstile);
+        script.onerror = () => reject(new Error("Turnstile failed to load"));
+        document.head.appendChild(script);
+      });
+    }
+
+    async function getTurnstileToken() {
+      const siteKey = escalationSection?.dataset.turnstileSiteKey;
+      if (!siteKey) return undefined;
+      const turnstile = await loadTurnstile();
+      return await new Promise((resolve, reject) => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        const timeout = setTimeout(() => reject(new Error("Turnstile timed out")), 15000);
+        const widgetId = turnstile.render(container, {
+          sitekey: siteKey,
+          size: "invisible",
+          callback: (token) => {
+            clearTimeout(timeout);
+            container.remove();
+            resolve(token);
+          },
+          "error-callback": () => {
+            clearTimeout(timeout);
+            container.remove();
+            reject(new Error("Turnstile challenge failed"));
+          }
+        });
+        turnstile.execute(widgetId);
+      });
+    }
+
     escalationBtn?.addEventListener("click", async () => {
       const url = escalationSection?.dataset.escalationUrl;
       const resultEl = $("[data-escalation-result]");
@@ -406,15 +496,19 @@ const provenanceEntries = Object.entries(artifact.provenance);
       textEl.textContent = "";
 
       try {
+        const turnstileToken = await getTurnstileToken();
         const response = await fetch(url, {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({
             artifact_id: artifact.artifact.id,
+            flow: "advanced",
+            outcome: selectedComposition().regime,
             model_slug: artifact.artifact.model_slug,
             cloud: artifact.artifact.cloud,
             composition_key: key(),
-            inputs: {}
+            inputs: {},
+            turnstile_token: turnstileToken
           })
         });
 

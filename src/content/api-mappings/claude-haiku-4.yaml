@@ -1,0 +1,15 @@
+slug: claude-haiku-4
+name: Claude Haiku 4
+vendor: Anthropic
+family: Claude
+size_class: medium
+typical_price_source: Anthropic and OpenRouter published API pricing
+mapped_open_weight_candidates:
+  - mistral-small-4
+  - qwen-3-5
+  - gemma-4-26b
+quality_caveat: These open-weight options can be evaluated for support,
+  summarization, and coding-adjacent workflows, but they are not
+  quality-equivalent to Claude.
+inclusion_rationale: Covers the mainstream mid-tier hosted model where self-host
+  economics can become interesting for steady or batch workloads.

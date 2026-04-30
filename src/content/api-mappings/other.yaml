@@ -1,0 +1,14 @@
+slug: other
+name: Other / not listed
+vendor: Unknown
+family: Unknown
+size_class: medium
+typical_price_source: User-supplied or unavailable
+mapped_open_weight_candidates:
+  - mistral-small-4
+  - qwen-3-5
+  - llama-4-maverick
+quality_caveat: Because this hosted model is not mapped precisely, RunWhere
+  cannot make a confident quality or cost-boundary claim.
+inclusion_rationale: Lets the four-question check remain complete while routing
+  unmapped hosted models to insufficient-data or tailored analysis.

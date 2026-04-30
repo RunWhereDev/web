@@ -3,11 +3,16 @@ import { readFile } from "node:fs/promises";
 import { createServer } from "node:http";
 import path from "node:path";
 import { GoogleGenAI } from "@google/genai";
+import { requireProjectId } from "./config.js";
 import { buildMessages, type EscalationInputs } from "./prompt.js";
 import { getRequiredSecret } from "./secrets.js";
 
 interface EscalationRequest {
   artifact_id?: string;
+  flow?: "check" | "advanced";
+  outcome?: string;
+  normalized_inputs?: unknown;
+  free_text?: string;
   model_slug?: string;
   cloud?: string;
   composition_key?: string;
@@ -54,15 +59,21 @@ async function readBody(request: NodeJS.ReadableStream) {
 }
 
 async function loadArtifact(body: EscalationRequest) {
+  if (body.flow === "check" || body.artifact_id?.includes("boundaries")) {
+    const filePath = path.join(process.cwd(), "data/check-boundaries.json");
+    return JSON.parse(await readFile(filePath, "utf8"));
+  }
+
   if (!body.model_slug || !body.cloud) {
-    throw new Error("model_slug and cloud are required");
+    throw new Error("model_slug and cloud are required for advanced escalation");
   }
 
   const filePath = path.join(process.cwd(), "data/compositions", body.model_slug, `${body.cloud}.json`);
   return JSON.parse(await readFile(filePath, "utf8"));
 }
 
-const GEMINI_MODEL = process.env.RUNWHERE_GEMINI_MODEL || "gemini-2.5-flash";
+const GEMINI_MODEL = process.env.RUNWHERE_VERTEX_MODEL || "gemini-2.5-flash";
+const VERTEX_LOCATION = process.env.RUNWHERE_GCP_LOCATION || "global";
 
 const CORS_HEADERS = {
   "access-control-allow-origin": "*",
@@ -73,6 +84,30 @@ const CORS_HEADERS = {
 function writeSse(response: import("node:http").ServerResponse, event: string, data: unknown) {
   response.write(`event: ${event}\n`);
   response.write(`data: ${JSON.stringify(data)}\n\n`);
+}
+
+async function validateTurnstile(body: EscalationRequest, ip: string) {
+  if (process.env.RUNWHERE_DISABLE_TURNSTILE === "true") return;
+
+  if (!body.turnstile_token) {
+    throw new Error("turnstile_token is required");
+  }
+
+  const secret = process.env.TURNSTILE_SECRET_KEY || await getRequiredSecret("TURNSTILE_SECRET_KEY");
+  const form = new URLSearchParams({
+    secret,
+    response: body.turnstile_token,
+    remoteip: ip
+  });
+  const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+    method: "POST",
+    body: form
+  });
+  const result = await response.json() as { success?: boolean; "error-codes"?: string[] };
+
+  if (!result.success) {
+    throw new Error(`turnstile_failed:${result["error-codes"]?.join(",") || "unknown"}`);
+  }
 }
 
 export const server = createServer(async (request, response) => {
@@ -113,9 +148,16 @@ export const server = createServer(async (request, response) => {
 
   try {
     const body = JSON.parse(await readBody(request)) as EscalationRequest;
+    await validateTurnstile(body, ip);
     const artifact = await loadArtifact(body);
-    const { system, user } = buildMessages(artifact, body.inputs || {}, body.composition_key);
-    const apiKey = await getRequiredSecret("GEMINI_API_KEY");
+    const { system, user } = buildMessages(artifact, {
+      ...(body.inputs || {}),
+      flow: body.flow,
+      outcome: body.outcome,
+      normalized_inputs: body.normalized_inputs,
+      free_text: body.free_text
+    }, body.composition_key);
+    const started = Date.now();
 
     response.writeHead(200, {
       ...CORS_HEADERS,
@@ -124,7 +166,11 @@ export const server = createServer(async (request, response) => {
       connection: "keep-alive"
     });
 
-    const genai = new GoogleGenAI({ apiKey });
+    const genai = new GoogleGenAI({
+      vertexai: true,
+      project: requireProjectId(),
+      location: VERTEX_LOCATION
+    });
     const stream = await genai.models.generateContentStream({
       model: GEMINI_MODEL,
       contents: user,
@@ -140,6 +186,16 @@ export const server = createServer(async (request, response) => {
       if (text) writeSse(response, "chunk", { text });
     }
 
+    console.log(JSON.stringify({
+      timestamp: new Date().toISOString(),
+      artifact_id: body.artifact_id || artifact.artifact?.id,
+      flow: body.flow || "advanced",
+      outcome: body.outcome || "unknown",
+      response_time_ms: Date.now() - started,
+      input_tokens: null,
+      output_tokens: null,
+      cost_usd: null
+    }));
     writeSse(response, "done", { ok: true });
     response.end();
   } catch (error) {

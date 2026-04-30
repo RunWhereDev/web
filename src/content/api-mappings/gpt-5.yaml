@@ -1,0 +1,15 @@
+slug: gpt-5
+name: GPT-5
+vendor: OpenAI
+family: GPT-5
+size_class: frontier
+typical_price_source: OpenAI and OpenRouter published API pricing
+mapped_open_weight_candidates:
+  - llama-4-maverick
+  - deepseek-v3-2
+  - qwen-3-coder-480b
+quality_caveat: The mapped open-weight models are not asserted to match GPT-5
+  quality; they are credible candidates when cost, compliance, or capacity
+  forces a self-host investigation.
+inclusion_rationale: Canonical frontier API family for the primary outlier check
+  and reference workload distribution.

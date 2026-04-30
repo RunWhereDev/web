@@ -1,10 +1,101 @@
 {
   "generated_at": "2026-04-29T03:00:00.000Z",
-  "ruleset_version": "1.0.0",
+  "ruleset_version": "1.1.0",
+  "headline": {
+    "api_first_rate": 0.89,
+    "label": "9 out of 10 typical workloads should stay on the API",
+    "methodology_url": "/methodology/#headline-rate"
+  },
   "refresh": {
     "pricing_last_run": "2026-04-29T03:00:00.000Z",
     "throughput_last_run": "2026-04-29T03:00:00.000Z"
   },
+  "api_models": [
+    {
+      "slug": "claude-haiku-4",
+      "name": "Claude Haiku 4",
+      "vendor": "Anthropic",
+      "family": "Claude",
+      "size_class": "medium",
+      "typical_price_source": "Anthropic and OpenRouter published API pricing",
+      "mapped_open_weight_candidates": [
+        "mistral-small-4",
+        "qwen-3-5",
+        "gemma-4-26b"
+      ],
+      "quality_caveat": "These open-weight options can be evaluated for support, summarization, and coding-adjacent workflows, but they are not quality-equivalent to Claude."
+    },
+    {
+      "slug": "claude-sonnet-5",
+      "name": "Claude Sonnet 5",
+      "vendor": "Anthropic",
+      "family": "Claude",
+      "size_class": "frontier",
+      "typical_price_source": "Anthropic and OpenRouter published API pricing",
+      "mapped_open_weight_candidates": [
+        "llama-4-maverick",
+        "qwen-3-coder-480b",
+        "mistral-large-3"
+      ],
+      "quality_caveat": "Frontier hosted models differ materially in reasoning, tool use, safety behavior, and latency; use these mappings only as candidate self-host investigations."
+    },
+    {
+      "slug": "gemini-2-5-flash",
+      "name": "Gemini 2.5 Flash",
+      "vendor": "Google",
+      "family": "Gemini",
+      "size_class": "small",
+      "typical_price_source": "Google AI Studio and OpenRouter published API pricing",
+      "mapped_open_weight_candidates": [
+        "gemma-4-26b",
+        "phi-4",
+        "mistral-small-4"
+      ],
+      "quality_caveat": "Flash-class API models optimize latency and price; mapped open weights may need task-specific evaluation before replacement."
+    },
+    {
+      "slug": "gpt-5-mini",
+      "name": "GPT-5 mini",
+      "vendor": "OpenAI",
+      "family": "GPT-5",
+      "size_class": "small",
+      "typical_price_source": "OpenAI and OpenRouter published API pricing",
+      "mapped_open_weight_candidates": [
+        "gemma-4-26b",
+        "mistral-small-4",
+        "phi-4"
+      ],
+      "quality_caveat": "These models are plausible efficient substitutes for narrow or cost-sensitive workloads, not quality-identical replacements for GPT-5 mini."
+    },
+    {
+      "slug": "gpt-5",
+      "name": "GPT-5",
+      "vendor": "OpenAI",
+      "family": "GPT-5",
+      "size_class": "frontier",
+      "typical_price_source": "OpenAI and OpenRouter published API pricing",
+      "mapped_open_weight_candidates": [
+        "llama-4-maverick",
+        "deepseek-v3-2",
+        "qwen-3-coder-480b"
+      ],
+      "quality_caveat": "The mapped open-weight models are not asserted to match GPT-5 quality; they are credible candidates when cost, compliance, or capacity forces a self-host investigation."
+    },
+    {
+      "slug": "other",
+      "name": "Other / not listed",
+      "vendor": "Unknown",
+      "family": "Unknown",
+      "size_class": "medium",
+      "typical_price_source": "User-supplied or unavailable",
+      "mapped_open_weight_candidates": [
+        "mistral-small-4",
+        "qwen-3-5",
+        "llama-4-maverick"
+      ],
+      "quality_caveat": "Because this hosted model is not mapped precisely, RunWhere cannot make a confident quality or cost-boundary claim."
+    }
+  ],
   "models": [
     {
       "slug": "deepseek-v3-2",
@@ -214,6 +305,36 @@
       "slug": "azure",
       "name": "Azure",
       "gpu_count": 4
+    }
+  ],
+  "serving_modalities": [
+    {
+      "slug": "api",
+      "label": "Hosted API"
+    },
+    {
+      "slug": "managed-endpoint",
+      "label": "Managed dedicated endpoint"
+    },
+    {
+      "slug": "serverless-gpu",
+      "label": "Serverless GPU"
+    },
+    {
+      "slug": "vm-cheap",
+      "label": "Cheap always-on GPU VM"
+    },
+    {
+      "slug": "vm-serious",
+      "label": "Serious always-on GPU VM"
+    },
+    {
+      "slug": "batch-gpu",
+      "label": "Scheduled/batch GPU"
+    },
+    {
+      "slug": "owned-hardware",
+      "label": "Owned/on-prem hardware"
     }
   ],
   "shapes": [

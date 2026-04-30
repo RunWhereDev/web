@@ -1,0 +1,408 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import boundary from "../../data/generated/check-boundaries.json";
+
+const boundaryJson = JSON.stringify(boundary).replace(/</g, "\\u003c");
+const escalationUrl = import.meta.env.PUBLIC_ESCALATION_URL || "http://localhost:8080/escalate";
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
+---
+
+<BaseLayout
+  title="Check result | RunWhere"
+  description="RunWhere's API-first exception check result."
+>
+  <article class="result-page page-shell" data-result-root data-escalation-url={escalationUrl} data-turnstile-site-key={turnstileSiteKey}>
+    <section class="result-hero" data-state="loading">
+      <p class="eyebrow">Check result</p>
+      <h1 data-result-title>Reading shareable profile…</h1>
+      <p class="lead" data-result-summary></p>
+      <p class="warning" data-warning hidden></p>
+    </section>
+
+    <section class="panel result-context" aria-labelledby="inputs-heading">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Normalized inputs</p>
+          <h2 id="inputs-heading">What this verdict used</h2>
+        </div>
+        <button class="button-secondary" type="button" data-copy-url>Copy shareable URL</button>
+      </div>
+      <dl data-inputs></dl>
+    </section>
+
+    <section class="panel result-panel" aria-labelledby="modality-heading">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Serving options</p>
+          <h2 id="modality-heading">Relevant modalities</h2>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table serving-table">
+          <thead>
+            <tr>
+              <th>Option</th>
+              <th>Target</th>
+              <th>Monthly estimate</th>
+              <th>Fit</th>
+              <th>Ops</th>
+              <th>Why</th>
+            </tr>
+          </thead>
+          <tbody data-serving-rows></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel change-card" aria-labelledby="change-heading">
+      <p class="eyebrow">Sensitivity</p>
+      <h2 id="change-heading">What would have to change</h2>
+      <ul data-change-list></ul>
+    </section>
+
+    <section class="panel escalation" data-escalation hidden>
+      <div>
+        <p class="eyebrow">J1 escalation</p>
+        <h2>Get tailored analysis · ~$0.005</h2>
+        <p class="muted">Shown for likely exceptions, hard constraints, or insufficient baked data.</p>
+      </div>
+      <div class="escalation-form">
+        <textarea class="field" data-free-text maxlength="280" placeholder="Optional workload context (280 chars max)"></textarea>
+        <button class="button-primary" type="button" data-escalation-btn>Get tailored analysis</button>
+        <div class="escalation-result" data-escalation-result hidden></div>
+        <p class="muted" data-escalation-error hidden></p>
+      </div>
+    </section>
+
+    <section class="provenance panel">
+      <p class="eyebrow">Provenance</p>
+      <p>
+        Boundary artifact <span class="mono">{boundary.artifact.id}</span>, generated <span class="mono">{boundary.artifact.generated_at}</span>, ruleset <span class="mono">{boundary.artifact.ruleset_version}</span>.
+        Headline math is documented on <a href="/methodology/#headline-rate">methodology</a>.
+      </p>
+    </section>
+  </article>
+
+  <script id="boundary-data" type="application/json" is:inline set:html={boundaryJson}></script>
+  <script>
+    import {
+      buildServingOptionRows,
+      decodeCheckProfile,
+      evaluateCheckProfile,
+      hardConstraintLabel,
+      spendBandLabel,
+      trafficShapeLabel
+    } from "../../../shared/check-boundary";
+
+    const boundary = JSON.parse(document.getElementById("boundary-data")?.textContent || "{}");
+    const root = document.querySelector("[data-result-root]") as HTMLElement | null;
+    const profile = decodeCheckProfile(new URL(location.href).searchParams.get("profile"));
+    const title = document.querySelector("[data-result-title]");
+    const summary = document.querySelector("[data-result-summary]");
+    const warning = document.querySelector("[data-warning]") as HTMLElement | null;
+    const inputs = document.querySelector("[data-inputs]");
+    const rows = document.querySelector("[data-serving-rows]");
+    const changeList = document.querySelector("[data-change-list]");
+    const escalation = document.querySelector("[data-escalation]") as HTMLElement | null;
+
+    function htmlEscape(value: string) {
+      const entities: Record<string, string> = { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" };
+      return value.replace(/[&<>"]/g, (char) => entities[char] || char);
+    }
+
+    function renderInvalid() {
+      root?.querySelector(".result-hero")?.setAttribute("data-state", "invalid");
+      if (title) title.textContent = "This check link is invalid or expired.";
+      if (summary) summary.textContent = "Run the four-question check again to generate a fresh shareable profile.";
+      if (inputs) inputs.innerHTML = "";
+      if (rows) rows.innerHTML = "";
+      if (changeList) changeList.innerHTML = "";
+    }
+
+    function renderResult() {
+      if (!profile) {
+        renderInvalid();
+        return;
+      }
+
+      const evaluation = evaluateCheckProfile(boundary, profile);
+      const servingRows = buildServingOptionRows(boundary, profile, evaluation);
+      root?.querySelector(".result-hero")?.setAttribute("data-state", evaluation.outcome);
+      if (title) title.textContent = evaluation.label;
+      if (summary) summary.textContent = evaluation.summary;
+      if (warning && evaluation.ruleset_mismatch) {
+        warning.hidden = false;
+        warning.textContent = `This URL was generated with ruleset ${profile.ruleset_version}; current ruleset is ${boundary.artifact.ruleset_version}. Re-run the check if you need the current canonical result.`;
+      }
+
+      const constraints = profile.hard_constraints.length ? profile.hard_constraints.map(hardConstraintLabel).join(", ") : "None";
+      const modelName = evaluation.mapped_api_model?.name || profile.hosted_model;
+      if (inputs) {
+        inputs.innerHTML = `
+          <div><dt>Spend band</dt><dd>${spendBandLabel(profile.spend_band)}</dd></div>
+          <div><dt>Hosted model</dt><dd>${htmlEscape(modelName)}</dd></div>
+          <div><dt>Traffic shape</dt><dd>${trafficShapeLabel(profile.traffic_shape)}</dd></div>
+          <div><dt>Hard constraints</dt><dd>${htmlEscape(constraints)}</dd></div>
+        `;
+      }
+
+      if (rows) {
+        rows.innerHTML = servingRows
+          .map((row) => `
+            <tr data-fit="${row.fit_status}">
+              <td><strong>${htmlEscape(row.label)}</strong></td>
+              <td>${htmlEscape(row.target)}</td>
+              <td>${htmlEscape(row.monthly_estimate)}</td>
+              <td>${row.fit_status.replace(/_/g, " ")}</td>
+              <td>${row.operational_effort}</td>
+              <td>${htmlEscape(row.why)}</td>
+            </tr>
+          `)
+          .join("");
+      }
+
+      if (changeList) {
+        changeList.innerHTML = evaluation.what_would_change.map((item) => `<li>${htmlEscape(item)}</li>`).join("");
+      }
+
+      if (escalation) escalation.hidden = evaluation.outcome === "confirmed_api";
+    }
+
+    document.querySelector("[data-copy-url]")?.addEventListener("click", async () => {
+      await navigator.clipboard?.writeText(location.href);
+    });
+
+    function loadTurnstile() {
+      if ((window as any).turnstile) return Promise.resolve((window as any).turnstile);
+      return new Promise((resolve, reject) => {
+        const script = document.createElement("script");
+        script.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit";
+        script.async = true;
+        script.defer = true;
+        script.onload = () => resolve((window as any).turnstile);
+        script.onerror = () => reject(new Error("Turnstile failed to load"));
+        document.head.appendChild(script);
+      });
+    }
+
+    async function getTurnstileToken() {
+      const siteKey = root?.dataset.turnstileSiteKey;
+      if (!siteKey) return undefined;
+      const turnstile = await loadTurnstile() as any;
+      return await new Promise<string>((resolve, reject) => {
+        const container = document.createElement("div");
+        document.body.appendChild(container);
+        const timeout = setTimeout(() => reject(new Error("Turnstile timed out")), 15_000);
+        const widgetId = turnstile.render(container, {
+          sitekey: siteKey,
+          size: "invisible",
+          callback: (token: string) => {
+            clearTimeout(timeout);
+            container.remove();
+            resolve(token);
+          },
+          "error-callback": () => {
+            clearTimeout(timeout);
+            container.remove();
+            reject(new Error("Turnstile challenge failed"));
+          }
+        });
+        turnstile.execute(widgetId);
+      });
+    }
+
+    document.querySelector("[data-escalation-btn]")?.addEventListener("click", async (event) => {
+      if (!profile) return;
+      const button = event.currentTarget as HTMLButtonElement;
+      const result = document.querySelector("[data-escalation-result]") as HTMLElement | null;
+      const error = document.querySelector("[data-escalation-error]") as HTMLElement | null;
+      const freeText = (document.querySelector("[data-free-text]") as HTMLTextAreaElement | null)?.value || "";
+      button.disabled = true;
+      button.textContent = "Analysing…";
+      if (result) {
+        result.hidden = false;
+        result.textContent = "";
+      }
+      if (error) error.hidden = true;
+
+      try {
+        const evaluation = evaluateCheckProfile(boundary, profile);
+        const turnstileToken = await getTurnstileToken();
+        const response = await fetch(root?.dataset.escalationUrl || "/escalate", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            artifact_id: boundary.artifact.id,
+            flow: "check",
+            outcome: evaluation.outcome,
+            normalized_inputs: profile,
+            free_text: freeText,
+            turnstile_token: turnstileToken
+          })
+        });
+        if (!response.ok || !response.body) throw new Error(`Escalation unavailable (${response.status})`);
+        const reader = response.body.getReader();
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let currentEvent = "";
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+          for (const line of lines) {
+            if (line.startsWith("event: ")) currentEvent = line.slice(7).trim();
+            if (line.startsWith("data: ") && currentEvent === "chunk" && result) {
+              const data = JSON.parse(line.slice(6));
+              result.textContent += data.text || "";
+            }
+            if (line === "") currentEvent = "";
+          }
+        }
+        button.textContent = "Run again";
+      } catch (err) {
+        if (result) result.hidden = true;
+        if (error) {
+          error.hidden = false;
+          error.textContent = err instanceof Error ? err.message : "Escalation unavailable.";
+        }
+        button.textContent = "Try again";
+      } finally {
+        button.disabled = false;
+      }
+    });
+
+    renderResult();
+  </script>
+</BaseLayout>
+
+<style>
+  .result-page {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: var(--space-8);
+  }
+
+  .result-hero {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-8);
+  }
+
+  .result-hero[data-state="confirmed_api"] {
+    border-color: color-mix(in srgb, var(--color-regime-api) 35%, var(--color-border));
+  }
+
+  .result-hero[data-state="may_be_exception"],
+  .result-hero[data-state="hard_constraint"],
+  .result-hero[data-state="insufficient_data"] {
+    border-color: color-mix(in srgb, var(--color-regime-close-call) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-regime-close-call) 7%, var(--color-surface));
+  }
+
+  .result-hero h1 {
+    margin-bottom: var(--space-3);
+    font-size: var(--text-3xl);
+    letter-spacing: 0;
+  }
+
+  .warning {
+    margin-top: var(--space-3);
+    color: var(--color-regime-close-call);
+    font-weight: 700;
+  }
+
+  .result-context,
+  .result-panel,
+  .change-card,
+  .provenance,
+  .escalation {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .section-head h2,
+  .change-card h2,
+  .escalation h2 {
+    font-size: var(--text-xl);
+    letter-spacing: 0;
+  }
+
+  [data-inputs] {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  [data-inputs] div {
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  [data-inputs] dt {
+    color: var(--color-fg-muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  [data-inputs] dd {
+    margin: var(--space-1) 0 0;
+    font-weight: 700;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  .serving-table tr[data-fit="recommended"] td:first-child {
+    color: var(--color-regime-self-host);
+  }
+
+  .serving-table tr[data-fit="not_a_fit"] {
+    color: var(--color-fg-subtle);
+  }
+
+  .change-card ul {
+    display: grid;
+    gap: var(--space-2);
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--color-fg-muted);
+  }
+
+  .escalation {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 760px) {
+    .escalation {
+      grid-template-columns: 0.8fr 1.2fr;
+    }
+  }
+
+  .escalation-form {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .escalation-result {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    padding: var(--space-4);
+    white-space: pre-wrap;
+  }
+</style>

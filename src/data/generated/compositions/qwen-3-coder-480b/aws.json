@@ -1,11 +1,11 @@
 {
   "artifact": {
-    "id": "qwen-3-coder-480b--aws--v1.0.0-local",
+    "id": "qwen-3-coder-480b--aws--v1.1.0-local",
     "model_slug": "qwen-3-coder-480b",
     "cloud": "aws",
     "generated_at": "2026-04-29T03:00:00.000Z",
     "tier": "stable",
-    "ruleset_version": "1.0.0",
+    "ruleset_version": "1.1.0",
     "source_commits": {
       "pricing": "local",
       "throughput": "local",
@@ -102,53 +102,89 @@
   },
   "compositions": {
     "h100-80g__fp16__light": {
-      "self_host_monthly_usd": 30770,
+      "self_host_monthly_usd": 18962,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 292.2127255460589,
-      "crossover_tokens_per_day": 292212725.5460589,
+      "ratio": 180.07597340930676,
+      "crossover_tokens_per_day": 180075973.40930676,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 18962,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 18962,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 18962,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 18962,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 27818,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
@@ -165,126 +201,202 @@
         "quantization": "fp16",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "h100-80g__fp16__medium": {
-      "self_host_monthly_usd": 60290,
+      "self_host_monthly_usd": 18962,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 57.25546058879392,
-      "crossover_tokens_per_day": 572554605.8879392,
+      "ratio": 18.007597340930673,
+      "crossover_tokens_per_day": 180075973.40930676,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 18962,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 18962,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 18962,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 18962,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 27818,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
         "instance_type": "p5.48xlarge",
         "gpu_price_hourly_usd": 12.3,
-        "gpu_count": 4,
+        "gpu_count": 2,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 80.5,
-        "vram_available_gb": 320,
-        "self_host_throughput_tps": 459,
+        "vram_available_gb": 160,
+        "self_host_throughput_tps": 230,
         "self_host_throughput_tps_per_gpu": 115,
         "quantization": "fp16",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "h100-80g__fp16__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 18962,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 18962,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 18962,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 18962,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 27818,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 31 h100-80g GPUs for VRAM and peak traffic; p5.48xlarge exposes 8.",
+      "reason": "Needs 10 h100-80g GPUs for VRAM and peak output traffic; p5.48xlarge exposes 8.",
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
@@ -300,57 +412,95 @@
         "quantization": "fp16",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "h100-80g__int8__light": {
-      "self_host_monthly_usd": 16010,
+      "self_host_monthly_usd": 10106,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 152.0417853751187,
-      "crossover_tokens_per_day": 152041785.3751187,
+      "ratio": 95.97340930674264,
+      "crossover_tokens_per_day": 95973409.30674265,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 18962,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 54386,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
@@ -367,192 +517,305 @@
         "quantization": "int8",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "h100-80g__int8__medium": {
-      "self_host_monthly_usd": 30770,
+      "self_host_monthly_usd": 10106,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 29.22127255460589,
-      "crossover_tokens_per_day": 292212725.5460589,
+      "ratio": 9.597340930674264,
+      "crossover_tokens_per_day": 95973409.30674265,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 18962,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 54386,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
         "instance_type": "p5.48xlarge",
         "gpu_price_hourly_usd": 12.3,
-        "gpu_count": 2,
+        "gpu_count": 1,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 40.3,
-        "vram_available_gb": 160,
-        "self_host_throughput_tps": 391,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 195,
         "self_host_throughput_tps_per_gpu": 195,
         "quantization": "int8",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "h100-80g__int8__heavy": {
-      "self_host_monthly_usd": null,
+      "self_host_monthly_usd": 54386,
       "api_monthly_usd": 10530,
-      "regime": "api-wins",
-      "ratio": null,
-      "crossover_tokens_per_day": null,
+      "cost_regime": "api-wins",
+      "regime": "close-call",
+      "ratio": 5.164862298195632,
+      "crossover_tokens_per_day": 516486229.81956327,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 18962,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 54386,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
-      "fits": false,
-      "reason": "Needs 18 h100-80g GPUs for VRAM and peak traffic; p5.48xlarge exposes 8.",
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
+      "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
         "instance_type": "p5.48xlarge",
         "gpu_price_hourly_usd": 12.3,
-        "gpu_count": 8,
+        "gpu_count": 6,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 40.3,
-        "vram_available_gb": 640,
-        "self_host_throughput_tps": 1562,
+        "vram_available_gb": 480,
+        "self_host_throughput_tps": 1172,
         "self_host_throughput_tps_per_gpu": 195,
         "quantization": "int8",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "h100-80g__int4__light": {
-      "self_host_monthly_usd": 16010,
+      "self_host_monthly_usd": 10106,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 152.0417853751187,
-      "crossover_tokens_per_day": 152041785.3751187,
+      "ratio": 95.97340930674264,
+      "crossover_tokens_per_day": 95973409.30674265,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 10106,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 36674,
+          "api_usd": 10530,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
@@ -569,192 +832,305 @@
         "quantization": "int4",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "h100-80g__int4__medium": {
-      "self_host_monthly_usd": 30770,
+      "self_host_monthly_usd": 10106,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 29.22127255460589,
-      "crossover_tokens_per_day": 292212725.5460589,
+      "ratio": 9.597340930674264,
+      "crossover_tokens_per_day": 95973409.30674265,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 10106,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 36674,
+          "api_usd": 10530,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
         "instance_type": "p5.48xlarge",
         "gpu_price_hourly_usd": 12.3,
-        "gpu_count": 2,
+        "gpu_count": 1,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 20.1,
-        "vram_available_gb": 160,
-        "self_host_throughput_tps": 574,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 287,
         "self_host_throughput_tps_per_gpu": 287,
         "quantization": "int4",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "h100-80g__int4__heavy": {
-      "self_host_monthly_usd": null,
+      "self_host_monthly_usd": 36674,
       "api_monthly_usd": 10530,
-      "regime": "api-wins",
-      "ratio": null,
-      "crossover_tokens_per_day": null,
+      "cost_regime": "api-wins",
+      "regime": "close-call",
+      "ratio": 3.4828110161443493,
+      "crossover_tokens_per_day": 348281101.614435,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 10106,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 10106,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 10106,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 10106,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 10106,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 36674,
+          "api_usd": 10530,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
-      "fits": false,
-      "reason": "Needs 13 h100-80g GPUs for VRAM and peak traffic; p5.48xlarge exposes 8.",
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
+      "fits": true,
       "inputs": {
         "gpu_sku": "h100-80g",
         "gpu_name": "NVIDIA H100 80GB",
         "instance_type": "p5.48xlarge",
         "gpu_price_hourly_usd": 12.3,
-        "gpu_count": 8,
+        "gpu_count": 4,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 20.1,
-        "vram_available_gb": 640,
-        "self_host_throughput_tps": 2297,
+        "vram_available_gb": 320,
+        "self_host_throughput_tps": 1149,
         "self_host_throughput_tps_per_gpu": 287,
         "quantization": "int4",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a100-80g__fp16__light": {
-      "self_host_monthly_usd": 13730,
+      "self_host_monthly_usd": 8738,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 130.38936372269706,
-      "crossover_tokens_per_day": 130389363.72269705,
+      "ratio": 82.98195631528965,
+      "crossover_tokens_per_day": 82981956.31528965,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 8738,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 8738,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 8738,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 8738,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 16226,
+          "api_usd": 2633,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
@@ -771,126 +1147,202 @@
         "quantization": "fp16",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a100-80g__fp16__medium": {
-      "self_host_monthly_usd": 32450,
+      "self_host_monthly_usd": 8738,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 30.816714150047485,
-      "crossover_tokens_per_day": 308167141.5004748,
+      "ratio": 8.298195631528964,
+      "crossover_tokens_per_day": 82981956.31528965,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 8738,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 8738,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 8738,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 8738,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 16226,
+          "api_usd": 2633,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
         "instance_type": "p4de.24xlarge",
         "gpu_price_hourly_usd": 5.2,
-        "gpu_count": 5,
+        "gpu_count": 2,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 80.5,
-        "vram_available_gb": 400,
-        "self_host_throughput_tps": 350,
+        "vram_available_gb": 160,
+        "self_host_throughput_tps": 140,
         "self_host_throughput_tps_per_gpu": 70,
         "quantization": "fp16",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a100-80g__fp16__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 8738,
+          "api_usd": 11,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 8738,
+          "api_usd": 105,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 8738,
+          "api_usd": 527,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 8738,
+          "api_usd": 1053,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 16226,
+          "api_usd": 2633,
+          "gpu_count": 4,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 50 a100-80g GPUs for VRAM and peak traffic; p4de.24xlarge exposes 8.",
+      "reason": "Needs 15 a100-80g GPUs for VRAM and peak output traffic; p4de.24xlarge exposes 8.",
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
@@ -906,57 +1358,95 @@
         "quantization": "fp16",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a100-80g__int8__light": {
-      "self_host_monthly_usd": 7490,
+      "self_host_monthly_usd": 4994,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 71.1301044634378,
-      "crossover_tokens_per_day": 71130104.4634378,
+      "ratio": 47.42640075973409,
+      "crossover_tokens_per_day": 47426400.759734094,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 12482,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
@@ -973,126 +1463,202 @@
         "quantization": "int8",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a100-80g__int8__medium": {
-      "self_host_monthly_usd": 19970,
+      "self_host_monthly_usd": 4994,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 18.964862298195634,
-      "crossover_tokens_per_day": 189648622.9819564,
+      "ratio": 4.7426400759734095,
+      "crossover_tokens_per_day": 47426400.759734094,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 12482,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
         "instance_type": "p4de.24xlarge",
         "gpu_price_hourly_usd": 5.2,
-        "gpu_count": 3,
+        "gpu_count": 1,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 40.3,
-        "vram_available_gb": 240,
-        "self_host_throughput_tps": 357,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 119,
         "self_host_throughput_tps_per_gpu": 119,
         "quantization": "int8",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a100-80g__int8__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 12482,
+          "api_usd": 2633,
+          "gpu_count": 3,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 30 a100-80g GPUs for VRAM and peak traffic; p4de.24xlarge exposes 8.",
+      "reason": "Needs 9 a100-80g GPUs for VRAM and peak output traffic; p4de.24xlarge exposes 8.",
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
@@ -1108,57 +1674,95 @@
         "quantization": "int8",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a100-80g__int4__light": {
-      "self_host_monthly_usd": 7490,
+      "self_host_monthly_usd": 4994,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 71.1301044634378,
-      "crossover_tokens_per_day": 71130104.4634378,
+      "ratio": 47.42640075973409,
+      "crossover_tokens_per_day": 47426400.759734094,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 8738,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 23714,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
@@ -1175,194 +1779,307 @@
         "quantization": "int4",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a100-80g__int4__medium": {
-      "self_host_monthly_usd": 13730,
+      "self_host_monthly_usd": 4994,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 13.038936372269706,
-      "crossover_tokens_per_day": 130389363.72269705,
+      "ratio": 4.7426400759734095,
+      "crossover_tokens_per_day": 47426400.759734094,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 8738,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 23714,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
         "instance_type": "p4de.24xlarge",
         "gpu_price_hourly_usd": 5.2,
-        "gpu_count": 2,
+        "gpu_count": 1,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 20.1,
-        "vram_available_gb": 160,
-        "self_host_throughput_tps": 350,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 175,
         "self_host_throughput_tps_per_gpu": 175,
         "quantization": "int4",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a100-80g__int4__heavy": {
-      "self_host_monthly_usd": null,
+      "self_host_monthly_usd": 23714,
       "api_monthly_usd": 10530,
-      "regime": "api-wins",
-      "ratio": null,
-      "crossover_tokens_per_day": null,
+      "cost_regime": "api-wins",
+      "regime": "close-call",
+      "ratio": 2.252041785375119,
+      "crossover_tokens_per_day": 225204178.53751191,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 4994,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 4994,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 4994,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": 4994,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": 8738,
+          "api_usd": 2633,
+          "gpu_count": 2,
+          "fits": true
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": 23714,
+          "api_usd": 10530,
+          "gpu_count": 6,
+          "fits": true
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 8,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 8,
+          "fits": false
         }
       ],
-      "fits": false,
-      "reason": "Needs 20 a100-80g GPUs for VRAM and peak traffic; p4de.24xlarge exposes 8.",
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
+      "fits": true,
       "inputs": {
         "gpu_sku": "a100-80g",
         "gpu_name": "NVIDIA A100 80GB",
         "instance_type": "p4de.24xlarge",
         "gpu_price_hourly_usd": 5.2,
-        "gpu_count": 8,
+        "gpu_count": 6,
         "gpu_max_count": 8,
         "gpu_memory_gb": 80,
         "vram_required_gb": 20.1,
-        "vram_available_gb": 640,
-        "self_host_throughput_tps": 1398,
+        "vram_available_gb": 480,
+        "self_host_throughput_tps": 1049,
         "self_host_throughput_tps_per_gpu": 175,
         "quantization": "int4",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "l40s__fp16__light": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 2 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 2 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1378,59 +2095,97 @@
         "quantization": "fp16",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "l40s__fp16__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 12 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 4 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1446,59 +2201,97 @@
         "quantization": "fp16",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "l40s__fp16__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 118 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 36 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1514,57 +2307,95 @@
         "quantization": "fp16",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "l40s__int8__light": {
-      "self_host_monthly_usd": 3266,
+      "self_host_monthly_usd": 2460,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 31.016144349477685,
-      "crossover_tokens_per_day": 31016144.349477682,
+      "ratio": 23.358024691358025,
+      "crossover_tokens_per_day": 23358024.691358026,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "l40s",
@@ -1581,59 +2412,97 @@
         "quantization": "int8",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "l40s__int8__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 7 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 3 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1649,59 +2518,97 @@
         "quantization": "int8",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "l40s__int8__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 69 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 21 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1717,57 +2624,95 @@
         "quantization": "int8",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "l40s__int4__light": {
-      "self_host_monthly_usd": 3266,
+      "self_host_monthly_usd": 2460,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 31.016144349477685,
-      "crossover_tokens_per_day": 31016144.349477682,
+      "ratio": 23.358024691358025,
+      "crossover_tokens_per_day": 23358024.691358026,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 2460,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "l40s",
@@ -1784,59 +2729,97 @@
         "quantization": "int4",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "l40s__int4__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 2460,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 5 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 2 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1852,59 +2835,97 @@
         "quantization": "int4",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "l40s__int4__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 2460,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 2460,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": 2460,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 47 l40s GPUs for VRAM and peak traffic; g6e.xlarge exposes 1.",
+      "reason": "Needs 15 l40s GPUs for VRAM and peak output traffic; g6e.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "l40s",
         "gpu_name": "NVIDIA L40S",
@@ -1920,59 +2941,97 @@
         "quantization": "int4",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a10g__fp16__light": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 4 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 4 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -1988,59 +3047,97 @@
         "quantization": "fp16",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a10g__fp16__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 17 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 6 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2056,59 +3153,97 @@
         "quantization": "fp16",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a10g__fp16__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 169 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 51 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2124,59 +3259,97 @@
         "quantization": "fp16",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a10g__int8__light": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 2 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 2 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2192,59 +3365,97 @@
         "quantization": "int8",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a10g__int8__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 10 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 3 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2260,59 +3471,97 @@
         "quantization": "int8",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a10g__int8__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": null,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": null,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 100 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 30 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2328,57 +3577,95 @@
         "quantization": "int8",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     },
     "a10g__int4__light": {
-      "self_host_monthly_usd": 2462,
+      "self_host_monthly_usd": 1977,
       "api_monthly_usd": 105,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
-      "ratio": 23.380816714150047,
-      "crossover_tokens_per_day": 23380816.71415005,
+      "ratio": 18.776828110161443,
+      "crossover_tokens_per_day": 18776828.110161442,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 1977,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 1977,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 10,
+        "constrained": false
+      },
       "fits": true,
       "inputs": {
         "gpu_sku": "a10g",
@@ -2395,59 +3682,97 @@
         "quantization": "int4",
         "shape": "light",
         "tokens_per_day": 1000000,
-        "peak_tokens_per_second": 35
+        "output_tokens_per_day": 300000,
+        "peak_tokens_per_second": 35,
+        "peak_output_tokens_per_second": 10
       }
     },
     "a10g__int4__medium": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 1053,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 1977,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 1977,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 104,
+        "constrained": false
+      },
       "fits": false,
-      "reason": "Needs 7 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 3 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2463,59 +3788,97 @@
         "quantization": "int4",
         "shape": "medium",
         "tokens_per_day": 10000000,
-        "peak_tokens_per_second": 347
+        "output_tokens_per_day": 3000000,
+        "peak_tokens_per_second": 347,
+        "peak_output_tokens_per_second": 104
       }
     },
     "a10g__int4__heavy": {
       "self_host_monthly_usd": null,
       "api_monthly_usd": 10530,
+      "cost_regime": "api-wins",
       "regime": "api-wins",
       "ratio": null,
       "crossover_tokens_per_day": null,
       "crossover_series": [
         {
           "tokens_per_day": 100000,
-          "api_usd": 11
+          "self_host_usd": 1977,
+          "api_usd": 11,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 1000000,
-          "api_usd": 105
+          "self_host_usd": 1977,
+          "api_usd": 105,
+          "gpu_count": 1,
+          "fits": true
         },
         {
           "tokens_per_day": 5000000,
-          "api_usd": 527
+          "self_host_usd": null,
+          "api_usd": 527,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 10000000,
-          "api_usd": 1053
+          "self_host_usd": null,
+          "api_usd": 1053,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 25000000,
-          "api_usd": 2633
+          "self_host_usd": null,
+          "api_usd": 2633,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 100000000,
-          "api_usd": 10530
+          "self_host_usd": null,
+          "api_usd": 10530,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 250000000,
-          "api_usd": 26325
+          "self_host_usd": null,
+          "api_usd": 26325,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 500000000,
-          "api_usd": 52650
+          "self_host_usd": null,
+          "api_usd": 52650,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 1000000000,
-          "api_usd": 105300
+          "self_host_usd": null,
+          "api_usd": 105300,
+          "gpu_count": 1,
+          "fits": false
         },
         {
           "tokens_per_day": 5000000000,
-          "api_usd": 526500
+          "self_host_usd": null,
+          "api_usd": 526500,
+          "gpu_count": 1,
+          "fits": false
         }
       ],
+      "api_capacity": {
+        "aggregate_p50_tps": 930,
+        "required_peak_output_tps": 1042,
+        "constrained": true
+      },
       "fits": false,
-      "reason": "Needs 68 a10g GPUs for VRAM and peak traffic; g5.xlarge exposes 1.",
+      "reason": "Needs 21 a10g GPUs for VRAM and peak output traffic; g5.xlarge exposes 1.",
       "inputs": {
         "gpu_sku": "a10g",
         "gpu_name": "NVIDIA A10G",
@@ -2531,7 +3894,9 @@
         "quantization": "int4",
         "shape": "heavy",
         "tokens_per_day": 100000000,
-        "peak_tokens_per_second": 3472
+        "output_tokens_per_day": 30000000,
+        "peak_tokens_per_second": 3472,
+        "peak_output_tokens_per_second": 1042
       }
     }
   },
@@ -2558,12 +3923,17 @@
     },
     "compositions.*.inputs.self_host_throughput_tps": {
       "label": "calculated",
-      "source": "memory bandwidth divided by active parameter bytes, adjusted for quantization",
+      "source": "memory bandwidth divided by active parameter bytes; capacity sized from output-token peak",
       "url": "/methodology/#self-host-throughput"
+    },
+    "compositions.*.api_capacity": {
+      "label": "measured",
+      "source": "OpenRouter p50 throughput times provider count compared with peak output tokens/sec",
+      "url": "/methodology/#api-capacity"
     },
     "compositions.*.self_host_monthly_usd": {
       "label": "calculated",
-      "source": "GPU hours at 60% utilization plus 0.1 FTE labor",
+      "source": "required GPU hours plus 0.1 FTE labor; utilization affects capacity sizing",
       "url": "/methodology/#cost-formulas"
     },
     "compositions.*.regime": {

@@ -1,0 +1,224 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import boundary from "../../data/generated/check-boundaries.json";
+import manifest from "../../data/generated/manifest.json";
+import { HARD_CONSTRAINT_OPTIONS, SPEND_BAND_OPTIONS, TRAFFIC_SHAPE_OPTIONS } from "../../../shared/check-boundary";
+---
+
+<BaseLayout
+  title="Check if you're the exception | RunWhere"
+  description="Answer four categorical questions to see whether your API workload belongs in RunWhere's self-hosting exception set."
+>
+  <section class="check-page page-shell-narrow">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Four-question check</p>
+        <h1>Start from the API. Test for exceptions.</h1>
+        <p class="hero-copy">
+          No tokens/day, GPU, quantization, or cloud choices. RunWhere only asks for what a cost-anxious API user already knows.
+        </p>
+      </div>
+    </header>
+
+    <form class="check-form panel" data-check-form data-ruleset-version={boundary.artifact.ruleset_version}>
+      <section>
+        <h2>1. Current monthly API spend</h2>
+        <div class="option-grid two">
+          {SPEND_BAND_OPTIONS.map((band, index) => (
+            <label class="choice-card interactive-panel">
+              <input type="radio" name="spend_band" value={band.slug} checked={index === 0} />
+              <span>{band.label}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>2. Hosted model in use</h2>
+        <label>
+          <span class="field-label">Hosted API model or family</span>
+          <select name="hosted_model">
+            {manifest.api_models.map((model) => (
+              <option value={model.slug}>{model.name} · {model.vendor}</option>
+            ))}
+          </select>
+        </label>
+      </section>
+
+      <section>
+        <h2>3. Traffic shape</h2>
+        <div class="option-grid">
+          {TRAFFIC_SHAPE_OPTIONS.map((shape, index) => (
+            <label class="choice-card interactive-panel">
+              <input type="radio" name="traffic_shape" value={shape.slug} checked={index === 0} />
+              <span>
+                <strong>{shape.label}</strong>
+                <small>{shape.description}</small>
+              </span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2>4. Hard constraints</h2>
+        <div class="option-grid two">
+          <label class="choice-card interactive-panel">
+            <input type="checkbox" name="hard_constraints" value="none" checked data-none />
+            <span>None</span>
+          </label>
+          {HARD_CONSTRAINT_OPTIONS.map((constraint) => (
+            <label class="choice-card interactive-panel">
+              <input type="checkbox" name="hard_constraints" value={constraint.slug} data-constraint />
+              <span>{constraint.label}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <details class="advanced-disclosure">
+        <summary>I know my candidate open-weight model</summary>
+        <label>
+          <span class="field-label">Candidate model (optional)</span>
+          <select name="candidate_open_weight_model">
+            <option value="">Use RunWhere's mapped candidates</option>
+            {manifest.models.map((model) => (
+              <option value={model.slug}>{model.name}</option>
+            ))}
+          </select>
+        </label>
+      </details>
+
+      <div class="form-actions">
+        <button class="button-primary" type="submit">Show my verdict →</button>
+        <p class="muted mono">Boundary artifact {boundary.artifact.id}</p>
+      </div>
+    </form>
+  </section>
+
+  <script>
+    import { encodeCheckProfile, normalizeConstraints } from "../../../shared/check-boundary";
+    import type { CheckProfile } from "../../../shared/types";
+
+    const form = document.querySelector("[data-check-form]") as HTMLFormElement | null;
+    const noneInput = form?.querySelector("[data-none]") as HTMLInputElement | null;
+    const constraintInputs = Array.from(form?.querySelectorAll("[data-constraint]") || []) as HTMLInputElement[];
+
+    function selectedRadio(name: string) {
+      return (form?.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement | null)?.value || "";
+    }
+
+    constraintInputs.forEach((input) => {
+      input.addEventListener("change", () => {
+        if (input.checked && noneInput) noneInput.checked = false;
+        if (!constraintInputs.some((constraint) => constraint.checked) && noneInput) noneInput.checked = true;
+      });
+    });
+
+    noneInput?.addEventListener("change", () => {
+      if (noneInput.checked) {
+        constraintInputs.forEach((constraint) => {
+          constraint.checked = false;
+        });
+      }
+    });
+
+    form?.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentForm = event.currentTarget as HTMLFormElement;
+      const formData = new FormData(currentForm);
+      const constraints = normalizeConstraints(formData.getAll("hard_constraints").map(String));
+      const candidate = String(formData.get("candidate_open_weight_model") || "");
+      const profile = {
+        ruleset_version: currentForm.dataset.rulesetVersion || "",
+        spend_band: selectedRadio("spend_band"),
+        hosted_model: String(formData.get("hosted_model") || ""),
+        traffic_shape: selectedRadio("traffic_shape"),
+        hard_constraints: constraints,
+        candidate_open_weight_model: candidate || undefined
+      } as CheckProfile;
+
+      location.href = `/check/result/?profile=${encodeURIComponent(encodeCheckProfile(profile))}`;
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .check-page {
+    padding-bottom: var(--space-8);
+  }
+
+  .check-form {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-6);
+  }
+
+  .check-form section {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .check-form h2 {
+    font-size: var(--text-lg);
+    letter-spacing: 0;
+  }
+
+  .option-grid {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 680px) {
+    .option-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .choice-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    padding: var(--space-3);
+    cursor: pointer;
+  }
+
+  .choice-card input {
+    margin-top: 0.25rem;
+    accent-color: var(--color-accent);
+  }
+
+  .choice-card span {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .choice-card small {
+    color: var(--color-fg-muted);
+    font-size: var(--text-xs);
+  }
+
+  .advanced-disclosure {
+    border-top: 1px solid var(--color-border-muted);
+    padding-top: var(--space-4);
+  }
+
+  .advanced-disclosure summary {
+    cursor: pointer;
+    color: var(--color-fg-muted);
+    font-weight: 700;
+  }
+
+  .advanced-disclosure label {
+    display: block;
+    margin-top: var(--space-4);
+  }
+
+  .form-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
+</style>

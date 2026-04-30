@@ -1,0 +1,8 @@
+slug: vm-serious
+label: Serious always-on GPU VM
+description: A100/H100-class VM or node for frontier-size models or high throughput.
+pricing_model: Hourly accelerator node rental times 720 monthly hours plus operational labor.
+best_fit: Steady frontier-model or high-throughput production workloads.
+v1_treatment: modeled
+operational_effort: High
+sort_order: 4

@@ -1,0 +1,11 @@
+slug: managed-endpoint
+label: Managed dedicated endpoint
+description: Dedicated inference endpoint on Vertex AI, SageMaker, Azure ML,
+  Bedrock custom model class, or similar.
+pricing_model: Provisioned accelerator instance-hours plus managed-service
+  premium and reduced ops labor.
+best_fit: Teams needing isolation, private networking, or deployment controls
+  without raw VM operations.
+v1_treatment: preview
+operational_effort: Medium
+sort_order: 1

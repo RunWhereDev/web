@@ -4,131 +4,88 @@ import manifest from "../data/generated/manifest.json";
 
 const defaultModel = manifest.models[0];
 const defaultCloud = manifest.clouds[0];
-const defaultShape = manifest.shapes.find((shape) => shape.slug === "medium") || manifest.shapes[0];
+const headline = manifest.headline;
+const refreshDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+}).format(new Date(manifest.refresh.pricing_last_run));
 ---
 
 <BaseLayout
-  title="RunWhere | Self-host or stay on the API?"
-  description="Choose an open-weight model, cloud, and usage shape. RunWhere returns the directional cost regime with assumptions and sources visible."
+  title="RunWhere | Stay on the API unless you're the exception"
+  description="RunWhere gives the API-first answer instantly, then checks whether your workload belongs in the self-hosting exception set."
 >
   <section class="home page-shell">
-    <div class="hero">
-      <div>
-        <h1>Self-host or stay on the API?</h1>
+    <div class="hero hero-grid">
+      <div class="hero-copy-block">
+        <p class="eyebrow">API-first by default</p>
+        <h1><a href={headline.methodology_url}>{headline.label}.</a></h1>
         <p class="hero-copy">
-          Choose a model, cloud, and usage shape. Get a directional cost regime with assumptions and sources visible.
+          At typical scale, hosted API providers compete hard enough on price that self-hosting usually loses — and that is before counting your time.
+          But exceptions exist.
         </p>
-      </div>
-    </div>
-
-    <form class="composer panel" data-composer>
-      <div class="composer-body">
-        <section class="model-section" aria-labelledby="model-heading">
-          <div class="section-head">
-            <h2 id="model-heading">Model</h2>
-            <span class="count-pill" data-count>{manifest.models.length} models</span>
-          </div>
-
-          <div class="model-list" role="radiogroup" aria-label="Models">
-            {manifest.models.map((model, index) => (
-              <label
-                class="model-option interactive-panel"
-                data-model-card
-              >
-                <input
-                  type="radio"
-                  name="model"
-                  value={model.slug}
-                  checked={index === 0}
-                  data-model-input
-                />
-                <span>
-                  <strong>{model.name}</strong>
-                  <span>{model.vendor} · {model.params_b}B params</span>
-                </span>
-              </label>
-            ))}
-          </div>
-        </section>
-
-        <div class="right-panel">
-          <section aria-labelledby="cloud-heading">
-            <h2 id="cloud-heading">Cloud</h2>
-            <div class="segmented" role="radiogroup" aria-label="Cloud">
-              {manifest.clouds.map((cloud, index) => (
-                <label class="segment">
-                  <input type="radio" name="cloud" value={cloud.slug} checked={index === 0} />
-                  <span>{cloud.name}</span>
-                </label>
-              ))}
-            </div>
-          </section>
-
-          <section aria-labelledby="shape-heading">
-            <h2 id="shape-heading">Usage shape</h2>
-            <div class="shape-grid" role="radiogroup" aria-label="Usage shape">
-              {manifest.shapes.map((shape) => (
-                <label class="shape-card interactive-panel">
-                  <input type="radio" name="shape" value={shape.slug} checked={shape.slug === defaultShape.slug} />
-                  <span class="shape-label">{shape.label}</span>
-                  <strong>{Intl.NumberFormat("en", { notation: "compact" }).format(shape.tokens_per_day)} tokens/day</strong>
-                  <span>{shape.persona}</span>
-                </label>
-              ))}
-            </div>
-          </section>
-
-          <div class="composer-actions">
-            <a class="button-primary" href={`/run/${defaultModel.slug}/${defaultCloud.slug}/?shape=${defaultShape.slug}`} data-submit>
-              Show regime &rarr;
-            </a>
-            <p class="request-line">
-              Don't see your model? <a href="https://github.com/RunWhere/web/issues/new?title=Model%20request%3A%20&labels=model-request">Request it on GitHub</a>.
-            </p>
-          </div>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button-primary" href="/check/">Check if I'm the exception →</a>
+          <a class="button-secondary" href={`/run/${defaultModel.slug}/${defaultCloud.slug}/`}>
+            I already know my open-weight model
+          </a>
         </div>
       </div>
-    </form>
 
-    <section class="home-notes">
+      <aside class="headline-card panel" aria-labelledby="trust-heading">
+        <p class="eyebrow">Headline provenance</p>
+        <h2 id="trust-heading">Computed, not hard-coded.</h2>
+        <dl>
+          <div>
+            <dt>API-first rate</dt>
+            <dd>{Math.round(headline.api_first_rate * 100)}%</dd>
+          </div>
+          <div>
+            <dt>Pricing refresh</dt>
+            <dd>{refreshDate}</dd>
+          </div>
+          <div>
+            <dt>Ruleset</dt>
+            <dd>{manifest.ruleset_version}</dd>
+          </div>
+        </dl>
+        <a href="/methodology/#headline-rate">See the reference workload math</a>
+      </aside>
+    </div>
+
+    <section class="exception-panel panel" aria-labelledby="exceptions-heading">
+      <div>
+        <p class="eyebrow">Exception traits</p>
+        <h2 id="exceptions-heading">Check if any of these apply.</h2>
+      </div>
+      <ul class="exception-list">
+        <li>Sustained high-volume API spend</li>
+        <li>Strict data residency or air-gap requirements</li>
+        <li>Predictable batch or steady GPU utilization</li>
+        <li>Small open-weight substitute is acceptable</li>
+        <li>Latency requirements API providers cannot meet</li>
+      </ul>
+    </section>
+
+    <section class="home-notes" aria-label="How RunWhere works">
       <article>
-        <p class="eyebrow">Versioned artifacts</p>
-        <h2>Build-time results.</h2>
-        <p>Each model–cloud page is a versioned artifact generated at build time, with a ruleset version and source timestamps.</p>
+        <p class="eyebrow">Four questions</p>
+        <h2>No parameter anxiety.</h2>
+        <p>The primary flow asks only for API spend band, hosted model, traffic shape, and hard constraints.</p>
       </article>
       <article>
-        <p class="eyebrow">Adjustable assumptions</p>
-        <h2>Opinions stay visible.</h2>
-        <p>Utilisation, labour, traffic shape, and quantisation multipliers are adjustable without changing the canonical URL.</p>
+        <p class="eyebrow">Serving modalities</p>
+        <h2>Self-hosting is not one thing.</h2>
+        <p>Exception results compare API, managed endpoints, serverless GPU, VMs, batch GPU, and owned hardware.</p>
       </article>
       <article>
-        <p class="eyebrow">Escalation</p>
-        <h2>Only close calls need live analysis.</h2>
-        <p>Clear regimes are deterministic. Boundary cases expose an opt-in live analysis path.</p>
+        <p class="eyebrow">Advanced path</p>
+        <h2>Open-weight details stay available.</h2>
+        <p>If you already know the model and cloud, inspect the precomputed GPU × quantization × shape matrix.</p>
       </article>
     </section>
   </section>
-
-  <script is:inline>
-    const composer = document.querySelector("[data-composer]");
-    const submit = document.querySelector("[data-submit]");
-
-    function selected(name) {
-      return composer?.querySelector(`input[name="${name}"]:checked`)?.value;
-    }
-
-    function updateHref() {
-      const model = selected("model");
-      const cloud = selected("cloud");
-      const shape = selected("shape");
-      if (submit && model && cloud && shape) {
-        submit.href = `/run/${model}/${cloud}/?shape=${shape}`;
-      }
-    }
-
-    composer?.addEventListener("change", updateHref);
-    updateHref();
-  </script>
 </BaseLayout>
 
 <style>
@@ -136,190 +93,107 @@ const defaultShape = manifest.shapes.find((shape) => shape.slug === "medium") ||
     padding-bottom: var(--space-8);
   }
 
-  .hero {
-    padding-block: var(--space-6);
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    align-items: stretch;
   }
 
-  .hero h1 {
-    font-size: var(--text-2xl);
-    font-weight: 650;
-    letter-spacing: 0;
-    line-height: 1.2;
-    margin-bottom: var(--space-3);
-  }
-
-  @media (min-width: 720px) {
-    .hero h1 {
-      font-size: var(--text-3xl);
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1fr) 360px;
     }
   }
 
-  .hero .hero-copy {
-    font-size: var(--text-base);
-    margin: 0;
-  }
-
-  .composer {
-    padding: var(--space-4);
-  }
-
-  .composer-body {
+  .hero-copy-block {
     display: grid;
-    gap: var(--space-6);
+    align-content: center;
+    gap: var(--space-4);
   }
 
-  @media (min-width: 860px) {
-    .composer-body {
-      grid-template-columns: 1fr 320px;
-    }
+  .hero h1 a {
+    color: inherit;
+    text-decoration-thickness: 0.08em;
+    text-underline-offset: 0.12em;
   }
 
-  .model-section,
-  .right-panel {
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  .headline-card,
+  .exception-panel {
+    padding: var(--space-6);
+  }
+
+  .headline-card {
     display: grid;
     gap: var(--space-4);
     align-content: start;
   }
 
-  .section-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--space-4);
+  .headline-card h2,
+  .exception-panel h2,
+  .home-notes h2 {
+    font-size: var(--text-xl);
+    letter-spacing: 0;
   }
 
-  .composer h2 {
-    font-size: var(--text-sm);
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--color-fg-muted);
-    letter-spacing: 0.1em;
-  }
-
-  .count-pill {
-    border: 1px solid var(--color-border);
-    border-radius: 999px;
-    background: var(--color-bg-subtle);
-    padding: 0.25rem 0.6rem;
-    color: var(--color-fg-muted);
-    font-size: var(--text-xs);
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .model-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-2);
-  }
-
-  .model-option {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-2);
-    padding: var(--space-3);
-    cursor: pointer;
-  }
-
-  .model-option input {
-    margin-top: 0.2rem;
-    accent-color: var(--color-accent);
-    flex-shrink: 0;
-  }
-
-  .model-option span {
-    display: grid;
-    gap: 0.1rem;
-  }
-
-  .model-option strong {
-    font-size: var(--text-sm);
-    line-height: 1.3;
-  }
-
-  .model-option span span {
-    display: block;
-    color: var(--color-fg-muted);
-    font-size: var(--text-xs);
-  }
-
-  .segmented {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-  }
-
-  .segment {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    min-height: 2.25rem;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.45rem 0.7rem;
-    background: var(--color-surface);
-    font-size: var(--text-sm);
-    cursor: pointer;
-  }
-
-  .segment input {
-    accent-color: var(--color-accent);
-  }
-
-  .shape-grid {
-    display: grid;
-    gap: var(--space-2);
-  }
-
-  .shape-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: var(--space-2);
-    padding: var(--space-3);
-    cursor: pointer;
-  }
-
-  .shape-card input {
-    margin-top: 0.2rem;
-    accent-color: var(--color-accent);
-  }
-
-  .shape-card span,
-  .shape-card strong {
-    display: block;
-    font-size: var(--text-sm);
-  }
-
-  .shape-label {
-    color: var(--color-fg-default);
-    font-weight: 700;
-  }
-
-  .shape-card strong {
-    font-size: var(--text-sm);
-    font-weight: 600;
-  }
-
-  .shape-card span:not(.shape-label) {
-    color: var(--color-fg-muted);
-    font-size: var(--text-xs);
-  }
-
-  .composer-actions {
+  .headline-card dl {
     display: grid;
     gap: var(--space-3);
+    margin: 0;
   }
 
-  .button-primary {
-    width: 100%;
-    justify-content: center;
+  .headline-card dl div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+    border-bottom: 1px solid var(--color-border-muted);
+    padding-bottom: var(--space-2);
   }
 
-  .request-line {
+  .headline-card dt {
     color: var(--color-fg-muted);
-    font-size: var(--text-xs);
-    text-align: center;
+    font-size: var(--text-sm);
+  }
+
+  .headline-card dd {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .exception-panel {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 860px) {
+    .exception-panel {
+      grid-template-columns: 0.8fr 1.2fr;
+      align-items: start;
+    }
+  }
+
+  .exception-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .exception-list li {
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-md);
+    background: var(--color-bg-subtle);
+    padding: var(--space-3);
+    color: var(--color-fg-muted);
+    font-size: var(--text-sm);
+    font-weight: 650;
   }
 
   .home-notes {
@@ -333,12 +207,6 @@ const defaultShape = manifest.shapes.find((shape) => shape.slug === "medium") ||
   .home-notes article {
     display: grid;
     gap: var(--space-2);
-  }
-
-  .home-notes h2 {
-    font-size: var(--text-lg);
-    font-weight: 650;
-    letter-spacing: 0;
   }
 
   .home-notes p:not(.eyebrow) {

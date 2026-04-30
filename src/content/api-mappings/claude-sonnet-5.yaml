@@ -1,0 +1,16 @@
+slug: claude-sonnet-5
+name: Claude Sonnet 5
+vendor: Anthropic
+family: Claude
+size_class: frontier
+typical_price_source: Anthropic and OpenRouter published API pricing
+mapped_open_weight_candidates:
+  - llama-4-maverick
+  - qwen-3-coder-480b
+  - mistral-large-3
+quality_caveat: Frontier hosted models differ materially in reasoning, tool use,
+  safety behavior, and latency; use these mappings only as candidate self-host
+  investigations.
+inclusion_rationale: Represents frontier hosted workloads where the API-first
+  prior is strong, but very high steady spend can justify dedicated capacity
+  analysis.

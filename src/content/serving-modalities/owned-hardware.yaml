@@ -1,0 +1,8 @@
+slug: owned-hardware
+label: Owned/on-prem hardware
+description: On-prem, colo, or owned workstation/server GPUs.
+pricing_model: Capex amortization plus power, cooling or colo, maintenance, and labor.
+best_fit: Privacy-bound, air-gapped, or very steady high-volume workloads.
+v1_treatment: advisory
+operational_effort: High
+sort_order: 6

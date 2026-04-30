@@ -9,12 +9,13 @@ import BaseLayout from "../layouts/BaseLayout.astro";
       <h1 class="page-title">No account, no private scenario storage.</h1>
     </header>
     <p>
-      RunWhere is static by default. The model, cloud, GPU, quantization, and usage shape you choose are represented in
-      the URL so the result can be shared.
+      RunWhere is static by default. Check results encode only categorical inputs — spend band, hosted model, traffic shape,
+      hard constraints, and ruleset version — in the URL so the result can be shared. Advanced pages encode model/cloud in
+      the path and GPU, quantization, or usage-shape knobs in the query string.
     </p>
     <p>
       Optional analytics may record page views and coarse product events when configured. The escalation function logs
-      artifact ID, timing, token counts, and estimated cost, but not user identifiers.
+      artifact ID, flow, outcome, timing, token counts, and estimated cost, but not user identifiers or IP addresses.
     </p>
   </article>
 </BaseLayout>

@@ -1,0 +1,8 @@
+slug: api
+label: Hosted API
+description: Hosted model API via provider marketplace or direct vendor.
+pricing_model: Blended input/output token price.
+best_fit: Default for most workloads, especially bursty or uncertain demand.
+v1_treatment: modeled
+operational_effort: Low
+sort_order: 0

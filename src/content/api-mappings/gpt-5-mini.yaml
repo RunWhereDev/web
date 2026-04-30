@@ -1,0 +1,14 @@
+slug: gpt-5-mini
+name: GPT-5 mini
+vendor: OpenAI
+family: GPT-5
+size_class: small
+typical_price_source: OpenAI and OpenRouter published API pricing
+mapped_open_weight_candidates:
+  - gemma-4-26b
+  - mistral-small-4
+  - phi-4
+quality_caveat: These models are plausible efficient substitutes for narrow or
+  cost-sensitive workloads, not quality-identical replacements for GPT-5 mini.
+inclusion_rationale: Common cost-anxious hosted model family where small
+  open-weight substitutes are realistic enough to test the exception boundary.

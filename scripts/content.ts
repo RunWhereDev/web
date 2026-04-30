@@ -2,7 +2,16 @@ import { readFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import yaml from "js-yaml";
 import { z } from "zod";
-import { gpuSpecSchema, modelSchema, type GpuSpec, type ModelRecord } from "../shared/content-schemas";
+import {
+  apiMappingSchema,
+  gpuSpecSchema,
+  modelSchema,
+  servingModalitySchema,
+  type ApiMappingRecord,
+  type GpuSpec,
+  type ModelRecord,
+  type ServingModalityRecord
+} from "../shared/content-schemas";
 
 async function readYamlFile<T>(filePath: string, schema: z.ZodType<T>) {
   const raw = await readFile(filePath, "utf8");
@@ -26,4 +35,16 @@ export function loadModels() {
 
 export function loadGpuSpecs() {
   return readYamlDir<GpuSpec>(projectPath("src/content/gpu-specs"), gpuSpecSchema);
+}
+
+export function loadApiMappings() {
+  return readYamlDir<ApiMappingRecord>(projectPath("src/content/api-mappings"), apiMappingSchema);
+}
+
+export async function loadServingModalities() {
+  const modalities = await readYamlDir<ServingModalityRecord>(
+    projectPath("src/content/serving-modalities"),
+    servingModalitySchema
+  );
+  return modalities.sort((a, b) => a.sort_order - b.sort_order);
 }

@@ -1,0 +1,8 @@
+slug: serverless-gpu
+label: Serverless GPU
+description: GPU-backed container or inference worker that can scale to zero.
+pricing_model: Active GPU seconds plus request/cold-start overhead and lightweight ops labor.
+best_fit: Bursty small or medium open-weight workloads that want API-like operations.
+v1_treatment: modeled
+operational_effort: Medium
+sort_order: 2

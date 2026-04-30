@@ -1,7 +1,7 @@
 import type { CloudGpu, CloudSlug, CostAssumptions, Quantization, UsageShape } from "../shared/types";
 import { DEFAULT_ASSUMPTIONS } from "../shared/cost-formulas";
 
-export const RULESET_VERSION = "1.0.0";
+export const RULESET_VERSION = "1.1.0";
 export const DEFAULT_GENERATED_AT = "2026-04-29T03:00:00.000Z";
 
 export const CLOUDS: Array<{ slug: CloudSlug; name: string; gpu_count: number }> = [

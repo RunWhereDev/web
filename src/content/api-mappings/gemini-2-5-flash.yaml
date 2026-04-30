@@ -1,0 +1,15 @@
+slug: gemini-2-5-flash
+name: Gemini 2.5 Flash
+vendor: Google
+family: Gemini
+size_class: small
+typical_price_source: Google AI Studio and OpenRouter published API pricing
+mapped_open_weight_candidates:
+  - gemma-4-26b
+  - phi-4
+  - mistral-small-4
+quality_caveat: Flash-class API models optimize latency and price; mapped open
+  weights may need task-specific evaluation before replacement.
+inclusion_rationale: Represents the low-latency low-cost API category that
+  usually remains cheaper than self-hosting unless traffic is very steady or
+  constrained.

@@ -1,0 +1,8 @@
+slug: vm-cheap
+label: Cheap always-on GPU VM
+description: Single smaller GPU VM such as L4, A10G, T4, or L40S.
+pricing_model: Hourly GPU VM rental times 720 monthly hours plus operational labor.
+best_fit: Steady small-model production where idle capacity is low.
+v1_treatment: modeled
+operational_effort: Medium
+sort_order: 3

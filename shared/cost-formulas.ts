@@ -1,4 +1,13 @@
-import type { ApiCostInput, CostAssumptions, Quantization, SelfHostCostInput } from "./types";
+import type {
+  ApiCostInput,
+  BatchGpuCostInput,
+  CostAssumptions,
+  ManagedEndpointCostInput,
+  OwnedHardwareCostInput,
+  Quantization,
+  SelfHostCostInput,
+  ServerlessGpuCostInput
+} from "./types";
 
 export const DEFAULT_ASSUMPTIONS: CostAssumptions = {
   utilization: 0.6,
@@ -14,6 +23,12 @@ export const DEFAULT_ASSUMPTIONS: CostAssumptions = {
 
 const MONTHLY_HOURS = 24 * 30;
 const OVERHEAD_MULTIPLIER = 1.08;
+const DEFAULT_COLD_START_PADDING_SECONDS = 20;
+const DEFAULT_SERVERLESS_OPS_FTE = 0.03;
+const DEFAULT_BATCH_OPS_FTE = 0.04;
+const DEFAULT_MANAGED_ENDPOINT_OPS_FTE = 0.05;
+const DEFAULT_OWNED_HARDWARE_OPS_FTE = 0.12;
+const DEFAULT_AMORTIZATION_MONTHS = 36;
 
 export function operationalLaborMonthlyUsd(
   fteFraction = DEFAULT_ASSUMPTIONS.fteFraction,
@@ -27,7 +42,7 @@ export function selfHostMonthlyUsd({ gpuPriceHourlyUsd, gpuCount, assumptions }:
     return Number.POSITIVE_INFINITY;
   }
 
-  const infrastructure = (gpuPriceHourlyUsd * gpuCount * MONTHLY_HOURS) / assumptions.utilization;
+  const infrastructure = gpuPriceHourlyUsd * gpuCount * MONTHLY_HOURS;
   const labor = operationalLaborMonthlyUsd(assumptions.fteFraction, assumptions.annualSalaryUsd);
   const base = infrastructure + labor;
 
@@ -40,6 +55,99 @@ export function apiMonthlyUsd({ tokensPerDay, priceInputPerMtokUsd, priceOutputP
     assumptions.inputShare * priceInputPerMtokUsd + assumptions.outputShare * priceOutputPerMtokUsd;
 
   return monthlyMtok * blendedPrice;
+}
+
+export function managedEndpointMonthlyUsd({
+  acceleratorInstanceHourlyUsd,
+  provisionedInstances,
+  managedServicePremiumMonthlyUsd,
+  assumptions,
+  opsLaborFteFraction = DEFAULT_MANAGED_ENDPOINT_OPS_FTE
+}: ManagedEndpointCostInput) {
+  if (acceleratorInstanceHourlyUsd < 0 || provisionedInstances <= 0 || managedServicePremiumMonthlyUsd < 0) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  return (
+    acceleratorInstanceHourlyUsd * provisionedInstances * MONTHLY_HOURS +
+    managedServicePremiumMonthlyUsd +
+    operationalLaborMonthlyUsd(opsLaborFteFraction, assumptions.annualSalaryUsd)
+  );
+}
+
+export function serverlessGpuMonthlyUsd({
+  outputTokensMonthly,
+  perGpuOutputTps,
+  gpuPricePerSecondUsd,
+  coldStartsMonthly,
+  coldStartPaddingSeconds = DEFAULT_COLD_START_PADDING_SECONDS,
+  requestOverheadMonthlyUsd = 0,
+  assumptions,
+  opsLaborFteFraction = DEFAULT_SERVERLESS_OPS_FTE
+}: ServerlessGpuCostInput) {
+  if (outputTokensMonthly < 0 || perGpuOutputTps <= 0 || gpuPricePerSecondUsd < 0 || coldStartsMonthly < 0) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  const activeGpuSeconds = outputTokensMonthly / perGpuOutputTps;
+  const coldStartSeconds = coldStartsMonthly * coldStartPaddingSeconds;
+
+  return (
+    (activeGpuSeconds + coldStartSeconds) * gpuPricePerSecondUsd +
+    requestOverheadMonthlyUsd +
+    operationalLaborMonthlyUsd(opsLaborFteFraction, assumptions.annualSalaryUsd)
+  );
+}
+
+export function batchGpuMonthlyUsd({
+  gpuPriceHourlyUsd,
+  gpusNeeded,
+  activeJobHoursMonthly,
+  orchestrationOverheadMonthlyUsd = 0,
+  assumptions,
+  opsLaborFteFraction = DEFAULT_BATCH_OPS_FTE
+}: BatchGpuCostInput) {
+  if (gpuPriceHourlyUsd < 0 || gpusNeeded <= 0 || activeJobHoursMonthly < 0 || orchestrationOverheadMonthlyUsd < 0) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  return (
+    gpuPriceHourlyUsd * gpusNeeded * activeJobHoursMonthly +
+    orchestrationOverheadMonthlyUsd +
+    operationalLaborMonthlyUsd(opsLaborFteFraction, assumptions.annualSalaryUsd)
+  );
+}
+
+export function ownedHardwareMonthlyUsd({
+  hardwarePurchasePriceUsd,
+  amortizationMonths = DEFAULT_AMORTIZATION_MONTHS,
+  monthlyPowerKwh,
+  electricityPricePerKwhUsd,
+  pue = 1.2,
+  coloOrSpaceMonthlyUsd = 0,
+  maintenanceMonthlyUsd = 0,
+  assumptions,
+  opsLaborFteFraction = DEFAULT_OWNED_HARDWARE_OPS_FTE
+}: OwnedHardwareCostInput) {
+  if (
+    hardwarePurchasePriceUsd < 0 ||
+    amortizationMonths <= 0 ||
+    monthlyPowerKwh < 0 ||
+    electricityPricePerKwhUsd < 0 ||
+    pue <= 0 ||
+    coloOrSpaceMonthlyUsd < 0 ||
+    maintenanceMonthlyUsd < 0
+  ) {
+    return Number.POSITIVE_INFINITY;
+  }
+
+  return (
+    hardwarePurchasePriceUsd / amortizationMonths +
+    monthlyPowerKwh * electricityPricePerKwhUsd * pue +
+    coloOrSpaceMonthlyUsd +
+    maintenanceMonthlyUsd +
+    operationalLaborMonthlyUsd(opsLaborFteFraction, assumptions.annualSalaryUsd)
+  );
 }
 
 export function crossoverTokensPerDay(selfHostMonthly: number, priceInputPerMtokUsd: number, priceOutputPerMtokUsd: number, assumptions = DEFAULT_ASSUMPTIONS) {
@@ -67,4 +175,12 @@ export function quantizationThroughputMultiplier(quantization: Quantization, ass
 
 export function peakTokensPerSecond(tokensPerDay: number, peakToAvgRatio = DEFAULT_ASSUMPTIONS.peakToAvgRatio) {
   return (tokensPerDay / 86_400) * peakToAvgRatio;
+}
+
+export function outputTokensPerDay(tokensPerDay: number, outputShare = DEFAULT_ASSUMPTIONS.outputShare) {
+  return tokensPerDay * outputShare;
+}
+
+export function peakOutputTokensPerSecond(tokensPerDay: number, assumptions = DEFAULT_ASSUMPTIONS) {
+  return peakTokensPerSecond(outputTokensPerDay(tokensPerDay, assumptions.outputShare), assumptions.peakToAvgRatio);
 }

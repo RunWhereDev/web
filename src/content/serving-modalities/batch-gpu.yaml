@@ -1,0 +1,10 @@
+slug: batch-gpu
+label: Scheduled/batch GPU
+description: Scheduled GPU job for offline inference, backfills, nightly
+  summarization, evaluations, or other latency-relaxed work.
+pricing_model: Active job GPU-hours plus orchestration overhead and batch ops labor.
+best_fit: Predictable offline inference where requests can queue and capacity
+  can be scheduled.
+v1_treatment: preview
+operational_effort: Medium
+sort_order: 5
