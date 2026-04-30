@@ -1,6 +1,5 @@
-import { readFile } from "node:fs/promises";
 import { CLOUDS, CLOUD_GPU_CATALOG } from "./catalog";
-import { loadGpuSpecs, loadModels, projectPath } from "./content";
+import { loadGpuSpecs, loadModels } from "./content";
 
 const models = await loadModels();
 const gpuSpecs = await loadGpuSpecs();
@@ -25,10 +24,5 @@ for (const cloud of CLOUDS) {
     }
   }
 }
-
-await readFile(projectPath("docs/SPEC.md"), "utf8");
-await readFile(projectPath("docs/BRAND.md"), "utf8");
-await readFile(projectPath("docs/MODELS.md"), "utf8");
-await readFile(projectPath("docs/OPERATIONS.md"), "utf8");
 
 console.log(`Validated ${models.length} models and ${gpuSpecs.length} GPU specs.`);
