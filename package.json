@@ -4,6 +4,9 @@
   "ruleset_version": "1.0.0",
   "type": "module",
   "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
     "build": "npm run build:artifacts && npm run build:manifest && astro build",
