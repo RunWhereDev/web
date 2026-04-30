@@ -32,6 +32,7 @@ jobs:
       - run: npm run build
         env:
           PUBLIC_SITE_URL: https://runwhere.dev
+          PUBLIC_GA4_MEASUREMENT_ID: ${{ vars.PUBLIC_GA4_MEASUREMENT_ID || secrets.PUBLIC_GA4_MEASUREMENT_ID || 'G-W74KZ9XQP8' }}
       - run: npm run sync:functions-data
       - run: npm install --prefix functions
       - run: npm run build --prefix functions

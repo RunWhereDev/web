@@ -18,6 +18,8 @@ const refreshDate = new Intl.DateTimeFormat("en-US", {
   day: "numeric",
   year: "numeric"
 }).format(new Date(manifest.refresh.pricing_last_run));
+
+const gaId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || "G-W74KZ9XQP8";
 ---
 
 <!doctype html>
@@ -35,6 +37,18 @@ const refreshDate = new Intl.DateTimeFormat("en-US", {
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+
+    {/* Google tag (gtag.js) */}
+    {gaId && (
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', gaId);
+      </script>
+    )}
   </head>
   <body>
     <header class="site-header">
