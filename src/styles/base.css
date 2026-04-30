@@ -60,6 +60,10 @@ svg {
   max-width: 100%;
 }
 
+[hidden] {
+  display: none !important;
+}
+
 .page-shell {
   width: min(100% - 2rem, 1180px);
   margin-inline: auto;
@@ -150,6 +154,7 @@ p {
 }
 
 @media (min-width: 720px) {
+
   .hero h1,
   .page-title {
     font-size: 3.2rem;

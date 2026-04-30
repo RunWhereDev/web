@@ -132,12 +132,13 @@ const provenanceEntries = Object.entries(artifact.provenance);
 
     <section class="panel escalation" data-escalation hidden data-escalation-url={escalationUrl} data-turnstile-site-key={turnstileSiteKey}>
       <div class="escalation-intro">
-        <p class="eyebrow">Close call</p>
-        <h2>Tailored analysis</h2>
-        <p class="muted">This composition sits near the boundary. RunWhere can hand it to a live analysis path.</p>
+        <p class="eyebrow" data-escalation-eyebrow>Close call</p>
+        <h2 data-escalation-title>Costs are close enough to inspect</h2>
+        <p class="muted" data-escalation-copy>Costs are close enough that assumptions could flip the recommendation. RunWhere can hand this composition to a live analysis path.</p>
       </div>
       <div class="escalation-action">
-        <button class="button-primary" type="button" data-escalation-btn>Get tailored analysis — ~$0.005</button>
+        <button class="button-primary" type="button" data-escalation-btn>Get a tailored recommendation</button>
+        <p class="muted escalation-note">Uses this model, cloud, GPU, quantization, and usage shape.</p>
         <div class="escalation-result" data-escalation-result hidden>
           <p class="escalation-text" data-escalation-text></p>
         </div>
@@ -224,6 +225,28 @@ const provenanceEntries = Object.entries(artifact.provenance);
     function applyServingNuance(costRegime, fits, apiCapacity) {
       if (costRegime === "api-wins" && fits && apiCapacity.constrained) return "close-call";
       return costRegime;
+    }
+
+    function escalationTrigger(computed) {
+      if (computed.costRegime === "close-call") {
+        return {
+          kind: "close-call",
+          eyebrow: "Close call",
+          title: "Costs are close enough to inspect",
+          copy: `The modeled monthly costs are only ${computed.ratio?.toFixed(1) || "~1"}x apart (${money(computed.selfCost)} self-host vs ${money(computed.apiCost)} API). A tailored read can check whether quality, operations, or assumptions would flip this.`
+        };
+      }
+
+      if (computed.costRegime === "api-wins" && computed.fits && computed.apiCapacity.constrained) {
+        return {
+          kind: "capacity-caveat",
+          eyebrow: "Capacity caveat",
+          title: "API is cheaper, but capacity needs a check",
+          copy: `API is still the cheaper cost path, but estimated peak output demand (${compact(computed.apiCapacity.required_peak_output_tps)} tokens/sec) is above measured hosted aggregate p50 capacity (${compact(computed.apiCapacity.aggregate_p50_tps)} tokens/sec). A tailored read can check quotas, latency, and routing risk.`
+        };
+      }
+
+      return null;
     }
 
     function selfHostForTokens(input, tokensPerDay) {
@@ -402,7 +425,16 @@ const provenanceEntries = Object.entries(artifact.provenance);
         ? ` Hosted API peak capacity is constrained at this output rate.`
         : ` Hosted API aggregate p50 capacity covers the estimated peak output rate.`;
       $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} blended tokens/day: self-host ${money(computed.selfCost)}/month, API ${money(computed.apiCost)}/month. Peak output demand is ${compact(computed.apiCapacity.required_peak_output_tps)} tokens/sec.${capacityCopy}`;
-      $("[data-escalation]").hidden = computed.regime !== "close-call";
+
+      const trigger = escalationTrigger(computed);
+      const escalation = $("[data-escalation]");
+      escalation.hidden = !trigger;
+      if (trigger) {
+        escalation.dataset.trigger = trigger.kind;
+        $("[data-escalation-eyebrow]").textContent = trigger.eyebrow;
+        $("[data-escalation-title]").textContent = trigger.title;
+        $("[data-escalation-copy]").textContent = trigger.copy;
+      }
 
       drawChart(composition, computed);
       updateUrl();
@@ -779,6 +811,11 @@ const provenanceEntries = Object.entries(artifact.provenance);
     display: grid;
     gap: var(--space-3);
     min-width: 220px;
+  }
+
+  .escalation-note {
+    max-width: 260px;
+    font-size: var(--text-sm);
   }
 
   .escalation-result {

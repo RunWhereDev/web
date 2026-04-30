@@ -63,12 +63,12 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
     <section class="panel escalation" data-escalation hidden>
       <div>
         <p class="eyebrow">J1 escalation</p>
-        <h2>Get tailored analysis · ~$0.005</h2>
-        <p class="muted">Shown for likely exceptions, hard constraints, or insufficient baked data.</p>
+        <h2>Get a tailored recommendation</h2>
+        <p class="muted">Shown for likely exceptions, hard constraints, or insufficient baked data. Adds a live review of the inputs above.</p>
       </div>
       <div class="escalation-form">
         <textarea class="field" data-free-text maxlength="280" placeholder="Optional workload context (280 chars max)"></textarea>
-        <button class="button-primary" type="button" data-escalation-btn>Get tailored analysis</button>
+        <button class="button-primary" type="button" data-escalation-btn>Review this recommendation</button>
         <div class="escalation-result" data-escalation-result hidden></div>
         <p class="muted" data-escalation-error hidden></p>
       </div>
