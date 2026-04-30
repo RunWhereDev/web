@@ -1,0 +1,14 @@
+slug: mistral-small-4
+name: Mistral Small 4
+family: Mistral Small
+vendor: Mistral AI
+license: apache-2.0
+hf_id: mistralai/Mistral-Small-4
+openrouter_slug: mistralai/mistral-small-4
+architecture: dense
+params_b: 24
+active_params_b: 24
+tier: stable
+added: "2026-04-29"
+one_liner: Right-sized workhorse for real-time use at lower hardware cost.
+inclusion_rationale: Smaller dense model with a materially different self-hosting profile from frontier MoEs.

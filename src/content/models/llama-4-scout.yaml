@@ -1,0 +1,14 @@
+slug: llama-4-scout
+name: Llama 4 Scout
+family: Llama 4
+vendor: Meta
+license: llama-community
+hf_id: meta-llama/Llama-4-Scout
+openrouter_slug: meta-llama/llama-4-scout
+architecture: moe
+params_b: 109
+active_params_b: 17
+tier: stable
+added: "2026-04-29"
+one_liner: Meta's long-context variant for document-heavy workloads.
+inclusion_rationale: Long-context deployment shape is distinct enough from Maverick to justify a second Llama entry.

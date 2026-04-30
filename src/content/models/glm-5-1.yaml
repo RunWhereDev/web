@@ -1,0 +1,14 @@
+slug: glm-5-1
+name: GLM-5.1
+family: GLM
+vendor: Zhipu AI
+license: apache-2.0
+hf_id: THUDM/GLM-5.1
+openrouter_slug: zhipu/glm-5.1
+architecture: moe
+params_b: 744
+active_params_b: 40
+tier: stable
+added: "2026-04-29"
+one_liner: Long-horizon agentic execution with sparse attention.
+inclusion_rationale: Agentic specialist from the Chinese model ecosystem with a distinct deployment profile.

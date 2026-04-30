@@ -1,1 +1,12 @@
+.DS_Store
+node_modules/
+dist/
+.astro/
+.env
+.env.*
+!.env.example
+coverage/
+functions/node_modules/
+functions/lib/
+functions/data/
 /docs/*

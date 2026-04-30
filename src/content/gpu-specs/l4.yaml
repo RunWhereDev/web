@@ -1,0 +1,5 @@
+sku: l4
+name: NVIDIA L4
+memory_gb: 24
+bandwidth_gbps: 300
+generation_rank: 2

@@ -1,0 +1,66 @@
+{
+  "generated_at": "2026-04-29T03:00:00.000Z",
+  "note": "Deterministic seed snapshot. Replace with live HF/OpenRouter throughput fetchers before production launch.",
+  "models": {
+    "llama-4-maverick": {
+      "throughput_p50_tps": 380,
+      "throughput_p90_tps": 520,
+      "providers_count": 5
+    },
+    "llama-4-scout": {
+      "throughput_p50_tps": 430,
+      "throughput_p90_tps": 590,
+      "providers_count": 4
+    },
+    "qwen-3-5": {
+      "throughput_p50_tps": 360,
+      "throughput_p90_tps": 500,
+      "providers_count": 4
+    },
+    "qwen-3-coder-480b": {
+      "throughput_p50_tps": 310,
+      "throughput_p90_tps": 450,
+      "providers_count": 3
+    },
+    "deepseek-v3-2": {
+      "throughput_p50_tps": 330,
+      "throughput_p90_tps": 470,
+      "providers_count": 5
+    },
+    "mistral-large-3": {
+      "throughput_p50_tps": 300,
+      "throughput_p90_tps": 430,
+      "providers_count": 3
+    },
+    "mistral-small-4": {
+      "throughput_p50_tps": 650,
+      "throughput_p90_tps": 820,
+      "providers_count": 4
+    },
+    "gemma-4-26b": {
+      "throughput_p50_tps": 720,
+      "throughput_p90_tps": 920,
+      "providers_count": 4
+    },
+    "glm-5-1": {
+      "throughput_p50_tps": 320,
+      "throughput_p90_tps": 460,
+      "providers_count": 3
+    },
+    "nemotron-cascade-2": {
+      "throughput_p50_tps": 900,
+      "throughput_p90_tps": 1200,
+      "providers_count": 2
+    },
+    "phi-4": {
+      "throughput_p50_tps": 1000,
+      "throughput_p90_tps": 1350,
+      "providers_count": 5
+    },
+    "kimi-k2-5": {
+      "throughput_p50_tps": 280,
+      "throughput_p90_tps": 400,
+      "providers_count": 2
+    }
+  }
+}

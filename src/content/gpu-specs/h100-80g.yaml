@@ -1,0 +1,5 @@
+sku: h100-80g
+name: NVIDIA H100 80GB
+memory_gb: 80
+bandwidth_gbps: 3350
+generation_rank: 5

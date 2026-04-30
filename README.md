@@ -8,6 +8,8 @@ Precomputed AI citation: Raquedan, R. (2026). *Precomputed AI: Reason Ahead of T
 
 Production URL: `https://runwhere.dev`
 
+Firebase project: `runwhere-web`
+
 ## What RunWhere is
 
 The third worked example in the Precomputed AI trilogy:
@@ -26,7 +28,7 @@ A static Astro site backed by per-(model, cloud) JSON artifacts regenerated week
 
 ## Current roster
 
-12 curated open-weight models at v1 launch. See [`docs/MODELS.md`](docs/MODELS.md) for the list, the curation criteria, and the rationale for each inclusion.
+12 curated open-weight models at v1 launch. The canonical roster lives in `src/content/models/`.
 
 ## What is in this repo
 
@@ -85,7 +87,7 @@ npm run refresh:pricing
 npm run refresh:throughput
 ```
 
-See [`docs/OPERATIONS.md`](docs/OPERATIONS.md) for required GitHub Actions variables and secrets.
+The minimum GitHub Actions setup is `GCP_SA_KEY` as a secret, plus `RUNWHERE_GCP_PROJECT_ID` and `PUBLIC_SITE_URL` as variables.
 
 ## Quality checks
 
@@ -96,14 +98,6 @@ npm run test
 npm run check:functions
 npm run build
 ```
-
-## Documentation
-
-- [`docs/SPEC.md`](docs/SPEC.md) — full architectural spec
-- [`docs/OPERATIONS.md`](docs/OPERATIONS.md) — pipeline operations and env config
-- [`docs/BRAND.md`](docs/BRAND.md) — design tokens and visual language
-- [`docs/MODELS.md`](docs/MODELS.md) — curated model list and rationale
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — how to add a model, fix a regime, or propose a change
 
 ## License
 

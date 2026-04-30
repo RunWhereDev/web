@@ -1,0 +1,20 @@
+name: Refresh throughput
+
+on:
+  schedule:
+    - cron: "0 3 1 1,4,7,10 *"
+  workflow_dispatch:
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run refresh:throughput
+      - run: npm run build:artifacts
+      - run: npm run build:manifest

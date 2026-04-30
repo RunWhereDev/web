@@ -1,0 +1,127 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import manifest from "../data/generated/manifest.json";
+
+const refreshDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+}).format(new Date(manifest.refresh.pricing_last_run));
+---
+
+<BaseLayout
+  title="Methodology | RunWhere"
+  description="How RunWhere classifies self-host versus hosted API regimes for open-weight models."
+>
+  <article class="prose page-shell-narrow">
+    <header>
+      <p class="eyebrow">Methodology</p>
+      <h1 class="page-title">Regimes, not false precision.</h1>
+      <p class="lead">
+        RunWhere precomputes model-cloud artifacts, then classifies each composition into one of three directional regimes.
+      </p>
+    </header>
+
+    <section id="regime-thresholds">
+      <h2>Regime Thresholds</h2>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Condition</th>
+            <th>Regime</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Cost ratio below 1.5x</td>
+            <td>Close call</td>
+          </tr>
+          <tr>
+            <td>Self-host at least 1.5x cheaper</td>
+            <td>Self-host wins clearly</td>
+          </tr>
+          <tr>
+            <td>API at least 1.5x cheaper, or self-host is infeasible</td>
+            <td>API wins clearly</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="cost-formulas">
+      <h2>Cost Formulas</h2>
+      <p>
+        Self-host monthly cost is GPU hourly price times required GPU count times 720 monthly hours, divided by utilization,
+        plus operational labor. API monthly cost is tokens per day times 30 days times the blended input/output price.
+      </p>
+      <pre><code>self_host = (gpu_hourly * gpu_count * 24 * 30 / utilization) + labor
+api = monthly_mtok * (input_share * input_price + output_share * output_price)</code></pre>
+    </section>
+
+    <section id="self-host-throughput">
+      <h2>Self-Host Throughput</h2>
+      <p>
+        Throughput is estimated from memory bandwidth divided by active FP16 parameter bytes, then adjusted by utilization
+        and quantization multipliers. MoE models use active parameters for serving pressure; dense and hybrid models use
+        total parameters.
+      </p>
+    </section>
+
+    <section id="bounded-defaults">
+      <h2>Bounded Defaults</h2>
+      <ul>
+        <li>GPU utilization: 60%</li>
+        <li>Input/output token split: 70% input, 30% output</li>
+        <li>INT8 throughput multiplier: 1.7x</li>
+        <li>INT4 throughput multiplier: 2.5x</li>
+        <li>Operational labor: 0.1 FTE at $150,000/year</li>
+        <li>Peak-to-average traffic ratio: 3:1</li>
+        <li>Storage/network overhead: off by default</li>
+      </ul>
+    </section>
+
+    <section id="source-provenance">
+      <h2>Source Provenance</h2>
+      <p>
+        Artifact values are labeled as calculated, cited, or measured. The current seed snapshots are deterministic local
+        inputs so the static app works end to end; production refresh scripts are the intended replacement for live cloud,
+        Hugging Face, and OpenRouter data.
+      </p>
+      <p>Pricing data last refreshed: {refreshDate}.</p>
+    </section>
+
+    <section id="curation-criteria">
+      <h2>Curation Criteria</h2>
+      <p>
+        Models must be self-hostable open weights, available on Hugging Face, compatible with common inference runtimes,
+        and small enough for a single cloud GPU node. Preview entries disclose unresolved hard-filter questions.
+      </p>
+    </section>
+
+    <section id="excluded">
+      <h2>Excluded From V1</h2>
+      <ul>
+        <li>Reserved capacity, committed-use discounts, and spot pricing</li>
+        <li>Multi-cloud compositions</li>
+        <li>User accounts or saved private scenarios</li>
+        <li>Precision cost accounting beyond the directional regime</li>
+      </ul>
+    </section>
+
+    <section id="escalation-policy">
+      <h2>Escalation Policy</h2>
+      <p>
+        Live analysis is reserved for close-call regimes. Clear wins stay deterministic because the precomputed artifact
+        already answers the question.
+      </p>
+    </section>
+
+    <section id="versioning">
+      <h2>Versioning</h2>
+      <p>
+        Every artifact includes an ID, generation timestamp, ruleset version, and source commit placeholders. Shareable
+        URLs encode identity in the path and user knobs in the query string.
+      </p>
+    </section>
+  </article>
+</BaseLayout>

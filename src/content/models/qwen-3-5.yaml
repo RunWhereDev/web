@@ -1,0 +1,14 @@
+slug: qwen-3-5
+name: Qwen 3.5
+family: Qwen
+vendor: Alibaba
+license: apache-2.0
+hf_id: Qwen/Qwen3.5
+openrouter_slug: qwen/qwen-3.5
+architecture: moe
+params_b: 235
+active_params_b: 22
+tier: stable
+added: "2026-04-29"
+one_liner: Alibaba's general-purpose MoE with strong coding and multilingual coverage.
+inclusion_rationale: Leading Chinese general-purpose model with an Apache 2.0 license and broad deployment interest.

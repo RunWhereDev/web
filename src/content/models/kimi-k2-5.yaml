@@ -1,0 +1,14 @@
+slug: kimi-k2-5
+name: Kimi K2.5
+family: Kimi
+vendor: Moonshot AI
+license: apache-2.0
+hf_id: moonshot-ai/Kimi-K2.5
+openrouter_slug: moonshot/kimi-k2.5
+architecture: moe
+params_b: 1000
+active_params_b: 32
+tier: stable
+added: "2026-04-29"
+one_liner: Large MoE for agentic workflows and upper-bound cost regimes.
+inclusion_rationale: Wildcard inclusion that stress-tests the high-parameter end of self-host economics.

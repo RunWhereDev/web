@@ -1,0 +1,37 @@
+{
+  "name": "runwhere-web",
+  "version": "0.1.0",
+  "ruleset_version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev --host 0.0.0.0",
+    "build": "npm run build:artifacts && npm run build:manifest && astro build",
+    "preview": "astro preview --host 0.0.0.0",
+    "validate:content": "tsx scripts/validate-content.ts",
+    "refresh:pricing": "tsx scripts/refresh-pricing.ts",
+    "refresh:throughput": "tsx scripts/refresh-throughput.ts",
+    "build:artifacts": "tsx scripts/build-artifacts.ts",
+    "build:manifest": "tsx scripts/build-manifest.ts",
+    "sync:functions-data": "tsx scripts/sync-functions-data.ts",
+    "lint": "astro check",
+    "test": "vitest run",
+    "check:functions": "npm run typecheck --prefix functions"
+  },
+  "dependencies": {
+    "astro": "^6.1.10",
+    "js-yaml": "^4.1.0",
+    "zod": "^3.24.3"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  },
+  "overrides": {
+    "yaml": "^2.8.3"
+  }
+}

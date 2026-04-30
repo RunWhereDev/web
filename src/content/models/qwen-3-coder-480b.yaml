@@ -1,0 +1,14 @@
+slug: qwen-3-coder-480b
+name: Qwen3-Coder-480B
+family: Qwen
+vendor: Alibaba
+license: apache-2.0
+hf_id: Qwen/Qwen3-Coder-480B-A35B
+openrouter_slug: qwen/qwen3-coder-480b
+architecture: moe
+params_b: 480
+active_params_b: 35
+tier: stable
+added: "2026-04-29"
+one_liner: Purpose-built for agentic coding among open-weight models.
+inclusion_rationale: Specialist coding model with a different workload shape from general-purpose Qwen.

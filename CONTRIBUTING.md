@@ -4,8 +4,6 @@ Thanks for your interest in RunWhere. This guide covers the most common contribu
 
 ## Before you start
 
-- Read [`docs/SPEC.md`](docs/SPEC.md) for architectural context.
-- Read [`docs/MODELS.md`](docs/MODELS.md) for the curation criteria.
 - Run the local pipeline once (`npm install && npm run dev`) to confirm your environment works.
 
 RunWhere is a worked example of the [Precomputed AI](https://precomputedai.com) design pattern. Contributions should reinforce — not weaken — the pattern's properties: versioned artifacts, declared regeneration cadence, visible escalation, stated assumptions.
@@ -14,7 +12,7 @@ RunWhere is a worked example of the [Precomputed AI](https://precomputedai.com) 
 
 ### Curation checklist
 
-A model is eligible for inclusion only if **all** hard filters pass (see [`docs/SPEC.md`](docs/SPEC.md) §9):
+A model is eligible for inclusion only if **all** hard filters pass:
 
 - [ ] License is Apache 2.0, MIT, or Llama Community License
 - [ ] Weights publicly available on Hugging Face Hub
@@ -65,8 +63,7 @@ The single source of truth lives in `shared/cost-formulas.ts` and `shared/regime
 
 - Include test updates in `shared/__tests__/`
 - Bump `ruleset_version` in `package.json` (semver: minor for non-breaking, major for breaking)
-- Update [`docs/SPEC.md`](docs/SPEC.md) §10 if the formulas change visibly to users
-- Update the `/methodology` MDX if the user-facing explanation changes
+- Update the `/methodology` page if the user-facing explanation changes
 
 A regime threshold change (the 1.5x cutoff) is a major version bump. Existing shareable URLs may flip regime; that's a meaningful contract change for users who shared older artifacts.
 
@@ -80,7 +77,7 @@ A regime threshold change (the 1.5x cutoff) is a major version bump. Existing sh
 
 ## Updating bounded-opinion defaults
 
-The seven defaults in [`docs/SPEC.md`](docs/SPEC.md) §10 (utilization, multipliers, horizon, FTE, peak ratio, etc.) are intentionally opinionated. Changes need:
+The bounded-opinion defaults (utilization, multipliers, horizon, FTE, peak ratio, etc.) are intentionally opinionated. Changes need:
 
 - A clear rationale grounded in industry data, not preference
 - An update to the `/methodology` page explaining the new value and its source

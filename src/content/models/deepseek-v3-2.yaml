@@ -1,0 +1,14 @@
+slug: deepseek-v3-2
+name: DeepSeek V3.2
+family: DeepSeek V3
+vendor: DeepSeek
+license: mit
+hf_id: deepseek-ai/DeepSeek-V3.2
+openrouter_slug: deepseek/deepseek-v3.2
+architecture: moe
+params_b: 685
+active_params_b: 37
+tier: stable
+added: "2026-04-29"
+one_liner: Frontier reasoning with sparse attention for efficient long context.
+inclusion_rationale: Reasoning-frontier open weight with an MIT license and strong community traction.

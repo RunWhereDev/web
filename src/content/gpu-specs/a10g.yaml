@@ -1,0 +1,5 @@
+sku: a10g
+name: NVIDIA A10G
+memory_gb: 24
+bandwidth_gbps: 600
+generation_rank: 2

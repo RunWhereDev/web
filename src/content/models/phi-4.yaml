@@ -1,0 +1,14 @@
+slug: phi-4
+name: Phi-4
+family: Phi
+vendor: Microsoft
+license: mit
+hf_id: microsoft/phi-4
+openrouter_slug: microsoft/phi-4
+architecture: dense
+params_b: 14
+active_params_b: 14
+tier: stable
+added: "2026-04-29"
+one_liner: Small reasoning model with a low hardware floor.
+inclusion_rationale: Small-model representation that often keeps API economics favorable.

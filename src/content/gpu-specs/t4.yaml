@@ -1,0 +1,5 @@
+sku: t4
+name: NVIDIA T4
+memory_gb: 16
+bandwidth_gbps: 320
+generation_rank: 1

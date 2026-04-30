@@ -1,0 +1,79 @@
+---
+import "../styles/base.css";
+import manifest from "../data/generated/manifest.json";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "RunWhere",
+  description = "Directional self-host vs hosted API regimes for open-weight models."
+} = Astro.props;
+const site = Astro.site?.toString().replace(/\/$/, "") || "http://localhost:4321";
+const canonical = new URL(Astro.url.pathname, site).toString();
+const refreshDate = new Intl.DateTimeFormat("en-US", {
+  month: "long",
+  day: "numeric",
+  year: "numeric"
+}).format(new Date(manifest.refresh.pricing_last_run));
+---
+
+<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#4a5296" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="RunWhere" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header-inner page-shell">
+        <a class="brand-link" href="/">
+          <span class="brand-mark" aria-hidden="true">RW</span>
+          <span>RunWhere</span>
+        </a>
+        <nav aria-label="Primary">
+          <ul class="nav-list">
+            <li><a class="link-quiet" href="/methodology/">Methodology</a></li>
+            <li><a class="link-quiet" href="/changelog/">Changelog</a></li>
+            <li><a class="link-quiet" href="/about/">About</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="footer-grid page-shell">
+        <div class="footer-column">
+          <p>
+            Built by <a href="https://regnard.raquedan.com">Regnard Raquedan</a>. Free and open -
+            <a href="https://github.com/RunWhere/web">contribute on GitHub</a>.
+          </p>
+          <p>A worked example of the <a href="https://precomputedai.com">Precomputed AI</a> design pattern.</p>
+        </div>
+        <ul class="footer-list">
+          <li><a class="link-quiet" href="/methodology/">Methodology</a></li>
+          <li><a class="link-quiet" href="/changelog/">Changelog</a></li>
+          <li><a class="link-quiet" href="/about/">About</a></li>
+        </ul>
+        <div class="footer-column">
+          <p><a class="link-quiet" href="/privacy/">Privacy</a></p>
+          <p>Pricing data last refreshed: {refreshDate}</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

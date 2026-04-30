@@ -1,0 +1,239 @@
+{
+  "generated_at": "2026-04-29T03:00:00.000Z",
+  "ruleset_version": "1.0.0",
+  "refresh": {
+    "pricing_last_run": "2026-04-29T03:00:00.000Z",
+    "throughput_last_run": "2026-04-29T03:00:00.000Z"
+  },
+  "models": [
+    {
+      "slug": "deepseek-v3-2",
+      "name": "DeepSeek V3.2",
+      "family": "DeepSeek V3",
+      "vendor": "DeepSeek",
+      "params_b": 685,
+      "active_params_b": 37,
+      "license": "mit",
+      "tier": "stable",
+      "one_liner": "Frontier reasoning with sparse attention for efficient long context.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "gemma-4-26b",
+      "name": "Gemma 4 26B",
+      "family": "Gemma 4",
+      "vendor": "Google",
+      "params_b": 26,
+      "active_params_b": 4,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Efficient multimodal model with strong throughput-per-dollar.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "glm-5-1",
+      "name": "GLM-5.1",
+      "family": "GLM",
+      "vendor": "Zhipu AI",
+      "params_b": 744,
+      "active_params_b": 40,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Long-horizon agentic execution with sparse attention.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "kimi-k2-5",
+      "name": "Kimi K2.5",
+      "family": "Kimi",
+      "vendor": "Moonshot AI",
+      "params_b": 1000,
+      "active_params_b": 32,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Large MoE for agentic workflows and upper-bound cost regimes.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "llama-4-maverick",
+      "name": "Llama 4 Maverick",
+      "family": "Llama 4",
+      "vendor": "Meta",
+      "params_b": 400,
+      "active_params_b": 17,
+      "license": "llama-community",
+      "tier": "stable",
+      "one_liner": "Meta's flagship MoE for general reasoning and coding.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "llama-4-scout",
+      "name": "Llama 4 Scout",
+      "family": "Llama 4",
+      "vendor": "Meta",
+      "params_b": 109,
+      "active_params_b": 17,
+      "license": "llama-community",
+      "tier": "stable",
+      "one_liner": "Meta's long-context variant for document-heavy workloads.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "mistral-large-3",
+      "name": "Mistral Large 3",
+      "family": "Mistral Large",
+      "vendor": "Mistral AI",
+      "params_b": 675,
+      "active_params_b": 41,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Mistral's frontier model for agentic and multimodal systems.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "mistral-small-4",
+      "name": "Mistral Small 4",
+      "family": "Mistral Small",
+      "vendor": "Mistral AI",
+      "params_b": 24,
+      "active_params_b": 24,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Right-sized workhorse for real-time use at lower hardware cost.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "nemotron-cascade-2",
+      "name": "Nemotron Cascade 2",
+      "family": "Nemotron",
+      "vendor": "NVIDIA",
+      "params_b": 30,
+      "active_params_b": 30,
+      "license": "other",
+      "tier": "preview",
+      "one_liner": "Inference-optimized hybrid model for high-throughput serving.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "phi-4",
+      "name": "Phi-4",
+      "family": "Phi",
+      "vendor": "Microsoft",
+      "params_b": 14,
+      "active_params_b": 14,
+      "license": "mit",
+      "tier": "stable",
+      "one_liner": "Small reasoning model with a low hardware floor.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "qwen-3-5",
+      "name": "Qwen 3.5",
+      "family": "Qwen",
+      "vendor": "Alibaba",
+      "params_b": 235,
+      "active_params_b": 22,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Alibaba's general-purpose MoE with strong coding and multilingual coverage.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    },
+    {
+      "slug": "qwen-3-coder-480b",
+      "name": "Qwen3-Coder-480B",
+      "family": "Qwen",
+      "vendor": "Alibaba",
+      "params_b": 480,
+      "active_params_b": 35,
+      "license": "apache-2.0",
+      "tier": "stable",
+      "one_liner": "Purpose-built for agentic coding among open-weight models.",
+      "clouds": [
+        "gcp",
+        "aws",
+        "azure"
+      ]
+    }
+  ],
+  "clouds": [
+    {
+      "slug": "gcp",
+      "name": "Google Cloud",
+      "gpu_count": 4
+    },
+    {
+      "slug": "aws",
+      "name": "AWS",
+      "gpu_count": 4
+    },
+    {
+      "slug": "azure",
+      "name": "Azure",
+      "gpu_count": 4
+    }
+  ],
+  "shapes": [
+    {
+      "slug": "light",
+      "label": "Light",
+      "tokens_per_day": 1000000,
+      "persona": "Side project, internal tooling"
+    },
+    {
+      "slug": "medium",
+      "label": "Medium",
+      "tokens_per_day": 10000000,
+      "persona": "Mid-stage SaaS, regular workload"
+    },
+    {
+      "slug": "heavy",
+      "label": "Heavy",
+      "tokens_per_day": 100000000,
+      "persona": "Production at scale"
+    }
+  ]
+}

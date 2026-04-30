@@ -1,0 +1,5 @@
+sku: a100-40g
+name: NVIDIA A100 40GB
+memory_gb: 40
+bandwidth_gbps: 1555
+generation_rank: 3

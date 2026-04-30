@@ -1,0 +1,14 @@
+slug: llama-4-maverick
+name: Llama 4 Maverick
+family: Llama 4
+vendor: Meta
+license: llama-community
+hf_id: meta-llama/Llama-4-Maverick
+openrouter_slug: meta-llama/llama-4-maverick
+architecture: moe
+params_b: 400
+active_params_b: 17
+tier: stable
+added: "2026-04-29"
+one_liner: Meta's flagship MoE for general reasoning and coding.
+inclusion_rationale: Flagship Western open-weight at v1 launch with broad provider coverage and strong tooling.

@@ -1,0 +1,14 @@
+slug: gemma-4-26b
+name: Gemma 4 26B
+family: Gemma 4
+vendor: Google
+license: apache-2.0
+hf_id: google/gemma-4-26b
+openrouter_slug: google/gemma-4-26b
+architecture: moe
+params_b: 26
+active_params_b: 4
+tier: stable
+added: "2026-04-29"
+one_liner: Efficient multimodal model with strong throughput-per-dollar.
+inclusion_rationale: Apache-licensed efficient model that shows the small active-parameter side of the matrix.

@@ -1,0 +1,5 @@
+sku: l40s
+name: NVIDIA L40S
+memory_gb: 48
+bandwidth_gbps: 864
+generation_rank: 3

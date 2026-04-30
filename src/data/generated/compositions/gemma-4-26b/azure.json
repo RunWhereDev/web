@@ -1,0 +1,2381 @@
+{
+  "artifact": {
+    "id": "gemma-4-26b--azure--v1.0.0-local",
+    "model_slug": "gemma-4-26b",
+    "cloud": "azure",
+    "generated_at": "2026-04-29T03:00:00.000Z",
+    "tier": "stable",
+    "ruleset_version": "1.0.0",
+    "source_commits": {
+      "pricing": "local",
+      "throughput": "local",
+      "models": "local"
+    }
+  },
+  "model_facts": {
+    "name": "Gemma 4 26B",
+    "family": "Gemma 4",
+    "vendor": "Google",
+    "params_b": 26,
+    "active_params_b": 4,
+    "architecture": "moe",
+    "file_bytes_fp16": 52000000000,
+    "license": "apache-2.0",
+    "hf_id": "google/gemma-4-26b"
+  },
+  "api_side": {
+    "providers_count": 4,
+    "price_input_per_mtok_usd": 0.55,
+    "price_output_per_mtok_usd": 1.7,
+    "throughput_p50_tps": 720,
+    "throughput_p90_tps": 920
+  },
+  "defaults": {
+    "gpu_sku": "a100-40g",
+    "quantization": "fp16",
+    "shape": "medium"
+  },
+  "options": {
+    "gpus": [
+      {
+        "sku": "h100-80g",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "price_hourly_usd": 10.95,
+        "max_gpus": 8
+      },
+      {
+        "sku": "a100-80g",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "price_hourly_usd": 4.75,
+        "max_gpus": 8
+      },
+      {
+        "sku": "a100-40g",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "price_hourly_usd": 3.35,
+        "max_gpus": 4
+      },
+      {
+        "sku": "t4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "price_hourly_usd": 0.52,
+        "max_gpus": 1
+      }
+    ],
+    "quantizations": [
+      "fp16",
+      "int8",
+      "int4"
+    ],
+    "shapes": [
+      {
+        "slug": "light",
+        "label": "Light",
+        "tokens_per_day": 1000000,
+        "persona": "Side project, internal tooling"
+      },
+      {
+        "slug": "medium",
+        "label": "Medium",
+        "tokens_per_day": 10000000,
+        "persona": "Mid-stage SaaS, regular workload"
+      },
+      {
+        "slug": "heavy",
+        "label": "Heavy",
+        "tokens_per_day": 100000000,
+        "persona": "Production at scale"
+      }
+    ],
+    "assumptions": {
+      "utilization": 0.6,
+      "fteFraction": 0.1,
+      "annualSalaryUsd": 150000,
+      "inputShare": 0.7,
+      "outputShare": 0.3,
+      "peakToAvgRatio": 3,
+      "int8ThroughputMultiplier": 1.7,
+      "int4ThroughputMultiplier": 2.5,
+      "overheadEnabled": false
+    }
+  },
+  "compositions": {
+    "h100-80g__fp16__light": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 535.9404096834263,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1005,
+        "self_host_throughput_tps_per_gpu": 1005,
+        "quantization": "fp16",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "h100-80g__fp16__medium": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 53.59404096834264,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1005,
+        "self_host_throughput_tps_per_gpu": 1005,
+        "quantization": "fp16",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "h100-80g__fp16__heavy": {
+      "self_host_monthly_usd": 53810,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 20.040968342644316,
+      "crossover_tokens_per_day": 2004096834.2644317,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 53810,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 53810,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 53810,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 53810,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 53810,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 53810,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 53810,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 4,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 320,
+        "self_host_throughput_tps": 4020,
+        "self_host_throughput_tps_per_gpu": 1005,
+        "quantization": "fp16",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "h100-80g__int8__light": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 535.9404096834263,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1709,
+        "self_host_throughput_tps_per_gpu": 1709,
+        "quantization": "int8",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "h100-80g__int8__medium": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 53.59404096834264,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1709,
+        "self_host_throughput_tps_per_gpu": 1709,
+        "quantization": "int8",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "h100-80g__int8__heavy": {
+      "self_host_monthly_usd": 40670,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 15.147113594040965,
+      "crossover_tokens_per_day": 1514711359.4040966,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 40670,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 40670,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 40670,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 40670,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 40670,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 40670,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 40670,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 3,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 240,
+        "self_host_throughput_tps": 5126,
+        "self_host_throughput_tps_per_gpu": 1709,
+        "quantization": "int8",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "h100-80g__int4__light": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 535.9404096834263,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 2513,
+        "self_host_throughput_tps_per_gpu": 2513,
+        "quantization": "int4",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "h100-80g__int4__medium": {
+      "self_host_monthly_usd": 14390,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 53.59404096834264,
+      "crossover_tokens_per_day": 535940409.68342644,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 14390,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 14390,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 14390,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 14390,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 14390,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 14390,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 14390,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 2513,
+        "self_host_throughput_tps_per_gpu": 2513,
+        "quantization": "int4",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "h100-80g__int4__heavy": {
+      "self_host_monthly_usd": 27530,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 10.253258845437616,
+      "crossover_tokens_per_day": 1025325884.5437615,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 27530,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 27530,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 27530,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 27530,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 27530,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 27530,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 27530,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "h100-80g",
+        "gpu_name": "NVIDIA H100 80GB",
+        "instance_type": "Standard_ND96isr_H100_v5",
+        "gpu_price_hourly_usd": 10.95,
+        "gpu_count": 2,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 160,
+        "self_host_throughput_tps": 5025,
+        "self_host_throughput_tps_per_gpu": 2513,
+        "quantization": "int4",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-80g__fp16__light": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 258.8454376163873,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 612,
+        "self_host_throughput_tps_per_gpu": 612,
+        "quantization": "fp16",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-80g__fp16__medium": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 25.884543761638735,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 612,
+        "self_host_throughput_tps_per_gpu": 612,
+        "quantization": "fp16",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-80g__fp16__heavy": {
+      "self_host_monthly_usd": 35450,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 13.202979515828678,
+      "crossover_tokens_per_day": 1320297951.5828676,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 35450,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 35450,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 35450,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 35450,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 35450,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 35450,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 35450,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 6,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 480,
+        "self_host_throughput_tps": 3670,
+        "self_host_throughput_tps_per_gpu": 612,
+        "quantization": "fp16",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-80g__int8__light": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 258.8454376163873,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1040,
+        "self_host_throughput_tps_per_gpu": 1040,
+        "quantization": "int8",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-80g__int8__medium": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 25.884543761638735,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1040,
+        "self_host_throughput_tps_per_gpu": 1040,
+        "quantization": "int8",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-80g__int8__heavy": {
+      "self_host_monthly_usd": 24050,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 8.957169459962756,
+      "crossover_tokens_per_day": 895716945.9962755,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 24050,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 24050,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 24050,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 24050,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 24050,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 24050,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 24050,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 4,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 320,
+        "self_host_throughput_tps": 4160,
+        "self_host_throughput_tps_per_gpu": 1040,
+        "quantization": "int8",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-80g__int4__light": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 258.8454376163873,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1529,
+        "self_host_throughput_tps_per_gpu": 1529,
+        "quantization": "int4",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-80g__int4__medium": {
+      "self_host_monthly_usd": 6950,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 25.884543761638735,
+      "crossover_tokens_per_day": 258845437.61638737,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 6950,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 6950,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 6950,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 6950,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 6950,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 6950,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 6950,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 1,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 80,
+        "self_host_throughput_tps": 1529,
+        "self_host_throughput_tps_per_gpu": 1529,
+        "quantization": "int4",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-80g__int4__heavy": {
+      "self_host_monthly_usd": 18350,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 6.834264432029795,
+      "crossover_tokens_per_day": 683426443.2029794,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 18350,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 18350,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 18350,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 18350,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 18350,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 18350,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 18350,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-80g",
+        "gpu_name": "NVIDIA A100 80GB",
+        "instance_type": "Standard_ND96amsr_A100_v4",
+        "gpu_price_hourly_usd": 4.75,
+        "gpu_count": 3,
+        "gpu_max_count": 8,
+        "gpu_memory_gb": 80,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 240,
+        "self_host_throughput_tps": 4588,
+        "self_host_throughput_tps_per_gpu": 1529,
+        "quantization": "int4",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-40g__fp16__light": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 196.27560521415268,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 467,
+        "self_host_throughput_tps_per_gpu": 467,
+        "quantization": "fp16",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-40g__fp16__medium": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 19.62756052141527,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 467,
+        "self_host_throughput_tps_per_gpu": 467,
+        "quantization": "fp16",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-40g__fp16__heavy": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 8 a100-40g GPUs for VRAM and peak traffic; Standard_NC96ads_A100_v4 exposes 4.",
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 4,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 160,
+        "self_host_throughput_tps": 1866,
+        "self_host_throughput_tps_per_gpu": 467,
+        "quantization": "fp16",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-40g__int8__light": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 196.27560521415268,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 793,
+        "self_host_throughput_tps_per_gpu": 793,
+        "quantization": "int8",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-40g__int8__medium": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 19.62756052141527,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 793,
+        "self_host_throughput_tps_per_gpu": 793,
+        "quantization": "int8",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-40g__int8__heavy": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 5 a100-40g GPUs for VRAM and peak traffic; Standard_NC96ads_A100_v4 exposes 4.",
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 4,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 160,
+        "self_host_throughput_tps": 3172,
+        "self_host_throughput_tps_per_gpu": 793,
+        "quantization": "int8",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "a100-40g__int4__light": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 196.27560521415268,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 1166,
+        "self_host_throughput_tps_per_gpu": 1166,
+        "quantization": "int4",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "a100-40g__int4__medium": {
+      "self_host_monthly_usd": 5270,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": 19.62756052141527,
+      "crossover_tokens_per_day": 196275605.2141527,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 5270,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 5270,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 5270,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 5270,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 5270,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 5270,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 5270,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 1,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 40,
+        "self_host_throughput_tps": 1166,
+        "self_host_throughput_tps_per_gpu": 1166,
+        "quantization": "int4",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "a100-40g__int4__heavy": {
+      "self_host_monthly_usd": 13310,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": 4.957169459962757,
+      "crossover_tokens_per_day": 495716945.99627566,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 13310,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 13310,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 13310,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 13310,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 13310,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 13310,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 13310,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "a100-40g",
+        "gpu_name": "NVIDIA A100 40GB",
+        "instance_type": "Standard_NC96ads_A100_v4",
+        "gpu_price_hourly_usd": 3.35,
+        "gpu_count": 3,
+        "gpu_max_count": 4,
+        "gpu_memory_gb": 40,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 120,
+        "self_host_throughput_tps": 3499,
+        "self_host_throughput_tps_per_gpu": 1166,
+        "quantization": "int4",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "t4__fp16__light": {
+      "self_host_monthly_usd": 1874,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 69.79515828677839,
+      "crossover_tokens_per_day": 69795158.28677839,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 1874,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 1874,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 1874,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 1874,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 1874,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 1874,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 1874,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 96,
+        "self_host_throughput_tps_per_gpu": 96,
+        "quantization": "fp16",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "t4__fp16__medium": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 4 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 96,
+        "self_host_throughput_tps_per_gpu": 96,
+        "quantization": "fp16",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "t4__fp16__heavy": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 37 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 9.2,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 96,
+        "self_host_throughput_tps_per_gpu": 96,
+        "quantization": "fp16",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "t4__int8__light": {
+      "self_host_monthly_usd": 1874,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 69.79515828677839,
+      "crossover_tokens_per_day": 69795158.28677839,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 1874,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 1874,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 1874,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 1874,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 1874,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 1874,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 1874,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 163,
+        "self_host_throughput_tps_per_gpu": 163,
+        "quantization": "int8",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "t4__int8__medium": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 3 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 163,
+        "self_host_throughput_tps_per_gpu": 163,
+        "quantization": "int8",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "t4__int8__heavy": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 22 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 4.6,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 163,
+        "self_host_throughput_tps_per_gpu": 163,
+        "quantization": "int8",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    },
+    "t4__int4__light": {
+      "self_host_monthly_usd": 1874,
+      "api_monthly_usd": 27,
+      "regime": "api-wins",
+      "ratio": 69.79515828677839,
+      "crossover_tokens_per_day": 69795158.28677839,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": 1874,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": 1874,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": 1874,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": 1874,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": 1874,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": 1874,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": 1874,
+          "api_usd": 6713
+        }
+      ],
+      "fits": true,
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 240,
+        "self_host_throughput_tps_per_gpu": 240,
+        "quantization": "int4",
+        "shape": "light",
+        "tokens_per_day": 1000000,
+        "peak_tokens_per_second": 35
+      }
+    },
+    "t4__int4__medium": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 269,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 2 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 240,
+        "self_host_throughput_tps_per_gpu": 240,
+        "quantization": "int4",
+        "shape": "medium",
+        "tokens_per_day": 10000000,
+        "peak_tokens_per_second": 347
+      }
+    },
+    "t4__int4__heavy": {
+      "self_host_monthly_usd": null,
+      "api_monthly_usd": 2685,
+      "regime": "api-wins",
+      "ratio": null,
+      "crossover_tokens_per_day": null,
+      "crossover_series": [
+        {
+          "tokens_per_day": 100000,
+          "self_host_usd": null,
+          "api_usd": 3
+        },
+        {
+          "tokens_per_day": 1000000,
+          "self_host_usd": null,
+          "api_usd": 27
+        },
+        {
+          "tokens_per_day": 5000000,
+          "self_host_usd": null,
+          "api_usd": 134
+        },
+        {
+          "tokens_per_day": 10000000,
+          "self_host_usd": null,
+          "api_usd": 269
+        },
+        {
+          "tokens_per_day": 25000000,
+          "self_host_usd": null,
+          "api_usd": 671
+        },
+        {
+          "tokens_per_day": 100000000,
+          "self_host_usd": null,
+          "api_usd": 2685
+        },
+        {
+          "tokens_per_day": 250000000,
+          "self_host_usd": null,
+          "api_usd": 6713
+        }
+      ],
+      "fits": false,
+      "reason": "Needs 15 t4 GPUs for VRAM and peak traffic; Standard_NC4as_T4_v3 exposes 1.",
+      "inputs": {
+        "gpu_sku": "t4",
+        "gpu_name": "NVIDIA T4",
+        "instance_type": "Standard_NC4as_T4_v3",
+        "gpu_price_hourly_usd": 0.52,
+        "gpu_count": 1,
+        "gpu_max_count": 1,
+        "gpu_memory_gb": 16,
+        "vram_required_gb": 2.3,
+        "vram_available_gb": 16,
+        "self_host_throughput_tps": 240,
+        "self_host_throughput_tps_per_gpu": 240,
+        "quantization": "int4",
+        "shape": "heavy",
+        "tokens_per_day": 100000000,
+        "peak_tokens_per_second": 3472
+      }
+    }
+  },
+  "provenance": {
+    "model_facts.file_bytes_fp16": {
+      "label": "cited",
+      "source": "Hugging Face Hub model metadata",
+      "url": "https://huggingface.co/google/gemma-4-26b"
+    },
+    "api_side.price_input_per_mtok_usd": {
+      "label": "cited",
+      "source": "OpenRouter model catalog snapshot",
+      "url": "https://openrouter.ai/api/v1/models"
+    },
+    "api_side.throughput_p50_tps": {
+      "label": "measured",
+      "source": "OpenRouter endpoint throughput snapshot",
+      "url": "https://openrouter.ai/docs"
+    },
+    "compositions.*.inputs.gpu_price_hourly_usd": {
+      "label": "cited",
+      "source": "Cloud GPU pricing snapshot",
+      "url": "/methodology/#source-provenance"
+    },
+    "compositions.*.inputs.self_host_throughput_tps": {
+      "label": "calculated",
+      "source": "memory bandwidth divided by active parameter bytes, adjusted for quantization",
+      "url": "/methodology/#self-host-throughput"
+    },
+    "compositions.*.self_host_monthly_usd": {
+      "label": "calculated",
+      "source": "GPU hours at 60% utilization plus 0.1 FTE labor",
+      "url": "/methodology/#cost-formulas"
+    },
+    "compositions.*.regime": {
+      "label": "calculated",
+      "source": "1.5x regime threshold",
+      "url": "/methodology/#regime-thresholds"
+    }
+  }
+}

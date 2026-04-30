@@ -1,0 +1,329 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import manifest from "../data/generated/manifest.json";
+
+const families = Array.from(new Set(manifest.models.map((model) => model.family))).sort();
+const defaultModel = manifest.models[0];
+const defaultCloud = manifest.clouds[0];
+const defaultShape = manifest.shapes.find((shape) => shape.slug === "medium") || manifest.shapes[0];
+---
+
+<BaseLayout
+  title="RunWhere | Self-host or stay on the API?"
+  description="Pick an open-weight model, cloud, and usage shape. RunWhere returns the directional regime in seconds."
+>
+  <section class="home page-shell">
+    <div class="hero">
+      <div>
+        <p class="eyebrow">Constraint baking for open-weight models</p>
+        <h1>Self-host or stay on the API?</h1>
+      </div>
+      <p class="hero-copy">
+        Pick a model, cloud, and rough usage shape. RunWhere serves a precomputed regime call with the assumptions and sources visible.
+      </p>
+    </div>
+
+    <form class="composer panel" data-composer>
+      <section class="composer-section" aria-labelledby="model-heading">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">1. Model</p>
+            <h2 id="model-heading">Pick your model</h2>
+          </div>
+          <span class="count-pill" data-count>{manifest.models.length} shown</span>
+        </div>
+
+        <label class="field-label" for="model-search">Search</label>
+        <input id="model-search" class="field" type="search" placeholder="Filter by model or vendor" data-search />
+
+        <div class="chip-row" aria-label="Filter by family">
+          {families.map((family) => (
+            <button class="button-chip" type="button" data-family={family} aria-pressed="false">{family}</button>
+          ))}
+        </div>
+
+        <div class="model-list" role="radiogroup" aria-label="Models">
+          {manifest.models.map((model, index) => (
+            <label
+              class="model-option interactive-panel"
+              data-model-card
+              data-search-text={`${model.name} ${model.vendor} ${model.family}`.toLowerCase()}
+              data-family={model.family}
+            >
+              <input
+                type="radio"
+                name="model"
+                value={model.slug}
+                checked={index === 0}
+                data-model-input
+              />
+              <span>
+                <strong>{model.name}</strong>
+                <span>{model.vendor} - {model.params_b}B params ({model.active_params_b}B active)</span>
+                <em>{model.one_liner}</em>
+              </span>
+            </label>
+          ))}
+        </div>
+        <p class="request-line">
+          Don't see your model? <a href="https://github.com/RunWhere/web/issues/new?title=Model%20request%3A%20&labels=model-request">Request it on GitHub</a>.
+        </p>
+      </section>
+
+      <section class="composer-section" aria-labelledby="cloud-heading">
+        <p class="eyebrow">2. Cloud</p>
+        <h2 id="cloud-heading">Pick your cloud</h2>
+        <div class="segmented" role="radiogroup" aria-label="Cloud">
+          {manifest.clouds.map((cloud, index) => (
+            <label class="segment">
+              <input type="radio" name="cloud" value={cloud.slug} checked={index === 0} />
+              <span>{cloud.name}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section class="composer-section" aria-labelledby="shape-heading">
+        <p class="eyebrow">3. Usage</p>
+        <h2 id="shape-heading">Rough usage shape</h2>
+        <div class="shape-grid" role="radiogroup" aria-label="Usage shape">
+          {manifest.shapes.map((shape) => (
+            <label class="shape-card interactive-panel">
+              <input type="radio" name="shape" value={shape.slug} checked={shape.slug === defaultShape.slug} />
+              <span class="shape-label">{shape.label}</span>
+              <strong>{Intl.NumberFormat("en", { notation: "compact" }).format(shape.tokens_per_day)} tokens/day</strong>
+              <span>{shape.persona}</span>
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <div class="composer-actions">
+        <a class="button-primary" href={`/run/${defaultModel.slug}/${defaultCloud.slug}/?shape=${defaultShape.slug}`} data-submit>
+          Show my regime ->
+        </a>
+      </div>
+    </form>
+
+    <section class="home-notes">
+      <article>
+        <p class="eyebrow">Versioned artifacts</p>
+        <h2>Common paths are instant.</h2>
+        <p>Each model-cloud page is generated from committed JSON artifacts with a ruleset version and source timestamps.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Adjustable defaults</p>
+        <h2>Opinions stay visible.</h2>
+        <p>Utilization, labor, traffic shape, and quantization multipliers can be adjusted in the artifact page without changing the canonical URL.</p>
+      </article>
+      <article>
+        <p class="eyebrow">Escalation</p>
+        <h2>Only close calls need live analysis.</h2>
+        <p>Clear regimes remain deterministic. Boundary cases expose an opt-in live analysis path.</p>
+      </article>
+    </section>
+  </section>
+
+  <script is:inline>
+    const composer = document.querySelector("[data-composer]");
+    const search = document.querySelector("[data-search]");
+    const familyButtons = Array.from(document.querySelectorAll("[data-family][aria-pressed]"));
+    const cards = Array.from(document.querySelectorAll("[data-model-card]"));
+    const count = document.querySelector("[data-count]");
+    const submit = document.querySelector("[data-submit]");
+    const activeFamilies = new Set();
+
+    function selected(name) {
+      return composer?.querySelector(`input[name="${name}"]:checked`)?.value;
+    }
+
+    function updateHref() {
+      const model = selected("model");
+      const cloud = selected("cloud");
+      const shape = selected("shape");
+      if (submit && model && cloud && shape) {
+        submit.href = `/run/${model}/${cloud}/?shape=${shape}`;
+      }
+    }
+
+    function updateFilters() {
+      const query = search?.value.trim().toLowerCase() || "";
+      let visible = 0;
+
+      cards.forEach((card) => {
+        const familyMatch = activeFamilies.size === 0 || activeFamilies.has(card.dataset.family);
+        const searchMatch = !query || card.dataset.searchText.includes(query);
+        const matches = familyMatch && searchMatch;
+        card.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      if (count) count.textContent = `${visible} shown`;
+    }
+
+    familyButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const family = button.dataset.family;
+        if (!family) return;
+        if (activeFamilies.has(family)) {
+          activeFamilies.delete(family);
+          button.setAttribute("aria-pressed", "false");
+        } else {
+          activeFamilies.add(family);
+          button.setAttribute("aria-pressed", "true");
+        }
+        updateFilters();
+      });
+    });
+
+    search?.addEventListener("input", updateFilters);
+    composer?.addEventListener("change", updateHref);
+    updateHref();
+  </script>
+</BaseLayout>
+
+<style>
+  .home {
+    padding-bottom: var(--space-8);
+  }
+
+  .composer {
+    display: grid;
+    gap: var(--space-8);
+    padding: var(--space-6);
+  }
+
+  .composer-section {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .composer h2,
+  .home-notes h2 {
+    font-size: var(--text-xl);
+    letter-spacing: 0;
+  }
+
+  .count-pill {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    background: var(--color-bg-subtle);
+    padding: 0.25rem 0.6rem;
+    color: var(--color-fg-muted);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .chip-row,
+  .segmented {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .model-list {
+    display: grid;
+    gap: var(--space-3);
+    max-height: 36rem;
+    overflow: auto;
+    padding-right: var(--space-1);
+  }
+
+  .model-option,
+  .shape-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: var(--space-3);
+    padding: var(--space-4);
+    cursor: pointer;
+  }
+
+  .model-option input,
+  .shape-card input,
+  .segment input {
+    margin-top: 0.25rem;
+    accent-color: var(--color-accent);
+  }
+
+  .model-option span span,
+  .model-option em,
+  .shape-card span {
+    display: block;
+    color: var(--color-fg-muted);
+    font-style: normal;
+    font-size: var(--text-sm);
+  }
+
+  .request-line {
+    color: var(--color-fg-muted);
+    font-size: var(--text-sm);
+  }
+
+  .segment {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-height: 2.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 0.55rem 0.75rem;
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .shape-grid {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  @media (min-width: 760px) {
+    .shape-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .shape-card {
+    grid-template-columns: auto 1fr;
+  }
+
+  .shape-label {
+    color: var(--color-fg-default);
+    font-weight: 700;
+  }
+
+  .composer-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .home-notes {
+    display: grid;
+    gap: var(--space-8);
+    margin-top: var(--space-12);
+    border-top: 1px solid var(--color-border-muted);
+    padding-top: var(--space-8);
+  }
+
+  .home-notes article {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .home-notes p:not(.eyebrow) {
+    color: var(--color-fg-muted);
+  }
+
+  @media (min-width: 900px) {
+    .home-notes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

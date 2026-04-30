@@ -1,0 +1,14 @@
+slug: mistral-large-3
+name: Mistral Large 3
+family: Mistral Large
+vendor: Mistral AI
+license: apache-2.0
+hf_id: mistralai/Mistral-Large-3
+openrouter_slug: mistralai/mistral-large-3
+architecture: moe
+params_b: 675
+active_params_b: 41
+tier: stable
+added: "2026-04-29"
+one_liner: Mistral's frontier model for agentic and multimodal systems.
+inclusion_rationale: European flagship with Apache 2.0 licensing and strong inference tooling support.

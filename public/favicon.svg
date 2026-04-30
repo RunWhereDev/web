@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="RunWhere">
+  <rect width="64" height="64" rx="14" fill="#f2f1f5"/>
+  <path d="M18 18h16c7 0 12 4 12 10 0 4-2 7-6 9l7 9H36l-6-8h-4v8h-8V18Zm8 7v7h8c2 0 4-1 4-4s-2-3-4-3h-8Z" fill="#4a5296"/>
+  <path d="M17 49h30" stroke="#1f2030" stroke-width="4" stroke-linecap="round"/>
+</svg>

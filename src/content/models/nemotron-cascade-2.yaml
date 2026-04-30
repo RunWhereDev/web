@@ -1,0 +1,14 @@
+slug: nemotron-cascade-2
+name: Nemotron Cascade 2
+family: Nemotron
+vendor: NVIDIA
+license: other
+hf_id: nvidia/Nemotron-Cascade-2
+openrouter_slug: nvidia/nemotron-cascade-2
+architecture: hybrid
+params_b: 30
+active_params_b: 30
+tier: preview
+added: "2026-04-29"
+one_liner: Inference-optimized hybrid model for high-throughput serving.
+inclusion_rationale: Preview until the NVIDIA license classification is verified against the hard filters.

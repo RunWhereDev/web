@@ -1,0 +1,5 @@
+sku: a100-80g
+name: NVIDIA A100 80GB
+memory_gb: 80
+bandwidth_gbps: 2039
+generation_rank: 4

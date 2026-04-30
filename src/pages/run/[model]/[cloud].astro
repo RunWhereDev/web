@@ -1,0 +1,614 @@
+---
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import manifest from "../../../data/generated/manifest.json";
+import type { Artifact } from "../../../../shared/types";
+
+export function getStaticPaths() {
+  return manifest.models.flatMap((model) =>
+    model.clouds.map((cloud) => ({
+      params: { model: model.slug, cloud }
+    }))
+  );
+}
+
+const modelSlug = Astro.params.model!;
+const cloudSlug = Astro.params.cloud!;
+const artifactPath = path.join(process.cwd(), "src/data/generated/compositions", modelSlug, `${cloudSlug}.json`);
+const artifact = JSON.parse(await readFile(artifactPath, "utf8")) as Artifact;
+const pageTitle = `${artifact.model_facts.name} on ${manifest.clouds.find((cloud) => cloud.slug === artifact.artifact.cloud)?.name || artifact.artifact.cloud} | RunWhere`;
+const dataJson = JSON.stringify(artifact).replace(/</g, "\\u003c");
+
+const provenanceEntries = Object.entries(artifact.provenance);
+---
+
+<BaseLayout
+  title={pageTitle}
+  description={`Directional self-host vs hosted API regime for ${artifact.model_facts.name} on ${artifact.artifact.cloud.toUpperCase()}.`}
+>
+  <article class="artifact page-shell">
+    <nav class="knob-panel" aria-label="Composition controls">
+      <a class="link-quiet" href="/">RunWhere</a>
+      <span aria-hidden="true">/</span>
+      <strong>{artifact.model_facts.name}</strong>
+      <label>
+        <span class="visually-hidden">GPU</span>
+        <select data-gpu>
+          {artifact.options.gpus.map((gpu) => (
+            <option value={gpu.sku} selected={gpu.sku === artifact.defaults.gpu_sku}>{gpu.sku}</option>
+          ))}
+        </select>
+      </label>
+      <div class="quant-row" role="group" aria-label="Quantization">
+        {artifact.options.quantizations.map((quant) => (
+          <button class="button-chip" type="button" data-quant={quant} aria-pressed={quant === artifact.defaults.quantization ? "true" : "false"}>{quant.toUpperCase()}</button>
+        ))}
+      </div>
+      <label>
+        <span class="visually-hidden">Usage shape</span>
+        <select data-shape>
+          {artifact.options.shapes.map((shape) => (
+            <option value={shape.slug} selected={shape.slug === artifact.defaults.shape}>{shape.label}</option>
+          ))}
+        </select>
+      </label>
+    </nav>
+
+    <section class="verdict-card" data-verdict-card>
+      <p class="eyebrow">Regime</p>
+      <h1 data-verdict-title>Loading regime</h1>
+      <p data-verdict-copy class="lead"></p>
+      <p data-flip-banner class="flip-banner" hidden></p>
+    </section>
+
+    <section class="chart-panel panel" aria-labelledby="chart-heading">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Crossover</p>
+          <h2 id="chart-heading">Monthly cost by tokens per day</h2>
+        </div>
+        <span class="count-pill mono" data-crossover></span>
+      </div>
+      <svg data-chart viewBox="0 0 760 360" role="img" aria-labelledby="chart-heading chart-desc">
+        <desc id="chart-desc">Self-host and API monthly cost lines across workload levels.</desc>
+      </svg>
+      <p class="chart-equivalent" data-chart-copy></p>
+    </section>
+
+    <section class="breakdown-grid">
+      <article class="panel metric-card">
+        <p class="eyebrow">Self-host</p>
+        <strong data-self-cost></strong>
+        <p data-self-details></p>
+      </article>
+      <article class="panel metric-card">
+        <p class="eyebrow">Hosted API</p>
+        <strong data-api-cost></strong>
+        <p data-api-details></p>
+      </article>
+    </section>
+
+    <details class="panel assumptions" data-assumptions>
+      <summary>
+        <span>Assumptions</span>
+        <span class="count-pill" data-adjusted-count>defaults</span>
+      </summary>
+      <div class="assumption-grid">
+        <label>
+          <span>GPU utilization <output data-utilization-output>60%</output></span>
+          <input type="range" min="30" max="95" value="60" data-assumption="utilization" />
+        </label>
+        <label>
+          <span>INT8 multiplier <output data-int8-output>1.7x</output></span>
+          <input type="range" min="1.2" max="2" value="1.7" step="0.1" data-assumption="int8" />
+        </label>
+        <label>
+          <span>INT4 multiplier <output data-int4-output>2.5x</output></span>
+          <input type="range" min="1.5" max="3.5" value="2.5" step="0.1" data-assumption="int4" />
+        </label>
+        <label>
+          <span>Operational labor <output data-fte-output>0.1 FTE</output></span>
+          <input type="range" min="0" max="1" value="0.1" step="0.05" data-assumption="fte" />
+        </label>
+        <label>
+          <span>Annual salary <output data-salary-output>$150K</output></span>
+          <input type="range" min="50000" max="300000" value="150000" step="10000" data-assumption="salary" />
+        </label>
+        <label>
+          <span>Peak-to-average <output data-peak-output>3:1</output></span>
+          <input type="range" min="1" max="10" value="3" step="0.5" data-assumption="peak" />
+        </label>
+        <label class="toggle-row">
+          <input type="checkbox" data-assumption="overhead" />
+          <span>Storage/network overhead</span>
+        </label>
+      </div>
+      <button class="button-secondary" type="button" data-reset>Reset to defaults</button>
+    </details>
+
+    <section class="panel escalation" data-escalation hidden>
+      <div>
+        <p class="eyebrow">Declared escalation</p>
+        <h2>Close call analysis</h2>
+        <p class="muted">This composition sits near the boundary, so RunWhere can hand it to the opt-in live path.</p>
+      </div>
+      <button class="button-primary" type="button">Get tailored analysis - ~$0.005</button>
+    </section>
+
+    <section class="provenance panel" aria-labelledby="provenance-heading">
+      <p class="eyebrow">Provenance</p>
+      <h2 id="provenance-heading">Sources behind this artifact</h2>
+      <div class="chip-list">
+        {provenanceEntries.map(([key, item]) => (
+          <a class={`prov-chip prov-${item.label}`} href={item.url} title={`${key}: ${item.source}`}>
+            {item.label}: {item.source}
+          </a>
+        ))}
+      </div>
+      <p class="muted mono">Artifact {artifact.artifact.id} - ruleset {artifact.artifact.ruleset_version}</p>
+    </section>
+  </article>
+
+  <script id="artifact-data" type="application/json" is:inline set:html={dataJson}></script>
+  <script is:inline>
+    const artifact = JSON.parse(document.getElementById("artifact-data").textContent);
+    const state = {
+      gpu: new URL(location.href).searchParams.get("gpu") || artifact.defaults.gpu_sku,
+      quant: new URL(location.href).searchParams.get("quant") || artifact.defaults.quantization,
+      shape: new URL(location.href).searchParams.get("shape") || artifact.defaults.shape
+    };
+    const defaults = {
+      utilization: 0.6,
+      int8: 1.7,
+      int4: 2.5,
+      fte: 0.1,
+      salary: 150000,
+      peak: 3,
+      overhead: false
+    };
+    const assumptions = { ...defaults };
+
+    const $ = (selector) => document.querySelector(selector);
+    const money = (value) =>
+      value == null || !Number.isFinite(value)
+        ? "Infeasible"
+        : new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            maximumFractionDigits: 0
+          }).format(value);
+    const compact = (value) =>
+      new Intl.NumberFormat("en-US", { notation: "compact", maximumFractionDigits: 1 }).format(value);
+
+    function key() {
+      return `${state.gpu}__${state.quant}__${state.shape}`;
+    }
+
+    function selectedComposition() {
+      return artifact.compositions[key()] || artifact.compositions[`${artifact.defaults.gpu_sku}__${artifact.defaults.quantization}__${artifact.defaults.shape}`];
+    }
+
+    function classify(selfCost, apiCost) {
+      if (!Number.isFinite(selfCost)) return "api-wins";
+      const ratio = Math.max(selfCost, apiCost) / Math.min(selfCost, apiCost);
+      if (ratio < 1.5) return "close-call";
+      return selfCost < apiCost ? "self-host-wins" : "api-wins";
+    }
+
+    function recompute(composition) {
+      const input = composition.inputs;
+      const defaultMultiplier = state.quant === "int8" ? defaults.int8 : state.quant === "int4" ? defaults.int4 : 1;
+      const activeMultiplier = state.quant === "int8" ? assumptions.int8 : state.quant === "int4" ? assumptions.int4 : 1;
+      const perGpuTps = input.self_host_throughput_tps_per_gpu / defaultMultiplier * activeMultiplier * (assumptions.utilization / defaults.utilization);
+      const peakTps = (input.tokens_per_day / 86400) * assumptions.peak;
+      const vramGpuCount = Math.max(1, Math.ceil(input.vram_required_gb / input.gpu_memory_gb));
+      const capacityGpuCount = Math.max(1, Math.ceil(peakTps / perGpuTps));
+      const gpuCount = Math.max(vramGpuCount, capacityGpuCount);
+      const fits = gpuCount <= input.gpu_max_count;
+      const labor = assumptions.fte * assumptions.salary / 12;
+      const baseCost = fits ? (input.gpu_price_hourly_usd * gpuCount * 24 * 30 / assumptions.utilization) + labor : Infinity;
+      const selfCost = assumptions.overhead ? baseCost * 1.08 : baseCost;
+      const apiCost = composition.api_monthly_usd;
+      const regime = classify(selfCost, apiCost);
+      const ratio = Number.isFinite(selfCost) && apiCost > 0 ? Math.max(selfCost, apiCost) / Math.min(selfCost, apiCost) : null;
+
+      return { ...composition, fits, selfCost, apiCost, regime, ratio, gpuCount, perGpuTps, peakTps };
+    }
+
+    function regimeTitle(regime) {
+      if (regime === "self-host-wins") return "Self-host wins clearly";
+      if (regime === "api-wins") return "API wins clearly";
+      return "Close call";
+    }
+
+    function updateUrl() {
+      const params = new URLSearchParams();
+      if (state.gpu !== artifact.defaults.gpu_sku) params.set("gpu", state.gpu);
+      if (state.quant !== artifact.defaults.quantization) params.set("quant", state.quant);
+      if (state.shape !== artifact.defaults.shape) params.set("shape", state.shape);
+      history.replaceState(null, "", `${location.pathname}${params.toString() ? `?${params}` : ""}`);
+    }
+
+    function updateControls() {
+      $("[data-gpu]").value = state.gpu;
+      $("[data-shape]").value = state.shape;
+      document.querySelectorAll("[data-quant]").forEach((button) => {
+        button.setAttribute("aria-pressed", button.dataset.quant === state.quant ? "true" : "false");
+      });
+    }
+
+    function drawChart(composition, computed) {
+      const svg = $("[data-chart]");
+      const width = 760;
+      const height = 360;
+      const pad = { left: 70, right: 24, top: 24, bottom: 56 };
+      const points = composition.crossover_series;
+      const minX = 100000;
+      const maxX = 250000000;
+      const costs = points.flatMap((point) => [point.api_usd, point.self_host_usd || computed.apiCost]);
+      const minY = Math.max(10, Math.min(...costs) * 0.65);
+      const maxY = Math.max(...costs, computed.selfCost || 0) * 1.35;
+      const log = Math.log10;
+      const x = (value) => pad.left + ((log(value) - log(minX)) / (log(maxX) - log(minX))) * (width - pad.left - pad.right);
+      const y = (value) => height - pad.bottom - ((log(value) - log(minY)) / (log(maxY) - log(minY))) * (height - pad.top - pad.bottom);
+      const path = (series) => series.map((point, index) => `${index ? "L" : "M"} ${x(point.tokens_per_day)} ${y(point.value)}`).join(" ");
+      const apiSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.api_usd }));
+      const selfSeries = points.map((point) => ({ tokens_per_day: point.tokens_per_day, value: point.self_host_usd || computed.selfCost || maxY }));
+      const workloadX = x(composition.inputs.tokens_per_day);
+      const yTicks = [100, 1000, 10000, 100000].filter((tick) => tick >= minY && tick <= maxY);
+      const xTicks = [100000, 1000000, 10000000, 100000000];
+
+      svg.innerHTML = `
+        <rect x="0" y="0" width="${width}" height="${height}" fill="transparent"></rect>
+        ${xTicks.map((tick) => `<line x1="${x(tick)}" x2="${x(tick)}" y1="${pad.top}" y2="${height - pad.bottom}" stroke="var(--color-border-muted)"></line><text x="${x(tick)}" y="${height - 20}" text-anchor="middle">${compact(tick)}</text>`).join("")}
+        ${yTicks.map((tick) => `<line x1="${pad.left}" x2="${width - pad.right}" y1="${y(tick)}" y2="${y(tick)}" stroke="var(--color-border-muted)"></line><text x="12" y="${y(tick) + 4}">${money(tick).replace(".00", "")}</text>`).join("")}
+        <path d="${path(selfSeries)}" fill="none" stroke="var(--color-regime-self-host)" stroke-width="3"></path>
+        <path d="${path(apiSeries)}" fill="none" stroke="var(--color-regime-api)" stroke-width="3"></path>
+        <line x1="${workloadX}" x2="${workloadX}" y1="${pad.top}" y2="${height - pad.bottom}" stroke="var(--color-fg-muted)" stroke-dasharray="6 6"></line>
+        <circle cx="${workloadX}" cy="${y(Math.max(1, computed.apiCost))}" r="5" fill="var(--color-regime-api)"></circle>
+        ${Number.isFinite(computed.selfCost) ? `<circle cx="${workloadX}" cy="${y(Math.max(1, computed.selfCost))}" r="5" fill="var(--color-regime-self-host)"></circle>` : ""}
+        <text x="${pad.left}" y="${height - 342}" fill="var(--color-regime-self-host)">Self-host</text>
+        <text x="${pad.left + 92}" y="${height - 342}" fill="var(--color-regime-api)">API</text>
+      `;
+    }
+
+    function updateAssumptionLabels() {
+      $("[data-utilization-output]").textContent = `${Math.round(assumptions.utilization * 100)}%`;
+      $("[data-int8-output]").textContent = `${assumptions.int8.toFixed(1)}x`;
+      $("[data-int4-output]").textContent = `${assumptions.int4.toFixed(1)}x`;
+      $("[data-fte-output]").textContent = `${assumptions.fte.toFixed(2).replace(/0$/, "")} FTE`;
+      $("[data-salary-output]").textContent = `$${Math.round(assumptions.salary / 1000)}K`;
+      $("[data-peak-output]").textContent = `${assumptions.peak}:1`;
+      const adjusted = Object.entries(assumptions).filter(([name, value]) => value !== defaults[name]).length;
+      $("[data-adjusted-count]").textContent = adjusted ? `${adjusted} adjusted` : "defaults";
+    }
+
+    function render() {
+      const composition = selectedComposition();
+      const computed = recompute(composition);
+      const defaultRegime = composition.regime;
+      const ratioCopy = computed.ratio ? `${computed.ratio.toFixed(1)}x difference` : "self-host infeasible";
+      const cheaper = computed.regime === "self-host-wins" ? "Self-host" : "API";
+
+      updateControls();
+      updateAssumptionLabels();
+      $("[data-verdict-card]").dataset.regime = computed.regime;
+      $("[data-verdict-title]").textContent = `${computed.regime === "close-call" ? "~" : "Clear:"} ${regimeTitle(computed.regime)}`;
+      $("[data-verdict-copy]").textContent =
+        computed.regime === "close-call"
+          ? `${ratioCopy}; operational preferences likely dominate.`
+          : `${cheaper} is cheaper at ${compact(composition.inputs.tokens_per_day)} tokens/day.`;
+
+      const flip = $("[data-flip-banner]");
+      if (defaultRegime !== computed.regime) {
+        flip.hidden = false;
+        flip.textContent = `With your adjustments, this becomes ${regimeTitle(computed.regime).toLowerCase()}. Defaults called it ${regimeTitle(defaultRegime).toLowerCase()}.`;
+      } else {
+        flip.hidden = true;
+      }
+
+      $("[data-self-cost]").textContent = money(computed.selfCost);
+      $("[data-self-details]").textContent = computed.fits
+        ? `${computed.gpuCount}x ${composition.inputs.gpu_name} - ${Math.round(computed.perGpuTps * computed.gpuCount)} tokens/sec - ${composition.inputs.instance_type}`
+        : composition.reason;
+      $("[data-api-cost]").textContent = money(computed.apiCost);
+      $("[data-api-details]").textContent = `${artifact.api_side.providers_count} providers - ${artifact.api_side.throughput_p50_tps} p50 tokens/sec - ${artifact.api_side.price_input_per_mtok_usd}/${artifact.api_side.price_output_per_mtok_usd} USD per MTok`;
+      $("[data-crossover]").textContent = composition.crossover_tokens_per_day ? `${compact(composition.crossover_tokens_per_day)} tok/day crossover` : "no crossover";
+      $("[data-chart-copy]").textContent = `At ${compact(composition.inputs.tokens_per_day)} tokens/day, self-host costs ${money(computed.selfCost)} per month vs API at ${money(computed.apiCost)}. ${regimeTitle(computed.regime)}.`;
+      $("[data-escalation]").hidden = computed.regime !== "close-call";
+
+      drawChart(composition, computed);
+      updateUrl();
+    }
+
+    $("[data-gpu]").addEventListener("change", (event) => {
+      state.gpu = event.target.value;
+      render();
+    });
+    $("[data-shape]").addEventListener("change", (event) => {
+      state.shape = event.target.value;
+      render();
+    });
+    document.querySelectorAll("[data-quant]").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.quant = button.dataset.quant;
+        render();
+      });
+    });
+    document.querySelectorAll("[data-assumption]").forEach((input) => {
+      input.addEventListener("input", () => {
+        const kind = input.dataset.assumption;
+        if (kind === "utilization") assumptions.utilization = Number(input.value) / 100;
+        if (kind === "int8") assumptions.int8 = Number(input.value);
+        if (kind === "int4") assumptions.int4 = Number(input.value);
+        if (kind === "fte") assumptions.fte = Number(input.value);
+        if (kind === "salary") assumptions.salary = Number(input.value);
+        if (kind === "peak") assumptions.peak = Number(input.value);
+        if (kind === "overhead") assumptions.overhead = input.checked;
+        render();
+      });
+    });
+    $("[data-reset]").addEventListener("click", () => {
+      Object.assign(assumptions, defaults);
+      document.querySelector('[data-assumption="utilization"]').value = 60;
+      document.querySelector('[data-assumption="int8"]').value = 1.7;
+      document.querySelector('[data-assumption="int4"]').value = 2.5;
+      document.querySelector('[data-assumption="fte"]').value = 0.1;
+      document.querySelector('[data-assumption="salary"]').value = 150000;
+      document.querySelector('[data-assumption="peak"]').value = 3;
+      document.querySelector('[data-assumption="overhead"]').checked = false;
+      render();
+    });
+
+    render();
+  </script>
+</BaseLayout>
+
+<style>
+  .artifact {
+    display: grid;
+    gap: var(--space-8);
+    padding-block: var(--space-8);
+  }
+
+  .knob-panel {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    border: 1px solid var(--color-border-muted);
+    border-radius: var(--radius-md);
+    background: color-mix(in srgb, var(--color-bg) 92%, white);
+    padding: var(--space-3);
+  }
+
+  .knob-panel select {
+    width: auto;
+    min-width: 8rem;
+  }
+
+  .quant-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .verdict-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    background: var(--color-surface);
+  }
+
+  .verdict-card[data-regime="self-host-wins"] {
+    border-color: color-mix(in srgb, var(--color-regime-self-host) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-regime-self-host) 7%, var(--color-surface));
+  }
+
+  .verdict-card[data-regime="api-wins"] {
+    border-color: color-mix(in srgb, var(--color-regime-api) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-regime-api) 7%, var(--color-surface));
+  }
+
+  .verdict-card[data-regime="close-call"] {
+    border-color: color-mix(in srgb, var(--color-regime-close-call) 45%, var(--color-border));
+    background: color-mix(in srgb, var(--color-regime-close-call) 7%, var(--color-surface));
+  }
+
+  .verdict-card h1 {
+    margin-bottom: var(--space-3);
+    font-size: var(--text-3xl);
+    letter-spacing: 0;
+  }
+
+  .verdict-card[data-regime="self-host-wins"] h1 {
+    color: var(--color-regime-self-host);
+  }
+
+  .verdict-card[data-regime="api-wins"] h1 {
+    color: var(--color-regime-api);
+  }
+
+  .verdict-card[data-regime="close-call"] h1 {
+    color: var(--color-regime-close-call);
+  }
+
+  .flip-banner {
+    margin-top: var(--space-4);
+    border-left: 4px solid var(--color-regime-close-call);
+    padding-left: var(--space-3);
+    color: var(--color-fg-default);
+    font-weight: 650;
+  }
+
+  .chart-panel,
+  .provenance,
+  .escalation {
+    display: grid;
+    gap: var(--space-4);
+    padding: var(--space-6);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: start;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .section-head h2,
+  .provenance h2,
+  .escalation h2 {
+    font-size: var(--text-xl);
+    letter-spacing: 0;
+  }
+
+  [data-chart] {
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  [data-chart] text {
+    fill: var(--color-fg-muted);
+    font: 12px var(--font-mono);
+  }
+
+  .chart-equivalent {
+    color: var(--color-fg-muted);
+  }
+
+  .breakdown-grid {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  @media (min-width: 760px) {
+    .breakdown-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .metric-card {
+    display: grid;
+    gap: var(--space-2);
+    padding: var(--space-6);
+  }
+
+  .metric-card strong {
+    font-size: var(--text-2xl);
+    letter-spacing: 0;
+  }
+
+  .metric-card p:not(.eyebrow) {
+    color: var(--color-fg-muted);
+  }
+
+  .assumptions {
+    padding: var(--space-6);
+  }
+
+  .assumptions summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .assumption-grid {
+    display: grid;
+    gap: var(--space-4);
+    padding-block: var(--space-6);
+  }
+
+  @media (min-width: 820px) {
+    .assumption-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .assumption-grid label {
+    display: grid;
+    gap: var(--space-2);
+    color: var(--color-fg-muted);
+    font-size: var(--text-sm);
+  }
+
+  .assumption-grid label span {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .assumption-grid input[type="range"] {
+    width: 100%;
+    accent-color: var(--color-accent);
+  }
+
+  .toggle-row {
+    display: flex !important;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  .toggle-row span {
+    display: inline !important;
+  }
+
+  .escalation {
+    align-items: center;
+  }
+
+  @media (min-width: 760px) {
+    .escalation {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  .chip-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+
+  .prov-chip {
+    border: 1px solid var(--color-border);
+    border-radius: 999px;
+    padding: 0.22rem 0.55rem;
+    font-size: var(--text-xs);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .prov-calculated {
+    background: color-mix(in srgb, var(--color-prov-calculated) 10%, transparent);
+    color: var(--color-prov-calculated);
+    border-color: color-mix(in srgb, var(--color-prov-calculated) 35%, var(--color-border));
+  }
+
+  .prov-cited {
+    background: color-mix(in srgb, var(--color-prov-cited) 10%, transparent);
+    color: var(--color-prov-cited);
+    border-color: color-mix(in srgb, var(--color-prov-cited) 35%, var(--color-border));
+  }
+
+  .prov-measured {
+    background: color-mix(in srgb, var(--color-prov-measured) 10%, transparent);
+    color: var(--color-prov-measured);
+    border-color: color-mix(in srgb, var(--color-prov-measured) 35%, var(--color-border));
+  }
+</style>
