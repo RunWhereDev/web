@@ -96,18 +96,11 @@ svg {
   font-size: var(--text-lg);
 }
 
-.brand-mark {
-  display: inline-grid;
-  width: 2rem;
-  height: 2rem;
-  place-items: center;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
-  color: var(--color-accent);
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  font-weight: 700;
+.brand-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-sm);
+  object-fit: contain;
 }
 
 .nav-list,
