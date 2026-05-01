@@ -856,15 +856,19 @@ const provenanceEntries = Object.entries(artifact.provenance);
 
   @media (min-width: 760px) {
     .escalation {
-      grid-template-columns: 1fr auto;
+      grid-template-columns: minmax(18rem, 0.9fr) minmax(20rem, 1.1fr);
       align-items: start;
     }
+  }
+
+  .escalation > * {
+    min-width: 0;
   }
 
   .escalation-action {
     display: grid;
     gap: var(--space-3);
-    min-width: 220px;
+    min-width: 0;
   }
 
   .escalation-note {
@@ -873,12 +877,21 @@ const provenanceEntries = Object.entries(artifact.provenance);
   }
 
   .escalation-result {
+    max-width: 100%;
+    min-width: 0;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     background: var(--color-bg-subtle);
     padding: var(--space-4);
     font-size: var(--text-sm);
     line-height: 1.6;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+  }
+
+  .escalation-text {
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
   }
 
   .escalation-error {
