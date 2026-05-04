@@ -13,8 +13,8 @@ const refreshDate = new Intl.DateTimeFormat("en-US", {
 ---
 
 <BaseLayout
-  title="RunWhere | Stay on the API unless you're the exception"
-  description="RunWhere gives the API-first answer instantly, then checks whether your workload belongs in the self-hosting exception set."
+  title="Self-Hosting LLMs vs. Managed API — RunWhere"
+  description="Compare the costs of self-hosting open-weight models against managed LLM APIs. RunWhere checks if your workload is the exception to API-first."
 >
   <section class="home page-shell">
     <div class="hero hero-grid">
@@ -65,6 +65,18 @@ const refreshDate = new Intl.DateTimeFormat("en-US", {
         <li>Predictable batch or steady GPU utilization</li>
         <li>Small open-weight substitute is acceptable</li>
         <li>Latency requirements API providers cannot meet</li>
+      </ul>
+    </section>
+
+    <section class="common-scenarios panel" aria-labelledby="scenarios-heading">
+      <div>
+        <p class="eyebrow">Common scenarios</p>
+        <h2 id="scenarios-heading">Compare specific decisions.</h2>
+      </div>
+      <ul class="scenario-links">
+        <li><a href="/guide/openai-api-vs-self-hosting/">When to switch from OpenAI API to self-hosting</a></li>
+        <li><a href="/guide/llama-3-vs-claude-api/">Llama 3 70B self-hosting cost vs. Claude API</a></li>
+        <li><a href="/guide/serverless-gpu-vs-always-on/">Serverless GPU vs. always-on for LLM inference</a></li>
       </ul>
     </section>
 
@@ -194,6 +206,31 @@ const refreshDate = new Intl.DateTimeFormat("en-US", {
     color: var(--color-fg-muted);
     font-size: var(--text-sm);
     font-weight: 650;
+  }
+
+  .common-scenarios {
+    margin-top: var(--space-8);
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .scenario-links {
+    display: grid;
+    gap: var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .scenario-links li a {
+    display: block;
+    font-weight: 650;
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+
+  .scenario-links li a:hover {
+    text-decoration: underline;
   }
 
   .home-notes {
