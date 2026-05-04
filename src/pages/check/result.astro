@@ -119,6 +119,8 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
       if (changeList) changeList.innerHTML = "";
     }
 
+    let hasLoggedRecommendationServed = false;
+
     function renderResult() {
       if (!profile) {
         renderInvalid();
@@ -166,6 +168,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
       }
 
       if (escalation) escalation.hidden = evaluation.outcome === "confirmed_api";
+
+      if (!hasLoggedRecommendationServed && typeof (window as any).gtag === "function") {
+        hasLoggedRecommendationServed = true;
+        (window as any).gtag("event", "recommendation_served", {
+          outcome: evaluation.outcome,
+          hosted_model: profile.hosted_model
+        });
+      }
     }
 
     document.querySelector("[data-copy-url]")?.addEventListener("click", async () => {
@@ -213,6 +223,14 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
 
     document.querySelector("[data-escalation-btn]")?.addEventListener("click", async (event) => {
       if (!profile) return;
+      const evaluation = evaluateCheckProfile(boundary, profile);
+
+      if (typeof (window as any).gtag === "function") {
+        (window as any).gtag("event", "escalation_requested", {
+          outcome: evaluation.outcome
+        });
+      }
+
       const button = event.currentTarget as HTMLButtonElement;
       const result = document.querySelector("[data-escalation-result]") as HTMLElement | null;
       const error = document.querySelector("[data-escalation-error]") as HTMLElement | null;
@@ -226,7 +244,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || "";
       if (error) error.hidden = true;
 
       try {
-        const evaluation = evaluateCheckProfile(boundary, profile);
         const turnstileToken = await getTurnstileToken();
         const response = await fetch(root?.dataset.escalationUrl || "/escalate", {
           method: "POST",

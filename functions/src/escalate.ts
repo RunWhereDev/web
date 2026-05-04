@@ -181,9 +181,23 @@ export const server = createServer(async (request, response) => {
       }
     });
 
+    let inputTokens: number | null = null;
+    let outputTokens: number | null = null;
+    let costUsd: number | null = null;
+
     for await (const chunk of stream) {
       const text = chunk.text;
       if (text) writeSse(response, "chunk", { text });
+      if (chunk.usageMetadata) {
+        inputTokens = chunk.usageMetadata.promptTokenCount ?? null;
+        outputTokens = chunk.usageMetadata.candidatesTokenCount ?? null;
+      }
+    }
+
+    if (inputTokens !== null && outputTokens !== null) {
+      const inputCost = (inputTokens / 1_000_000) * 0.075;
+      const outputCost = (outputTokens / 1_000_000) * 0.30;
+      costUsd = Number((inputCost + outputCost).toFixed(6));
     }
 
     console.log(JSON.stringify({
@@ -192,9 +206,9 @@ export const server = createServer(async (request, response) => {
       flow: body.flow || "advanced",
       outcome: body.outcome || "unknown",
       response_time_ms: Date.now() - started,
-      input_tokens: null,
-      output_tokens: null,
-      cost_usd: null
+      input_tokens: inputTokens,
+      output_tokens: outputTokens,
+      cost_usd: costUsd
     }));
     writeSse(response, "done", { ok: true });
     response.end();
