@@ -9,7 +9,8 @@
   },
   "scripts": {
     "dev": "astro dev --host 0.0.0.0",
-    "build": "npm run build:artifacts && npm run build:manifest && astro build",
+    "build": "npm run build:artifacts && npm run build:manifest && npm run build:assets && astro build",
+    "build:assets": "tsx scripts/generate-assets.ts",
     "preview": "astro preview --host 0.0.0.0",
     "validate:content": "tsx scripts/validate-content.ts",
     "refresh:pricing": "tsx scripts/refresh-pricing.ts",
@@ -29,6 +30,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@resvg/resvg-js": "^2.6.2",
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.14.1",
     "tsx": "^4.19.3",

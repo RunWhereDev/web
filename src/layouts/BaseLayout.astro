@@ -37,6 +37,11 @@ const gaId = import.meta.env.PUBLIC_GA4_MEASUREMENT_ID || "G-W74KZ9XQP8";
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={new URL("/og.png", canonical).toString()} />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={new URL("/og.png", canonical).toString()} />
 
     {/* Performance Optimizations */}
     <link rel="preconnect" href="https://www.googletagmanager.com" />
