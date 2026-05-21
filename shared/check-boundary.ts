@@ -106,13 +106,13 @@ export const DEFAULT_EXCEPTION_RULES: ExceptionRule[] = [
 
 export const REFERENCE_PROFILES: ReferenceProfile[] = [
     { id: "low-bursty-small", label: "Low spend, bursty small-model app", weight: 27, profile: { spend_band: "lt_200", hosted_model: "gpt-5-mini", traffic_shape: "bursty", hard_constraints: [] } },
-    { id: "low-steady-small", label: "Low spend, steady small-model app", weight: 17, profile: { spend_band: "lt_200", hosted_model: "gemini-2-5-flash", traffic_shape: "steady", hard_constraints: [] } },
+    { id: "low-steady-small", label: "Low spend, steady small-model app", weight: 17, profile: { spend_band: "lt_200", hosted_model: "gemini-3-5-flash", traffic_shape: "steady", hard_constraints: [] } },
     { id: "mid-bursty-small", label: "Mid spend, bursty small-model product", weight: 18, profile: { spend_band: "200_to_2k", hosted_model: "gpt-5-mini", traffic_shape: "bursty", hard_constraints: [] } },
     { id: "mid-steady-small", label: "Mid spend, steady small-model product", weight: 3, profile: { spend_band: "200_to_2k", hosted_model: "gpt-5-mini", traffic_shape: "steady", hard_constraints: [] } },
     { id: "mid-bursty-frontier", label: "Mid spend, bursty frontier-family product", weight: 15, profile: { spend_band: "200_to_2k", hosted_model: "gpt-5", traffic_shape: "bursty", hard_constraints: [] } },
     { id: "high-bursty-frontier", label: "High spend, bursty frontier-family product", weight: 12, profile: { spend_band: "2k_to_10k", hosted_model: "claude-sonnet-5", traffic_shape: "bursty", hard_constraints: [] } },
     { id: "high-steady-medium", label: "High spend, steady medium-model product", weight: 2, profile: { spend_band: "2k_to_10k", hosted_model: "claude-haiku-4", traffic_shape: "steady", hard_constraints: [] } },
-    { id: "batch-small", label: "Predictable small-model batch job", weight: 2, profile: { spend_band: "200_to_2k", hosted_model: "gemini-2-5-flash", traffic_shape: "batch", hard_constraints: [] } },
+    { id: "batch-small", label: "Predictable small-model batch job", weight: 2, profile: { spend_band: "200_to_2k", hosted_model: "gemini-3-5-flash", traffic_shape: "batch", hard_constraints: [] } },
     { id: "very-high-frontier", label: "Very high steady frontier spend", weight: 2, profile: { spend_band: "gt_10k", hosted_model: "gpt-5", traffic_shape: "steady", hard_constraints: [] } },
     { id: "compliance-bound", label: "Compliance-bound workload", weight: 2, profile: { spend_band: "200_to_2k", hosted_model: "gpt-5-mini", traffic_shape: "bursty", hard_constraints: ["data_residency"] } }
 ];

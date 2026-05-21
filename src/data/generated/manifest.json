@@ -40,8 +40,8 @@
       "quality_caveat": "Frontier hosted models differ materially in reasoning, tool use, safety behavior, and latency; use these mappings only as candidate self-host investigations."
     },
     {
-      "slug": "gemini-2-5-flash",
-      "name": "Gemini 2.5 Flash",
+      "slug": "gemini-3-5-flash",
+      "name": "Gemini 3.5 Flash",
       "vendor": "Google",
       "family": "Gemini",
       "size_class": "small",

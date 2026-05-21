@@ -40,8 +40,8 @@ const boundary: CheckBoundaryArtifact = {
             quality_caveat: "Not quality equivalent."
         },
         {
-            slug: "gemini-2-5-flash",
-            name: "Gemini 2.5 Flash",
+            slug: "gemini-3-5-flash",
+            name: "Gemini 3.5 Flash",
             vendor: "Google",
             family: "Gemini",
             size_class: "small",

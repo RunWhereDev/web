@@ -72,7 +72,7 @@ async function loadArtifact(body: EscalationRequest) {
   return JSON.parse(await readFile(filePath, "utf8"));
 }
 
-const GEMINI_MODEL = process.env.RUNWHERE_VERTEX_MODEL || "gemini-2.5-flash";
+const GEMINI_MODEL = process.env.RUNWHERE_VERTEX_MODEL || "gemini-3.5-flash";
 const VERTEX_LOCATION = process.env.RUNWHERE_GCP_LOCATION || "global";
 
 const CORS_HEADERS = {

@@ -60,8 +60,8 @@
       "quality_caveat": "Frontier hosted models differ materially in reasoning, tool use, safety behavior, and latency; use these mappings only as candidate self-host investigations."
     },
     {
-      "slug": "gemini-2-5-flash",
-      "name": "Gemini 2.5 Flash",
+      "slug": "gemini-3-5-flash",
+      "name": "Gemini 3.5 Flash",
       "vendor": "Google",
       "family": "Gemini",
       "size_class": "small",
@@ -358,7 +358,7 @@
       "weight": 17,
       "profile": {
         "spend_band": "lt_200",
-        "hosted_model": "gemini-2-5-flash",
+        "hosted_model": "gemini-3-5-flash",
         "traffic_shape": "steady",
         "hard_constraints": []
       }
@@ -424,7 +424,7 @@
       "weight": 2,
       "profile": {
         "spend_band": "200_to_2k",
-        "hosted_model": "gemini-2-5-flash",
+        "hosted_model": "gemini-3-5-flash",
         "traffic_shape": "batch",
         "hard_constraints": []
       }
